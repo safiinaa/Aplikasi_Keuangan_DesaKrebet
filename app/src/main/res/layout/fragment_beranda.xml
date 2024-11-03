@@ -160,6 +160,15 @@
         app:layout_constraintTop_toBottomOf="@id/layoutSaldo"
         tools:ignore="ContentDescription" />
 
+    <TextView
+        android:id="@+id/tvTitle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:text="@string/riwayat_transaksi"
+        app:layout_constraintTop_toBottomOf="@id/imgLine"
+        style="@style/blackTextBtn"/>
+
     <LinearLayout
         android:id="@+id/layoutMenu2"
         android:layout_width="match_parent"
@@ -167,7 +176,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgLine">
+        app:layout_constraintTop_toBottomOf="@id/tvTitle2">
 
         <Button
             style="@style/whiteTextBtn"
