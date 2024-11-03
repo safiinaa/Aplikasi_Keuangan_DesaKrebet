@@ -4,4 +4,19 @@
     <string name="forget_password">Forget Password</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
+    <string name="alamatKrebet">Desa Wisata Krebet RT. 04, Sendangsari, Pajangan, Krebet, Sendangsari,
+                Kecamatan Pajangan, Kabupaten Bantul, Daerah Istimewa Yogyakarta 55751</string>
+    <string name="beranda">Beranda</string>
+    <string name="pendapatan">Pendapatan</string>
+    <string name="pengeluaran">Pengeluaran</string>
+    <string name="laporan">Laporan</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="saldo">Saldo</string>
+    <string name="saldo1">Rp.2.000.000</string>
+    <string name="pemasukan">Pemasukan</string>
+    <string name="saldo2">Rp.5.000.000</string>
+    <string name="semua">Semua</string>
+    <string name="pengunjung_a">Pengunjung A</string>
+    <string name="tanggal">24 April 2024</string>
+    <string name="pengajar_tari">Pengajar Tari</string>
 </resources>

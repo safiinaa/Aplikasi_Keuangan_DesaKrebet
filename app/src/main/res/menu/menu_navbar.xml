@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home_fragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:title="@string/beranda"/>
+    <item
+        android:id="@+id/pendapatan_fragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_pendapatan"
+        android:title="@string/pendapatan"/>
+    <item
+        android:id="@+id/pengeluaran_fragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_pengeluaran"
+        android:title="@string/pengeluaran"/>
+    <item
+        android:id="@+id/laporan_fragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_laporan"
+        android:title="@string/laporan"/>
+</menu>

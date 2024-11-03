@@ -15,7 +15,7 @@
         android:layout_height="@dimen/_145sdp"
         android:layout_marginTop="@dimen/_30sdp"
         android:layout_gravity="center"
-        tools:srcCompat="@drawable/ic_logo" />
+        tools:srcCompat="@drawable/ic_logo3" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -35,7 +35,7 @@
             android:id="@+id/etMail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/style_inputText"
+            android:background="@drawable/style_input_text"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             tools:layout_editor_absoluteX="31dp" />
@@ -43,7 +43,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layotPass"
+        android:id="@+id/layoutPass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp">
@@ -52,7 +52,7 @@
             android:id="@+id/etPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/style_inputText"
+            android:background="@drawable/style_input_text"
             android:hint="@string/password"
             android:inputType="textEmailAddress"
             tools:layout_editor_absoluteX="31dp" />

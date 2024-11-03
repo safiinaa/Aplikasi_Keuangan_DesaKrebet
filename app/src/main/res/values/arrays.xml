@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="menu1">
+        <item>Harian</item>
+        <item>Bulanan</item>
+        <item>Tahunan</item>
+    </string-array>
+
+    <string-array name="menu2">
+        <item>Nama Pengunjung</item>
+        <item>Profil</item>
+    </string-array>
+</resources>
