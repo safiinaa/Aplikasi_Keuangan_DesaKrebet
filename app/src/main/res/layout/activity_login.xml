@@ -1,35 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/padding"
+    android:id="@+id/main"
     android:background="@color/green2"
-    android:orientation="vertical"
     tools:context=".LoginActivity">
 
     <ImageView
         android:id="@+id/logo"
         android:layout_width="@dimen/_145sdp"
         android:layout_height="@dimen/_145sdp"
-        android:layout_marginTop="@dimen/_30sdp"
-        android:layout_gravity="center"
-        tools:srcCompat="@drawable/ic_logo3" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_logo3" />
 
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_24sdp"
         style="@style/blackTextTittle"
-        android:text="@string/login" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="@string/login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutMail"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp">
+        android:background="@drawable/style_input_text"
+        android:layout_marginHorizontal="@dimen/padding"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        app:startIconDrawable="@drawable/ic_keluar">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etMail"
@@ -44,9 +53,14 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutPass"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp">
+        android:background="@drawable/style_input_text"
+        android:layout_marginHorizontal="@dimen/padding"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutMail">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPass"
@@ -61,23 +75,29 @@
 
     <TextView
         android:id="@+id/tvForget"
+        style="@style/bodyTextRegular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
         android:layout_gravity="end"
-        style="@style/bodyTextRegular"
+        android:layout_marginHorizontal="@dimen/padding"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:clickable="true"
         android:text="@string/forget_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutPass"
         tools:ignore="TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_48sdp"
-        android:layout_marginTop="@dimen/_40sdp"
-        style="@style/blackTextBtn"
+        style="@style/whiteTextBtn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_38sdp"
         android:background="@drawable/style_btn"
-        android:text="@string/login" />
+        android:layout_marginHorizontal="@dimen/padding"
+        android:layout_marginTop="@dimen/_45sdp"
+        android:text="@string/login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvForget" />
 
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

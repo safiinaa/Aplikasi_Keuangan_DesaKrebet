@@ -13,10 +13,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [PenTahunanFragment.newInstance] factory method to
+ * Use the [PendapatanTahunanFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PenTahunanFragment : Fragment() {
+class PendapatanTahunanFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -34,7 +34,7 @@ class PenTahunanFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pen_tahunan, container, false)
+        return inflater.inflate(R.layout.fragment_pendapatan_tahunan, container, false)
     }
 
     companion object {
@@ -49,7 +49,7 @@ class PenTahunanFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            PenTahunanFragment().apply {
+            PendapatanTahunanFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

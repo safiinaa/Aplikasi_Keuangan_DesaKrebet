@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/padding"
     android:orientation="vertical"
-    tools:context=".BerandaFragment">
+    tools:context=".HomeFragment">
 
     <RelativeLayout
         android:id="@+id/layoutMenu"
@@ -29,7 +29,8 @@
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_24sdp"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/ic_list" />
+            android:background="@drawable/ic_list"
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </RelativeLayout>
 
@@ -72,7 +73,8 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_centerVertical="true"
                     android:importantForAccessibility="no"
-                    android:src="@drawable/ic_masuk" />
+                    android:src="@drawable/ic_masuk"
+                    tools:ignore="ImageContrastCheck" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -162,12 +164,13 @@
 
     <TextView
         android:id="@+id/tvTitle2"
+        style="@style/blackTextBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_12sdp"
         android:text="@string/riwayat_transaksi"
-        app:layout_constraintTop_toBottomOf="@id/imgLine"
-        style="@style/blackTextBtn"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgLine" />
 
     <LinearLayout
         android:id="@+id/layoutMenu2"
@@ -180,26 +183,28 @@
 
         <Button
             style="@style/whiteTextBtn"
-            android:layout_width="@dimen/_90sdp"
+            android:layout_width="120dp"
             android:layout_height="@dimen/_35sdp"
             android:background="@drawable/style_btn2"
             android:text="@string/semua" />
 
         <Button
             style="@style/blue1TextBtn"
-            android:layout_width="@dimen/_90sdp"
+            android:layout_width="120dp"
             android:layout_height="@dimen/_35sdp"
             android:layout_marginStart="@dimen/_6sdp"
             android:background="@drawable/style_btn_outline"
-            android:text="@string/pemasukan" />
+            android:text="@string/pemasukan"
+            tools:ignore="DuplicateSpeakableTextCheck,TextSizeCheck" />
 
         <Button
             style="@style/blue1TextBtn"
-            android:layout_width="@dimen/_95sdp"
+            android:layout_width="120dp"
             android:layout_height="@dimen/_35sdp"
             android:layout_marginStart="@dimen/_6sdp"
             android:background="@drawable/style_btn2"
-            android:text="@string/pengeluaran" />
+            android:text="@string/pengeluaran"
+            tools:ignore="DuplicateSpeakableTextCheck,DuplicateSpeakableTextCheck,TextSizeCheck" />
 
     </LinearLayout>
 

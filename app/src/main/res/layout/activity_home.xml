@@ -12,10 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:elevation="@dimen/_10sdp"
         android:paddingVertical="@dimen/_10sdp"
         android:paddingHorizontal="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_24sdp"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
