@@ -27,4 +27,21 @@
     <string name="pengunjung">Pengunjung</string>
     <string name="bulan">April</string>
     <string name="tahun">2023</string>
+    <string name="detail_transaksi">Detail Transaksi</string>
+    <string name="nama">Nama</string>
+    <string name="tgl">Tanggal</string>
+    <string name="jumlah">Jumlah</string>
+    <string name="catatan">Catatan</string>
+    <string name="total">Total</string>
+    <string name="bukti_transaksi">Bukti Transaksi</string>
+    <string name="upload">Upload</string>
+    <string name="alamat">Alamat</string>
+    <string name="tambah_transaksi_pengeluaran">Tambah Transaksi Pengeluaran</string>
+    <string name="tambah_transaksi_pemasukan">Tambah Transaksi Pemasukan</string>
+    <string name="nomor_telepon">Nomor Telepon</string>
+    <string name="simpan">Simpan</string>
+    <string name="profil">Profil</string>
+    <string name="admin_1">Admin 1</string>
+    <string name="logout">Logout</string>
+    <string name="keluar">Keluar</string>
 </resources>
