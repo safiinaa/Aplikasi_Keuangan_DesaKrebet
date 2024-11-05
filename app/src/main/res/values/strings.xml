@@ -44,4 +44,5 @@
     <string name="admin_1">Admin 1</string>
     <string name="logout">Logout</string>
     <string name="keluar">Keluar</string>
+    <string name="reset_password">Reset Password</string>
 </resources>

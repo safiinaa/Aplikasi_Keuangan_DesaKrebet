@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/padding"
-    tools:context=".PendapatanBulananFragment">
+    tools:context=".pendapatan.PendapatanBulananFragment">
 
     <LinearLayout
         android:id="@+id/layoutMenu2"

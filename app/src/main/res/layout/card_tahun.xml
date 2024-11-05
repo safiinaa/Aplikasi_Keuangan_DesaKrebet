@@ -4,9 +4,9 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
-    android:layout_marginTop="@dimen/_10sdp"
+    android:layout_marginTop="20dp"
     android:backgroundTint="@color/green2"
-    app:cardCornerRadius="@dimen/_8sdp">
+    app:cardCornerRadius="10dp">
 
     <RelativeLayout
         android:id="@+id/cvHistory"

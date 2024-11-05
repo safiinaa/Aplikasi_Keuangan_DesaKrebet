@@ -4,9 +4,9 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
-    android:layout_marginTop="@dimen/_17sdp"
+    android:layout_marginTop="20dp"
     android:backgroundTint="@color/green2"
-    app:cardCornerRadius="@dimen/_8sdp">
+    app:cardCornerRadius="10dp">
 
     <RelativeLayout
         android:id="@+id/cvHistory"
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvPengunjung"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginTop="8dp"
             android:layout_alignParentStart="true"
             style="@style/bodyTextRegular"
             android:text="@string/tanggal" />
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvTanggal"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginTop="14dp"
             android:text="@string/pengajar_tari" />
 
         <TextView
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvTanggal"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginTop="14dp"
             android:layout_marginEnd="0dp"
             android:text="@string/saldo1" />
 

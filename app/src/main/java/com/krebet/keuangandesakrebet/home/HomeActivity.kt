@@ -1,4 +1,4 @@
-package com.krebet.keuangandesakrebet
+package com.krebet.keuangandesakrebet.home
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -6,6 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import com.krebet.keuangandesakrebet.LaporanFragment
+import com.krebet.keuangandesakrebet.pendapatan.PendapatanFragment
+import com.krebet.keuangandesakrebet.pengeluaran.PengeluaranFragment
+import com.krebet.keuangandesakrebet.R
 import com.krebet.keuangandesakrebet.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
@@ -17,7 +21,7 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v , insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -50,7 +54,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun loadFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frameLayout,fragment)
+        transaction.replace(R.id.frameLayout ,fragment)
         transaction.commit()
     }
 }
