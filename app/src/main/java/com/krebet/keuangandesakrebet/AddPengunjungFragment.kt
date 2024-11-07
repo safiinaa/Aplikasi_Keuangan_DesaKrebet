@@ -13,6 +13,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.FieldValue.serverTimestamp
 import com.google.firebase.firestore.firestore
 import com.krebet.keuangandesakrebet.databinding.FragmentAddPengunjungBinding
+import com.krebet.keuangandesakrebet.home.HomeFragment
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -48,8 +49,7 @@ class AddPengunjungFragment : Fragment() {
                     val sdf = SimpleDateFormat("dd-MM-yyyy" , Locale("id", "ID"))
                     val date = sdf.format(Date(it)).toString()
                     tanggal = date
-                    tvTanggal.isVisible = true
-                    tvTanggal.text = date
+                    btnTanggal.text = date
                 }
                 datePicker.addOnNegativeButtonClickListener {
                     datePicker.dismiss()
@@ -87,7 +87,8 @@ class AddPengunjungFragment : Fragment() {
                             etNama.text?.clear()
                             etNoTelp.text?.clear()
                             etAlamat.text?.clear()
-                            tvTanggal.text = ""
+                            tanggal = ""
+                            btnTanggal.text = getString(R.string.tgl)
                         }
                         .addOnFailureListener {
                             Toast.makeText(context, "Terjadi kesalahan, silahkan ulangi kembali", Toast.LENGTH_LONG).show()
@@ -95,6 +96,12 @@ class AddPengunjungFragment : Fragment() {
                             Log.e("Add Pengunjung", it.message.toString())
                         }
                 }
+            }
+
+            btnKembali.setOnClickListener {
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.replace(R.id.frameLayout ,HomeFragment())
+                transaction.commit()
             }
         }
     }

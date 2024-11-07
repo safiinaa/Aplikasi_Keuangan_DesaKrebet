@@ -12,9 +12,9 @@
     <string name="laporan">Laporan</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="saldo">Saldo</string>
-    <string name="saldo1">Rp.2.000.000</string>
+    <string name="saldo1">-.---.---</string>
     <string name="pemasukan">Pemasukan</string>
-    <string name="saldo2">Rp.5.000.000</string>
+    <string name="saldo2">-.---.---</string>
     <string name="semua">Semua</string>
     <string name="pengunjung_a">Pengunjung A</string>
     <string name="tanggal">24 April 2024</string>
@@ -49,4 +49,5 @@
     <string name="tambah_pemasukan">Tambah pemasukan</string>
     <string name="tambah_pengeluaran">Tambah pengeluaran</string>
     <string name="tambah_nama_pengunjung">Tambah Nama Pengunjung</string>
+    <string name="nominal_rp">Nominal (Rp)</string>
 </resources>

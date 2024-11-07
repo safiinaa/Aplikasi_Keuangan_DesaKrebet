@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp"
+    android:paddingHorizontal="20dp"
     android:paddingBottom="20dp"
     tools:context=".AddPengunjungFragment">
 
@@ -112,18 +111,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutAlamat" />
-
-    <TextView
-        android:id="@+id/tvTanggal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:textColor="@color/greytxt"
-        android:textSize="14sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/btnTanggal"
-        app:layout_constraintEnd_toEndOf="@+id/btnTanggal"
-        app:layout_constraintTop_toTopOf="@+id/btnTanggal" />
 
     <Button
         android:id="@+id/btnSimpan"
