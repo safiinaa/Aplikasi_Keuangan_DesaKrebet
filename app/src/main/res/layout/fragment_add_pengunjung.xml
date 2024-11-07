@@ -47,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutTitle"
-        app:startIconDrawable="@drawable/ic_back">
+        app:startIconDrawable="@drawable/ic_user">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNama"
@@ -69,7 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutNama"
-        app:startIconDrawable="@drawable/ic_back">
+        app:startIconDrawable="@drawable/ic_phone">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNoHp"
@@ -91,7 +91,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutNoHp"
-        app:startIconDrawable="@drawable/ic_keluar">
+        app:startIconDrawable="@drawable/ic_location">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etAlamat"
@@ -113,7 +113,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutAlamat"
-        app:startIconDrawable="@drawable/ic_keluar">
+        app:startIconDrawable="@drawable/ic_calender">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etTgl"

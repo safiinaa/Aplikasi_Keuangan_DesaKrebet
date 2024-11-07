@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "927103605811",
+    "project_id": "keuangan-desa-krebet",
+    "storage_bucket": "keuangan-desa-krebet.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:927103605811:android:5c6399c4387674ff005746",
+        "android_client_info": {
+          "package_name": "com.krebet.keuangandesakrebet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCflQ8yLNPB55gCpoaaQn_dIa8_jGpAZnA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

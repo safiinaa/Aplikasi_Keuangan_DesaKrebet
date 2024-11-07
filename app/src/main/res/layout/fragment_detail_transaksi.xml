@@ -46,7 +46,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutTitle"
-        app:startIconDrawable="@drawable/ic_back">
+        app:startIconDrawable="@drawable/ic_profile">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNama"
@@ -68,7 +68,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutNama"
-        app:startIconDrawable="@drawable/ic_keluar">
+        app:startIconDrawable="@drawable/ic_calender">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etTgl"
@@ -102,7 +102,7 @@
             android:background="@drawable/style_input_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:startIconDrawable="@drawable/ic_keluar">
+            app:startIconDrawable="@drawable/ic_calculator">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etNominal"
@@ -131,8 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/imgX"
-            android:background="@drawable/style_input_text"
-            app:startIconDrawable="@drawable/ic_keluar">
+            android:background="@drawable/style_input_text">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etQty"
@@ -156,7 +155,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
-        app:startIconDrawable="@drawable/ic_keluar">
+        app:startIconDrawable="@drawable/ic_pen">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etCatatan"

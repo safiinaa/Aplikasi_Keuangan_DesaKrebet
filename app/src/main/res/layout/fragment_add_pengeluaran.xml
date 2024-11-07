@@ -47,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutTitle"
-        app:startIconDrawable="@drawable/ic_back">
+        app:startIconDrawable="@drawable/ic_profile">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNama"
@@ -69,7 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutNama"
-        app:startIconDrawable="@drawable/ic_back">
+        app:startIconDrawable="@drawable/ic_location">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etAlamat"
@@ -91,7 +91,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutAlamat"
-        app:startIconDrawable="@drawable/ic_keluar">
+        app:startIconDrawable="@drawable/ic_calender">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etTgl"
@@ -125,7 +125,7 @@
             android:background="@drawable/style_input_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:startIconDrawable="@drawable/ic_keluar">
+            app:startIconDrawable="@drawable/ic_calculator">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etNominal"
@@ -154,8 +154,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_toEndOf="@+id/imgX"
-            android:background="@drawable/style_input_text"
-            app:startIconDrawable="@drawable/ic_keluar">
+            android:background="@drawable/style_input_text">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etQty"
@@ -179,7 +178,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
-        app:startIconDrawable="@drawable/ic_keluar">
+        app:startIconDrawable="@drawable/ic_pen">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etCatatan"
@@ -192,28 +191,6 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/textView"
-        style="@style/blackTextTittle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/total"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutCatatan" />
-
-    <TextView
-        android:id="@+id/tvTotal"
-        style="@style/blackTextBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/style_btn"
-        android:text="@string/saldo2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
     <Button
         android:id="@+id/btnUpload"
         style="@style/blackTextTittle"
@@ -221,8 +198,43 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/style_btn"
+        android:drawableLeft="@drawable/ic_camera"
         android:text="@string/upload"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTotal" />
+        app:layout_constraintTop_toBottomOf="@+id/layoutCatatan" />
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/blackTextTittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/total"
+        app:layout_constraintBottom_toTopOf="@+id/tvTotal"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTotal"
+        style="@style/blackTextBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/style_btn"
+        android:text="@string/saldo2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnSimpan"
+        style="@style/blackTextTittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/style_btn"
+        android:text="@string/simpan"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
