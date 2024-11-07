@@ -46,4 +46,7 @@
     <string name="keluar">Keluar</string>
     <string name="reset_password">Reset Password</string>
     <string name="input_nama_pengunjung">Input Nama Pengunjung</string>
+    <string name="tambah_pemasukan">Tambah pemasukan</string>
+    <string name="tambah_pengeluaran">Tambah pengeluaran</string>
+    <string name="tambah_nama_pengunjung">Tambah Nama Pengunjung</string>
 </resources>

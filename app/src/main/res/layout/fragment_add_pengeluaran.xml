@@ -7,36 +7,32 @@
     android:padding="20dp"
     tools:context=".pengeluaran.AddPengeluaranFragment">
 
-    <RelativeLayout
-        android:id="@+id/layoutTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:backgroundTint="@color/white"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="20dp">
+        tools:ignore="SpeakableTextPresentCheck" />
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="0dp"
-            android:backgroundTint="@color/white"
-            android:src="@drawable/ic_back" />
-
-        <TextView
-            style="@style/blackTextTittle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:layout_toEndOf="@+id/imageButton"
-            android:gravity="center"
-            android:text="@string/tambah_transaksi_pengeluaran" />
-
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/textView"
+        style="@style/blackTextTittle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/btnBack"
+        android:gravity="center"
+        android:text="@string/tambah_pengeluaran"
+        app:layout_constraintBottom_toBottomOf="@+id/btnBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnBack" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutNama"
@@ -46,7 +42,7 @@
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutTitle"
+        app:layout_constraintTop_toBottomOf="@+id/btnBack"
         app:startIconDrawable="@drawable/ic_profile">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -133,8 +129,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/style_input_text2"
                 android:hint="@string/jumlah"
-                android:inputType="text"
-                tools:layout_editor_absoluteX="31dp" />
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -146,7 +141,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_toEndOf="@+id/layoutNominal"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_back"
+            tools:ignore="ContentDescription" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutQty"

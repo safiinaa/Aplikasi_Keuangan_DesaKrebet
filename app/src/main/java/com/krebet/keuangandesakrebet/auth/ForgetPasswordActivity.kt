@@ -33,7 +33,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
                 val email = etMail.text.toString()
 
                 if (email.isEmpty()) {
-                    Toast.makeText(this@ForgetPasswordActivity, "Mohon isi email", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ForgetPasswordActivity, "Email tidak boleh kosong", Toast.LENGTH_SHORT).show()
                 } else {
                     loading.isVisible = true
                     Firebase.auth.sendPasswordResetEmail(email)

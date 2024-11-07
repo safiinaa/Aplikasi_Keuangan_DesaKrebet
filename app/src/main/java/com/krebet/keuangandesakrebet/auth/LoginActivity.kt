@@ -36,9 +36,9 @@ class LoginActivity : AppCompatActivity() {
                 val password = etPass.text.toString()
 
                 if (email.isEmpty()) {
-                    Toast.makeText(this@LoginActivity, "Mohon isi email", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity, "Email tidak boleh kosong", Toast.LENGTH_SHORT).show()
                 } else if (password.isEmpty()) {
-                    Toast.makeText(this@LoginActivity, "Mohon isi password", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity, "Password tidak boleh kosong", Toast.LENGTH_SHORT).show()
                 } else {
                     loading.isVisible = true
                     Firebase.auth.signInWithEmailAndPassword(email, password)
