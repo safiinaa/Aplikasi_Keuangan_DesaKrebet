@@ -4,62 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/padding"
+    android:paddingHorizontal="20dp"
+    android:paddingBottom="20dp"
     tools:context=".pendapatan.PendapatanFragment">
 
     <LinearLayout
-        android:id="@+id/layoutMenu2"
+        android:id="@+id/layoutMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            style="@style/whiteTextBtn"
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:background="@drawable/style_btn2"
-            android:text="@string/pengunjung" />
+        <RadioGroup
+            android:id="@+id/toggleGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
 
-        <Button
-            style="@style/blue1TextBtn"
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_marginStart="@dimen/_6sdp"
-            android:background="@drawable/style_btn_outline"
-            android:text="@string/bulanan" />
+            <RadioButton
+                android:id="@+id/btnSemua"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_selector"
+                android:button="@null"
+                android:checked="true"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/semua"
+                android:textColor="@drawable/text_color_selector"
+                android:textStyle="bold" />
 
-        <Button
-            style="@style/blue1TextBtn"
-            android:layout_width="@dimen/_95sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_marginStart="@dimen/_6sdp"
-            android:background="@drawable/style_btn2"
-            android:text="@string/tahunan" />
-
+            <RadioButton
+                android:id="@+id/btnBulanan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_selector"
+                android:button="@null"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/bulanan"
+                android:textColor="@drawable/text_color_selector"
+                android:textStyle="bold" />
+        </RadioGroup>
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btnTambah"
-        style="@style/blackTextBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:background="@drawable/style_btn"
-        android:text="@string/tambah"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutMenu2" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnTambah"
-        tools:listitem="@layout/card_pengunjung"/>
-
+        app:layout_constraintTop_toBottomOf="@+id/layoutMenu"
+        tools:listitem="@layout/item_pemasukan" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

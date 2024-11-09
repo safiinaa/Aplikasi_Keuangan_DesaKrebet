@@ -16,6 +16,7 @@ firebaseAuth = "23.1.0"
 firebaseCrashlytics = "19.2.1"
 googleFirebaseCrashlytics = "3.0.2"
 firebaseFirestore = "25.1.1"
+firebaseStorage = "21.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -31,6 +32,7 @@ ssp-android = { module = "com.intuit.ssp:ssp-android", version.ref = "sspAndroid
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

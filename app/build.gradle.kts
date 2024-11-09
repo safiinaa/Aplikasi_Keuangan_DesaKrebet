@@ -51,13 +51,11 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation ("com.intuit.sdp:sdp-android:1.1.0")
     implementation ("com.intuit.ssp:ssp-android:1.1.0")
-
-    implementation("com.google.android.material:material:1.6.0")
-
 }

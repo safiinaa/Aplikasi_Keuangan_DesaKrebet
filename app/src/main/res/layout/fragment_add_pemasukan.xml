@@ -48,7 +48,7 @@
         <AutoCompleteTextView
             android:id="@+id/etNama"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:hint="@string/nama"
             android:inputType="textPersonName"
             style="@style/Widget.Material3.TextInputEditText.OutlinedBox.Dense"
@@ -142,30 +142,10 @@
         android:background="@drawable/style_btn"
         android:drawableLeft="@drawable/ic_camera"
         android:text="@string/upload"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutCatatan"
         tools:ignore="RtlHardcoded" />
-
-    <TextView
-        android:id="@+id/title"
-        style="@style/blackTextTittle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/total"
-        app:layout_constraintBottom_toTopOf="@+id/btnSimpan"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/tvTotal"
-        style="@style/blackTextBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/style_btn"
-        android:text="@string/saldo2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <Button
         android:id="@+id/btnSimpan"
@@ -176,5 +156,16 @@
         android:text="@string/simpan"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

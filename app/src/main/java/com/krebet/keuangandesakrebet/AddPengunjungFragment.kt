@@ -46,10 +46,9 @@ class AddPengunjungFragment : Fragment() {
                     .build()
                 datePicker.show(parentFragmentManager , "DatePicker")
                 datePicker.addOnPositiveButtonClickListener {
-                    val sdf = SimpleDateFormat("dd-MM-yyyy" , Locale("id", "ID"))
-                    val date = sdf.format(Date(it)).toString()
-                    tanggal = date
-                    btnTanggal.text = date
+                    val dateFormat = SimpleDateFormat("dd-MM-yyyy" , Locale("id", "ID"))
+                    tanggal = dateFormat.format(Date(it)).toString()
+                    btnTanggal.text = SimpleDateFormat("dd MMMM yyyy" , Locale("id", "ID")).format(it)
                 }
                 datePicker.addOnNegativeButtonClickListener {
                     datePicker.dismiss()

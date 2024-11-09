@@ -6,17 +6,20 @@ import com.google.firebase.Timestamp
 
 @Suppress("SpellCheckingInspection" , "DEPRECATION")
 data class Pengunjung (
-    val nama: String? = null,
-    val alamat: String? = null,
+    var idPengunjung: String? = "",
+    var nama: String? = "" ,
+    val alamat: String? = "" ,
     val tanggal: Timestamp? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString() ,
         parcel.readString() ,
         parcel.readString() ,
         parcel.readParcelable(Timestamp::class.java.classLoader)
     )
 
     override fun writeToParcel(parcel: Parcel , flags: Int) {
+        parcel.writeString(idPengunjung)
         parcel.writeString(nama)
         parcel.writeString(alamat)
         parcel.writeParcelable(tanggal , flags)
