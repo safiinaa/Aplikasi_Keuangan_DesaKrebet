@@ -37,11 +37,20 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nama"
+        android:drawableRight="@drawable/ic_profile"
+        android:background="@drawable/style_input_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutTitle"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutNama"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/style_input_text"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +61,6 @@
             android:id="@+id/etNama"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/style_input_text2"
             android:hint="@string/nama"
             android:inputType="text"
             tools:layout_editor_absoluteX="31dp" />
@@ -90,7 +98,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutTgl">
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutNominal"

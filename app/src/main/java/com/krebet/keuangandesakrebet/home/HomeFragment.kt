@@ -5,10 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.krebet.keuangandesakrebet.AddPengunjungFragment
+import com.krebet.keuangandesakrebet.PengunjungFragment
+import com.krebet.keuangandesakrebet.ProfilFragment
 import com.krebet.keuangandesakrebet.R
+import com.krebet.keuangandesakrebet.adapter.SpinnerAdapter
 import com.krebet.keuangandesakrebet.databinding.FragmentHomeBinding
 import com.krebet.keuangandesakrebet.pemasukan.AddPemasukanFragment
 import com.krebet.keuangandesakrebet.pengeluaran.AddPengeluaranFragment
@@ -65,8 +70,10 @@ class HomeFragment : Fragment() {
                 loadFragment(AddPengeluaranFragment())
                 closeMenu()
             }
+
         }
     }
+
 
     private fun openMenu() {
         binding.apply {
