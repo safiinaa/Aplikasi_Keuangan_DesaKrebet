@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/padding"
-    tools:context=".pendapatan.PendapatanBulananFragment">
+    tools:context=".pemasukan.PemasukanTahunanFragment">
 
     <LinearLayout
         android:id="@+id/layoutMenu2"
@@ -14,7 +14,8 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="20dp">
 
         <Button
             style="@style/whiteTextBtn"
@@ -61,17 +62,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnTambah">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/blackTextTitle2"
-            android:layout_gravity="center"
-            android:text="@string/bulanthn" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/item_history"/>
+            tools:listitem="@layout/item_pemasukan"/>
 
 
     </LinearLayout>

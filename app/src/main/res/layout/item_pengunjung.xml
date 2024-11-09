@@ -3,46 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:clickable="true"
-    android:layout_marginTop="20dp"
+    android:padding="20dp"
+    android:layout_marginBottom="10dp"
     android:backgroundTint="@color/green2"
     app:cardCornerRadius="10dp">
-
-    <RelativeLayout
-        android:id="@+id/cvHistory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding">
 
         <TextView
             android:id="@+id/tvPengunjung"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pengunjung_a"
+            android:text="@string/smkn_2_yogyakarta"
             style="@style/blackTextTitle2"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"/>
-
-        <TextView
-            android:id="@+id/tvNama"
-            style="@style/bodyTextRegular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvPengunjung"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="14dp"
-            android:text="@string/smkn_2_yogyakarta" />
-
-        <TextView
-            android:id="@+id/tvJumlah"
-            style="@style/bodyTextRegular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvNama"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="14dp"
-            android:text="@string/saldo1" />
-
-    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

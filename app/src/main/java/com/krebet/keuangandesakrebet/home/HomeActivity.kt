@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import com.krebet.keuangandesakrebet.LaporanFragment
 import com.krebet.keuangandesakrebet.R
 import com.krebet.keuangandesakrebet.databinding.ActivityHomeBinding
-import com.krebet.keuangandesakrebet.pendapatan.PendapatanFragment
+import com.krebet.keuangandesakrebet.pemasukan.PemasukanFragment
 import com.krebet.keuangandesakrebet.pengeluaran.PengeluaranFragment
 
 @Suppress("DEPRECATION" , "SpellCheckingInspection")
@@ -49,8 +49,8 @@ class HomeActivity : AppCompatActivity() {
                     R.id.home_fragment -> {
                         loadFragment(HomeFragment())
                     }
-                    R.id.pendapatan_fragment -> {
-                        loadFragment(PendapatanFragment())
+                    R.id.pemasukan_fragment -> {
+                        loadFragment(PemasukanFragment())
                     }
                     R.id.pengeluaran_fragment -> {
                         loadFragment(PengeluaranFragment())

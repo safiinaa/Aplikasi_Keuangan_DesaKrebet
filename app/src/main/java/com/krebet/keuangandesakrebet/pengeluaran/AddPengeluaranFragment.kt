@@ -72,7 +72,7 @@ class AddPengeluaranFragment : Fragment() {
                 val visitorData = visitors.find { it.nama == selectedVisitor }
                 visitorData.let {
                     visitorId = it?.idPengunjung
-                    etAlamat.setText(it?.alamat)
+                    tvAlamat.setText(it?.alamat)
                 }
                 etNama.dismissDropDown()
                 etNama.clearFocus()
@@ -146,7 +146,6 @@ class AddPengeluaranFragment : Fragment() {
                             Toast.makeText(context, "Data berhasil disimpan", Toast.LENGTH_LONG).show()
                             loading.isVisible = false
                             etNama.text?.clear()
-                            etAlamat.text?.clear()
                             btnTanggal.text = getString(R.string.tgl)
                             price = null
                             qty = null

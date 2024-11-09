@@ -7,10 +7,10 @@
         android:icon="@drawable/ic_home"
         android:title="@string/beranda"/>
     <item
-        android:id="@+id/pendapatan_fragment"
+        android:id="@+id/pemasukan_fragment"
         android:enabled="true"
         android:icon="@drawable/ic_pendapatan"
-        android:title="@string/pendapatan"/>
+        android:title="@string/pemasukan"/>
     <item
         android:id="@+id/pengeluaran_fragment"
         android:enabled="true"

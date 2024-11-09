@@ -62,24 +62,21 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layoutAlamat"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tvAlamat"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/alamat"
             android:layout_marginTop="20dp"
+            android:padding="15dp"
+            android:textSize="16sp"
+            android:drawableLeft="@drawable/ic_location"
+            android:drawablePadding="10dp"
+            android:background="@drawable/outlined_rectangle_grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutNama"
-            app:startIconDrawable="@drawable/ic_location">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etAlamat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/alamat"
-                android:inputType="textMultiLine" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@id/layoutNama"
+            tools:ignore="UseCompatTextViewDrawableXml" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnTanggal"
@@ -99,7 +96,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutAlamat" />
+            app:layout_constraintTop_toBottomOf="@+id/tvAlamat" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layoutNominal"
@@ -200,12 +197,12 @@
 
         <TextView
             android:id="@+id/tvTotal"
-            style="@style/blackTextBtn"
+            style="@style/whiteTextBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:padding="10dp"
-            android:background="@drawable/style_btn"
+            android:background="@drawable/style_tv_fill"
             android:text="@string/saldo2"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
