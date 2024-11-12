@@ -53,4 +53,5 @@
     <string name="laporan_arus_kas">Laporan Arus Kas</string>
     <string name="laporan_laba_rugi">Laporan Laba Rugi</string>
     <string name="jurnal_transaksi">Jurnal Transaksi</string>
+    <string name="thn">2023</string>
 </resources>
