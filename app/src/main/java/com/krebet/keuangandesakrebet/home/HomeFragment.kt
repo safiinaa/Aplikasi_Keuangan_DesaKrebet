@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.type.Date
 import com.krebet.keuangandesakrebet.AddPengunjungFragment
 import com.krebet.keuangandesakrebet.PengunjungFragment
 import com.krebet.keuangandesakrebet.ProfilFragment
@@ -19,6 +20,7 @@ import com.krebet.keuangandesakrebet.model.Pengunjung
 import com.krebet.keuangandesakrebet.model.Transaksi
 import com.krebet.keuangandesakrebet.pemasukan.AddPemasukanFragment
 import com.krebet.keuangandesakrebet.pengeluaran.AddPengeluaranFragment
+import java.util.Calendar
 
 @Suppress("SpellCheckingInspection")
 class HomeFragment : Fragment() {
@@ -109,7 +111,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun getPengeluaran() {
-        db.collection("pengeluaran").get()
+        db.collection("pengeluaran")
+            .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
                     val transaction = document.toObject(Transaksi::class.java).copy(jenis = "pengeluaran")
@@ -136,7 +139,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun getPemasukan() {
-        db.collection("pemasukan").get()
+        db.collection("pemasukan")
+            .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
                     val transaction = document.toObject(Transaksi::class.java).copy(jenis = "pemasukan")
@@ -174,8 +178,14 @@ class HomeFragment : Fragment() {
 
         binding.spinnerMenu.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedItem = parent?.getItemAtPosition(position) as String
-                Toast.makeText(requireContext(), "Dipilih: $selectedItem", Toast.LENGTH_SHORT).show()
+                val selectedItem = parent?.getItemAtPosition(position) as Boolean
+
+//                while(selectedItem){
+//                    "Harian" -> loadTransactionForPeriod(getStartOfDay(), getEndOfDay())
+//                    "Bulanan" -> loadTransactionForPeriod(getStartOfMonth(), getEndOfMonth())
+//                    "Tahunan" -> loadTransactionForPeriod(getStartOfYear(), getEndOfYear())
+//                    else -> Toast.makeText(requireContext(), "Dipilih: $selectedItem", Toast.LENGTH_SHORT).show()
+//                }
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
@@ -219,6 +229,83 @@ class HomeFragment : Fragment() {
         val transaction = parentFragmentManager.beginTransaction()
         transaction.replace(R.id.frameLayout ,fragment)
         transaction.commit()
+    }
+
+    private fun getStartOfDay(): java.util.Date {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        return calendar.time
+    }
+
+    private fun getEndOfDay(): java.util.Date {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, 23)
+        calendar.set(Calendar.MINUTE, 59)
+        calendar.set(Calendar.SECOND, 59)
+        calendar.set(Calendar.MILLISECOND, 999)
+        return calendar.time
+    }
+
+    private fun getStartOfMonth(): java.util.Date {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.DAY_OF_MONTH, 1)
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        return calendar.time
+    }
+
+    private fun getEndOfMonth(): java.util.Date {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
+        calendar.set(Calendar.HOUR_OF_DAY, 23)
+        calendar.set(Calendar.MINUTE, 59)
+        calendar.set(Calendar.SECOND, 59)
+        calendar.set(Calendar.MILLISECOND, 999)
+        return calendar.time
+    }
+
+    private fun getStartOfYear(): java.util.Date {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.DAY_OF_YEAR, 1)
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        return calendar.time
+    }
+
+    private fun getEndOfYear(): java.util.Date {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.DAY_OF_YEAR, calendar.getActualMaximum(Calendar.DAY_OF_YEAR))
+        calendar.set(Calendar.HOUR_OF_DAY, 23)
+        calendar.set(Calendar.MINUTE, 59)
+        calendar.set(Calendar.SECOND, 59)
+        calendar.set(Calendar.MILLISECOND, 999)
+        return calendar.time
+    }
+
+    private fun loadTransactionsForPeriod(startDate: Date, endDate: Date) {
+        transactions.clear() // Clear transaksi sebelumnya untuk update
+
+//        getPemasukan(startDate, endDate) { pemasukan ->
+//            getPengeluaran(startDate, endDate) { pengeluaran ->
+//                val totalIncome = pemasukan.sumOf { it.amount }
+//                val totalExpense = pengeluaran.sumOf { it.amount }
+//
+//                binding.incomeBalance.text = "Rp ${totalIncome.formatToCurrency()}"
+//                binding.expenseBalance.text = "Rp ${totalExpense.formatToCurrency()}"
+//
+//                // Menggabungkan pemasukan dan pengeluaran untuk ditampilkan di RecyclerView
+//                transactions.addAll(pemasukan)
+//                transactions.addAll(pengeluaran)
+//                setRecyclerView(transactions)
+//            }
+//        }
     }
 
     override fun onDestroyView() {

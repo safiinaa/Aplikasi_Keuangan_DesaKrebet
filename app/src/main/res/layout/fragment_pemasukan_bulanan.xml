@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/padding"
+    android:padding="20dp"
     tools:context=".pemasukan.PemasukanBulananFragment">
 
     <LinearLayout
@@ -18,24 +18,24 @@
 
         <Button
             style="@style/whiteTextBtn"
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_width="135dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/style_btn2"
             android:text="@string/pengunjung" />
 
         <Button
             style="@style/blue1TextBtn"
-            android:layout_width="@dimen/_90sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_width="135dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
             android:background="@drawable/style_btn_outline"
             android:text="@string/bulanan" />
 
         <Button
             style="@style/blue1TextBtn"
-            android:layout_width="@dimen/_95sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_width="135dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
             android:background="@drawable/style_btn2"
             android:text="@string/tahunan" />
 
@@ -46,7 +46,7 @@
         style="@style/blackTextBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/style_btn"
         android:text="@string/tambah"
         app:layout_constraintEnd_toEndOf="parent"

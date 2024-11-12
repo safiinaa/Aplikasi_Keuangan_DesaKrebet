@@ -50,4 +50,7 @@
     <string name="tambah_nama_pengunjung">Tambah Nama Pengunjung</string>
     <string name="nominal_rp">Nominal (Rp)</string>
     <string name="nama_pengunjung">Nama Pengunjung</string>
+    <string name="laporan_arus_kas">Laporan Arus Kas</string>
+    <string name="laporan_laba_rugi">Laporan Laba Rugi</string>
+    <string name="jurnal_transaksi">Jurnal Transaksi</string>
 </resources>
