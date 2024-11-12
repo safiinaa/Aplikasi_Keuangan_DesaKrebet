@@ -6,7 +6,7 @@ import com.google.firebase.Timestamp
 
 @Suppress("SpellCheckingInspection" , "DEPRECATION")
 data class Pengunjung (
-    var idPengunjung: String? = "",
+    var id: String? = "" ,
     var nama: String? = "" ,
     val alamat: String? = "" ,
     val tanggal: Timestamp? = null
@@ -19,7 +19,7 @@ data class Pengunjung (
     )
 
     override fun writeToParcel(parcel: Parcel , flags: Int) {
-        parcel.writeString(idPengunjung)
+        parcel.writeString(id)
         parcel.writeString(nama)
         parcel.writeString(alamat)
         parcel.writeParcelable(tanggal , flags)

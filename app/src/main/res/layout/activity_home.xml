@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.HomeActivity">
+    tools:context=".ui.home.HomeActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="@string/alamatKrebet"
             android:drawablePadding="8dp"
-            app:drawableStartCompat="@drawable/ic_logo2" />
+            app:drawableStartCompat="@drawable/ic_logo" />
     </androidx.cardview.widget.CardView>
 
     <FrameLayout

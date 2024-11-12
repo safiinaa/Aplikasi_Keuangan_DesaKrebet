@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/main"
     android:background="@color/green2"
-    tools:context=".auth.LoginActivity">
+    tools:context=".ui.auth.LoginActivity">
 
     <ImageView
         android:id="@+id/logo"
@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_logo3" />
+        android:src="@drawable/ic_logo_large" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -68,8 +68,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/style_input_text"
             android:hint="@string/password"
-            android:inputType="textPassword"
-            tools:layout_editor_absoluteX="31dp" />
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

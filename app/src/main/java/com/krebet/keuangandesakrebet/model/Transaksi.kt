@@ -8,9 +8,9 @@ import com.google.firebase.Timestamp
 data class Transaksi (
     val idPengunjung: String? = "" ,
     val tanggal: Timestamp? = null ,
-    val total: Float? = 0F ,
     val nominal: Float? = 0F ,
     val qty: Float? = 0F ,
+    val total: Float? = 0F ,
     val catatan: String? = "" ,
     val jenis: String? = "" ,
     var pengunjung: Pengunjung? = null
@@ -29,9 +29,9 @@ data class Transaksi (
     override fun writeToParcel(parcel: Parcel , flags: Int) {
         parcel.writeString(idPengunjung)
         parcel.writeParcelable(tanggal , flags)
-        parcel.writeValue(total)
         parcel.writeValue(nominal)
         parcel.writeValue(qty)
+        parcel.writeValue(total)
         parcel.writeString(catatan)
         parcel.writeString(jenis)
         parcel.writeParcelable(pengunjung , flags)

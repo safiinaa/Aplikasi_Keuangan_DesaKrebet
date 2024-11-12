@@ -1,0 +1,188 @@
+package com.krebet.keuangandesakrebet.ui.pemasukan
+
+import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.firebase.firestore.FieldValue.serverTimestamp
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
+import com.krebet.keuangandesakrebet.R
+import com.krebet.keuangandesakrebet.databinding.FragmentAddPemasukanBinding
+import com.krebet.keuangandesakrebet.model.Pengunjung
+import com.krebet.keuangandesakrebet.ui.home.HomeFragment
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
+@Suppress("SpellCheckingInspection")
+class AddPemasukanFragment : Fragment() {
+
+    private var _binding: FragmentAddPemasukanBinding? = null
+    private val binding get() = _binding!!
+
+    private var tanggal: Date? = null
+    private var alamat: String? = null
+    private var visitorId: String? = null
+    private lateinit var visitors: List<Pengunjung>
+    private lateinit var selectedVisitor: String
+
+    private lateinit var listener: ListenerRegistration
+    private var db = FirebaseFirestore.getInstance()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentAddPemasukanBinding.inflate(inflater , container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View , savedInstanceState: Bundle?) {
+        super.onViewCreated(view , savedInstanceState)
+
+        binding.apply {
+            etNama.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence? , start: Int , count: Int , after: Int) {}
+
+                override fun onTextChanged(s: CharSequence? , start: Int , before: Int , count: Int) {
+                    val query = s.toString().trim()
+                    if (query.isNotEmpty()) {
+                        alamat = null
+                        tvAlamat.text = getString(R.string.alamat)
+                        searchVisitor(query)
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {}
+            })
+
+            etNama.setOnItemClickListener { parent , _ , position , _ ->
+                selectedVisitor = parent.getItemAtPosition(position).toString()
+                val visitorData = visitors.find { it.nama == selectedVisitor }
+                visitorData.let {
+                    visitorId = it?.id
+                    alamat = it?.alamat
+                    tvAlamat.text = alamat
+                }
+                etNama.dismissDropDown()
+                etNama.clearFocus()
+            }
+
+            btnTanggal.setOnClickListener {
+                val datePicker = MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Pilih Tanggal")
+                    .build()
+                datePicker.show(parentFragmentManager , "DatePicker")
+                datePicker.addOnPositiveButtonClickListener {
+                    val sdf = SimpleDateFormat("dd MMMM yyyy" , Locale("id", "ID"))
+                    val date = Date(it)
+                    tanggal = date
+                    btnTanggal.text = sdf.format(date).toString()
+                }
+                datePicker.addOnNegativeButtonClickListener {
+                    datePicker.dismiss()
+                }
+            }
+
+            btnSimpan.setOnClickListener {
+                val nama = etNama.text.toString()
+                val nominal = etNominal.text.toString()
+                val catatan = etCatatan.text.toString()
+
+                if (nama.isEmpty()) {
+                    Toast.makeText(context, "Nama tidak boleh kosong", Toast.LENGTH_LONG).show()
+                } else if (alamat == null) {
+                    Toast.makeText(context, "Nama belum disimpan, simpan pada menu tambah nama pengunjung", Toast.LENGTH_LONG).show()
+                } else if (tanggal == null) {
+                    Toast.makeText(context, "Tanggal tidak boleh kosong", Toast.LENGTH_LONG).show()
+                } else if (nominal.isEmpty()) {
+                    Toast.makeText(context, "Nominal tidak boleh kosong", Toast.LENGTH_LONG).show()
+                } else if (catatan.isEmpty()) {
+                    Toast.makeText(context, "Catatan tidak boleh kosong", Toast.LENGTH_LONG).show()
+                } else {
+                    loading.isVisible = true
+                    val pemasukan = hashMapOf(
+                        "idPengunjung" to visitorId,
+                        "tanggal" to tanggal,
+                        "total" to nominal.toFloat(),
+                        "catatan" to catatan,
+                        "createdAt" to serverTimestamp()
+                    )
+
+                    db.collection("pemasukan")
+                        .add(pemasukan)
+                        .addOnSuccessListener {
+                            Toast.makeText(context, "Data berhasil disimpan", Toast.LENGTH_LONG).show()
+                            loading.isVisible = false
+                            tanggal = null
+                            alamat = null
+                            etNama.text?.clear()
+                            tvAlamat.text = getString(R.string.alamat)
+                            btnTanggal.text = getString(R.string.tgl)
+                            etNominal.text?.clear()
+                            etCatatan.text?.clear()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(context, "Terjadi kesalahan, silahkan ulangi kembali", Toast.LENGTH_LONG).show()
+                            loading.isVisible = false
+                        }
+                }
+            }
+
+            btnKembali.setOnClickListener {
+                val transaction = parentFragmentManager.beginTransaction()
+                transaction.replace(R.id.frameLayout , HomeFragment())
+                transaction.commit()
+            }
+        }
+    }
+
+    private fun searchVisitor(query: String) {
+        val docRef = db.collection("pengunjung")
+            .orderBy("nama")
+            .startAt(query)
+            .endAt(query + "\uf8ff")
+        listener = docRef.addSnapshotListener { value, error ->
+            if (error != null) {
+                Toast.makeText(context, "Terjadi kesalahan, silahkan ulangi kembali", Toast.LENGTH_LONG).show()
+                return@addSnapshotListener
+            }
+
+            if (value != null) {
+                visitors = value.mapNotNull {
+                    val visitor = it.toObject(Pengunjung::class.java)
+                    visitor.copy(id = it.id)
+                }.distinctBy { it.nama }
+
+                val adapter = ArrayAdapter<String>(requireContext() , R.layout.list_item , visitors.map { it.nama })
+                binding.etNama.setAdapter(adapter)
+                binding.etNama.showDropDown()
+            } else {
+                Toast.makeText(context, "Nama tidak ditemukan", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (::listener.isInitialized) {
+            listener.remove()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        if (::listener.isInitialized) {
+            listener.remove()
+        }
+        _binding = null
+    }
+}

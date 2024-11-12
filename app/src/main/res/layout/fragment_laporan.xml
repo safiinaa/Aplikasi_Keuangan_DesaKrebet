@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="20dp"
-    tools:context=".LaporanFragment">
+    tools:context=".ui.laporan.LaporanFragment">
 
     <TextView
         android:id="@+id/btnArusKas"
@@ -13,9 +13,9 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bottom_border"
         android:padding="15dp"
-        android:drawableLeft="@drawable/ic_cashflow"
         android:drawablePadding="10dp"
         android:text="@string/laporan_arus_kas"
+        app:drawableLeftCompat="@drawable/ic_cashflow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,11 +25,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:drawableLeft="@drawable/ic_cashflow"
         android:drawablePadding="10dp"
         android:background="@drawable/bottom_border"
         android:padding="15dp"
         android:text="@string/laporan_laba_rugi"
+        app:drawableLeftCompat="@drawable/ic_cashflow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnArusKas" />
@@ -39,11 +39,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:drawableLeft="@drawable/ic_cashflow"
         android:drawablePadding="10dp"
         android:background="@drawable/bottom_border"
         android:padding="15dp"
         android:text="@string/riwayat_transaksi"
+        app:drawableLeftCompat="@drawable/ic_cashflow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnLabaRugi" />
@@ -53,11 +53,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:drawableLeft="@drawable/ic_cashflow"
         android:drawablePadding="10dp"
         android:background="@drawable/bottom_border"
         android:padding="15dp"
         android:text="@string/jurnal_transaksi"
+        app:drawableLeftCompat="@drawable/ic_cashflow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnRiwayatTransaksi" />
