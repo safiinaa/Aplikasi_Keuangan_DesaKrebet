@@ -1,4 +1,4 @@
-package com.krebet.keuangandesakrebet.ui.pemasukan
+package com.krebet.keuangandesakrebet.ui.pengeluaran
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,13 +8,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.krebet.keuangandesakrebet.R
-import com.krebet.keuangandesakrebet.databinding.FragmentPemasukanBulananBinding
 import com.krebet.keuangandesakrebet.model.Transaksi
+import com.krebet.keuangandesakrebet.adapter.SemuaPemasukanPengeluaranAdapter
+import com.krebet.keuangandesakrebet.databinding.FragmentSemuaPemasukanPengeluaranBinding
 
 @Suppress("SpellCheckingInspection")
-class PemasukanBulananFragment : Fragment() {
+class SemuaPengeluaranFragment : Fragment() {
 
-    private var _binding: FragmentPemasukanBulananBinding? = null
+    private var _binding: FragmentSemuaPemasukanPengeluaranBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var id: String
@@ -24,7 +25,7 @@ class PemasukanBulananFragment : Fragment() {
         inflater: LayoutInflater , container: ViewGroup? ,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPemasukanBulananBinding.inflate(inflater, container, false)
+        _binding = FragmentSemuaPemasukanPengeluaranBinding.inflate(inflater, container, false)
 
         id = requireArguments().getString("id")!!
         val nama = requireArguments().getString("nama")!!
@@ -39,7 +40,7 @@ class PemasukanBulananFragment : Fragment() {
 
         val data = mutableListOf<Transaksi>()
 
-        db.collection("pemasukan")
+        db.collection("pengeluaran")
             .whereEqualTo("idPengunjung", id)
             .get()
             .addOnSuccessListener { result ->
@@ -50,7 +51,7 @@ class PemasukanBulananFragment : Fragment() {
                 }
 
                 if (isAdded) {
-                    binding.recycleView.adapter = DetailPemasukanAdapter(data)
+                    binding.recyclerView.adapter = SemuaPemasukanPengeluaranAdapter(data)
                 }
             }
             .addOnFailureListener {
@@ -59,7 +60,7 @@ class PemasukanBulananFragment : Fragment() {
 
         binding.btnKembali.setOnClickListener {
             val transaction = parentFragmentManager.beginTransaction()
-            transaction.replace(R.id.frameLayout , PemasukanFragment())
+            transaction.replace(R.id.frameLayout , PengeluaranFragment())
             transaction.commit()
         }
     }

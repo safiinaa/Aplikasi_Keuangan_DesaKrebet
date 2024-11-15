@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.krebet.keuangandesakrebet.R
+import com.krebet.keuangandesakrebet.adapter.HomeAdapter
 import com.krebet.keuangandesakrebet.databinding.FragmentHomeBinding
 import com.krebet.keuangandesakrebet.model.Pengunjung
 import com.krebet.keuangandesakrebet.model.Transaksi
@@ -20,6 +21,11 @@ import com.krebet.keuangandesakrebet.ui.pemasukan.AddPemasukanFragment
 import com.krebet.keuangandesakrebet.ui.pengeluaran.AddPengeluaranFragment
 import com.krebet.keuangandesakrebet.ui.pengunjung.AddPengunjungFragment
 import com.krebet.keuangandesakrebet.ui.pengunjung.PengunjungFragment
+import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 @Suppress("SpellCheckingInspection")
 class HomeFragment : Fragment() {
@@ -33,6 +39,9 @@ class HomeFragment : Fragment() {
     private val db = FirebaseFirestore.getInstance()
     private var transactions = mutableSetOf<Transaksi>()
 
+    private var saldoPemasukan = 0F
+    private var saldoPengeluaran = 0F
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,6 +54,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view , savedInstanceState)
 
         setupSpinner()
+
         transactions.clear()
         getPemasukan()
         getPengeluaran()
@@ -164,45 +174,147 @@ class HomeFragment : Fragment() {
     }
 
     private fun setRecyclerView(transactions: List<Transaksi>) {
+        val transactionsSorted = transactions.sortedBy { it.tanggal }
         if (isAdded) {
-            binding.recycleView.adapter = TransaksiAdapter(transactions, requireActivity().supportFragmentManager)
+            binding.recyclerView.adapter = HomeAdapter(transactionsSorted, requireActivity().supportFragmentManager)
         }
     }
 
-    private fun setupSpinner() {
-        val menuItems = arrayOf("Harian", "Bulanan", "Tahunan")
-        val adapter: ArrayAdapter<*> = ArrayAdapter<Any?>(requireContext(), R.layout.item_spinner, menuItems)
-        binding.spinnerMenu.adapter = adapter
+    private fun getSaldoTahunan() {
+        saldoPemasukan = 0F
+        saldoPengeluaran = 0F
 
-        binding.spinnerMenu.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedItem = menuItems[position]
-                when(selectedItem) {
-                    "Harian" -> {
-                        getDailyBalance()
-                    }
-                    "Bulanan" -> {
-                        getMonthlyBalance()
-                    }
-                    "Tahunan" -> {
-                        getAnnualBalance()
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR).toString()
+        val yearFormat = SimpleDateFormat("yyyy", Locale("id", "ID"))
+
+        db.collection("pemasukan").get()
+            .addOnSuccessListener {
+                for (document in it) {
+                    val transaction = document.toObject(Transaksi::class.java)
+
+                    val transactionDate = transaction.tanggal!!.toDate()
+                    val transactionYear = yearFormat.format(transactionDate)
+
+                    if (transactionYear == currentYear) {
+                        saldoPemasukan += transaction.total ?: 0F
                     }
                 }
+                binding.tvSaldoMasuk.text = formatRupiah(saldoPemasukan)
             }
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
+            .addOnFailureListener {
+                Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+            }
+
+        db.collection("pengeluaran").get()
+            .addOnSuccessListener {
+                for (document in it) {
+                    val transaction = document.toObject(Transaksi::class.java)
+
+                    val transactionDate = transaction.tanggal!!.toDate()
+                    val transactionYear = yearFormat.format(transactionDate)
+
+                    if (transactionYear == currentYear) {
+                        saldoPengeluaran += transaction.total ?: 0F
+                    }
+                }
+                binding.tvSaldoKeluar.text = formatRupiah(saldoPengeluaran)
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+            }
     }
 
-    private fun getAnnualBalance() {
-        Toast.makeText(context, "Tahunan", Toast.LENGTH_LONG).show()
+    private fun getSaldoBulanan() {
+        saldoPemasukan = 0F
+        saldoPengeluaran = 0F
+
+        val monthFormat = SimpleDateFormat("MM-yyyy", Locale("id", "ID"))
+        val currentMonth = monthFormat.format(Date())
+
+        db.collection("pemasukan").get()
+            .addOnSuccessListener {
+                for (document in it) {
+                    val transaction = document.toObject(Transaksi::class.java)
+
+                    val transactionDate = transaction.tanggal!!.toDate()
+                    val transactionMonth = monthFormat.format(transactionDate)
+
+                    if (transactionMonth == currentMonth) {
+                        saldoPemasukan += transaction.total ?: 0F
+                    }
+                }
+                binding.tvSaldoMasuk.text = formatRupiah(saldoPemasukan)
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+            }
+
+        db.collection("pengeluaran").get()
+            .addOnSuccessListener {
+                for (document in it) {
+                    val transaction = document.toObject(Transaksi::class.java)
+
+                    val transactionDate = transaction.tanggal!!.toDate()
+                    val transactionMonth = monthFormat.format(transactionDate)
+
+                    if (transactionMonth == currentMonth) {
+                        saldoPengeluaran += transaction.total ?: 0F
+                    }
+                }
+                binding.tvSaldoKeluar.text = formatRupiah(saldoPengeluaran)
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+            }
     }
 
-    private fun getMonthlyBalance() {
-        Toast.makeText(context, "Bulanan", Toast.LENGTH_LONG).show()
+    private fun getSaldoHarian() {
+        saldoPemasukan = 0F
+        saldoPengeluaran = 0F
+
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale("id", "ID"))
+        val currentDate = dateFormat.format(Date())
+
+        db.collection("pemasukan").get()
+            .addOnSuccessListener {
+                for (document in it) {
+                    val transaction = document.toObject(Transaksi::class.java)
+
+                    val transactionDate = transaction.tanggal!!.toDate()
+                    val transactionDateFormat = dateFormat.format(transactionDate)
+
+                    if (transactionDateFormat == currentDate) {
+                        saldoPemasukan += transaction.total ?: 0F
+                    }
+                }
+                binding.tvSaldoMasuk.text = formatRupiah(saldoPemasukan)
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+            }
+
+        db.collection("pengeluaran").get()
+            .addOnSuccessListener {
+                for (document in it) {
+                    val transaction = document.toObject(Transaksi::class.java)
+
+                    val transactionDate = transaction.tanggal!!.toDate()
+                    val transactionMonthFormat = dateFormat.format(transactionDate)
+
+                    if (transactionMonthFormat == currentDate) {
+                        saldoPengeluaran += transaction.total ?: 0F
+                    }
+                }
+                binding.tvSaldoKeluar.text = formatRupiah(saldoPengeluaran)
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+            }
     }
 
-    private fun getDailyBalance() {
-        Toast.makeText(context, "Harian", Toast.LENGTH_LONG).show()
+    private fun formatRupiah(total: Float): String {
+        val formatRp = DecimalFormat("Rp ###,###,###").format(total)
+        return formatRp
     }
 
     private fun openList() {
@@ -236,6 +348,30 @@ class HomeFragment : Fragment() {
             btnTambahPemasukan.isVisible = false
             btnTambahPengeluaran.isVisible = false
             isMenuOpen = false
+        }
+    }
+
+    private fun setupSpinner() {
+        val menuItems = arrayOf("Harian", "Bulanan", "Tahunan")
+        val adapter: ArrayAdapter<*> = ArrayAdapter<Any?>(requireContext(), R.layout.item_spinner, menuItems)
+        binding.spinnerMenu.adapter = adapter
+
+        binding.spinnerMenu.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedItem = menuItems[position]
+                when(selectedItem) {
+                    "Harian" -> {
+                        getSaldoHarian()
+                    }
+                    "Bulanan" -> {
+                        getSaldoBulanan()
+                    }
+                    "Tahunan" -> {
+                        getSaldoTahunan()
+                    }
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 

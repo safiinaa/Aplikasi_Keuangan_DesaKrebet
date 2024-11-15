@@ -5,6 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
     android:backgroundTint="@color/green2"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="10dp">
 
         <TextView

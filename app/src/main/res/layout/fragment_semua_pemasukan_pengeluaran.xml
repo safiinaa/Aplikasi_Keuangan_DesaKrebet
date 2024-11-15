@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="20dp"
-    android:paddingBottom="20dp"
-    tools:context=".ui.pemasukan.PemasukanBulananFragment">
+    android:paddingBottom="10dp"
+    tools:context=".ui.pemasukan.SemuaPemasukanFragment">
 
     <ImageButton
         android:id="@+id/btnKembali"
@@ -36,16 +36,16 @@
         app:layout_constraintTop_toTopOf="@+id/btnKembali" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleView"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnKembali"
-        tools:listitem="@layout/item_history" />
+        tools:listitem="@layout/item_transaction" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

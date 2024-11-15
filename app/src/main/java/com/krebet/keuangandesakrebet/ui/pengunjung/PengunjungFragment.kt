@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.krebet.keuangandesakrebet.R
+import com.krebet.keuangandesakrebet.adapter.PengunjungAdapter
 import com.krebet.keuangandesakrebet.databinding.FragmentPengunjungBinding
 import com.krebet.keuangandesakrebet.model.Pengunjung
 import com.krebet.keuangandesakrebet.ui.home.HomeFragment
@@ -44,7 +45,7 @@ class PengunjungFragment : Fragment() {
                     val data = document.toObject(Pengunjung::class.java)
                     listPengunjung.add(data)
                 }
-                binding.recyclerView.adapter = PengunjungAdapter(listPengunjung)
+                binding.recyclerView.adapter = PengunjungAdapter(listPengunjung, requireActivity().supportFragmentManager)
             }
             .addOnFailureListener {
                 Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()

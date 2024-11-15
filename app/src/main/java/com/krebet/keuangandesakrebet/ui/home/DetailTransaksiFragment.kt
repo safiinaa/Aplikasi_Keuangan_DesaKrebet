@@ -1,4 +1,4 @@
-package com.krebet.keuangandesakrebet.ui.detail
+package com.krebet.keuangandesakrebet.ui.home
 
 import android.os.Build
 import android.os.Bundle
@@ -11,7 +11,6 @@ import androidx.core.view.isVisible
 import com.krebet.keuangandesakrebet.R
 import com.krebet.keuangandesakrebet.databinding.FragmentDetailTransaksiBinding
 import com.krebet.keuangandesakrebet.model.Transaksi
-import com.krebet.keuangandesakrebet.ui.home.HomeFragment
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Locale

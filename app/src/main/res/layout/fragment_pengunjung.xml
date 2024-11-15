@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="20dp"
-    android:paddingBottom="20dp"
+    android:paddingBottom="10dp"
     tools:context=".ui.pengunjung.PengunjungFragment">
 
     <ImageButton
@@ -37,7 +37,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

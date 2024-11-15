@@ -1,21 +1,18 @@
-package com.krebet.keuangandesakrebet.ui.home
+package com.krebet.keuangandesakrebet.adapter
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.krebet.keuangandesakrebet.R
 import com.krebet.keuangandesakrebet.databinding.ItemHistoryBinding
 import com.krebet.keuangandesakrebet.model.Transaksi
-import com.krebet.keuangandesakrebet.ui.detail.DetailTransaksiFragment
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 @Suppress("SpellCheckingInspection")
-class TransaksiAdapter(private val data: List<Transaksi> , private val fragmentManager: FragmentManager) : RecyclerView.Adapter<TransaksiAdapter.ViewHolder>() {
+class PemasukanPengeluaranBulananAdapter(private val data: List<Transaksi>) : RecyclerView.Adapter<PemasukanPengeluaranBulananAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ItemHistoryBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -41,17 +38,6 @@ class TransaksiAdapter(private val data: List<Transaksi> , private val fragmentM
                     ContextCompat.getColor(context, R.color.blue2)
                 }
                 root.setCardBackgroundColor(itemColor)
-
-                holder.itemView.setOnClickListener {
-                    val data = Transaksi(tanggal = tanggal, nominal = nominal, qty = qty, total = total, catatan = catatan, jenis = jenis, pengunjung = pengunjung)
-                    val fragment = DetailTransaksiFragment()
-                    val mBundle = Bundle()
-                    mBundle.putParcelable("data", data)
-                    fragment.arguments = mBundle
-                    fragmentManager.beginTransaction()
-                        .replace(R.id.frameLayout, fragment)
-                        .commit()
-                }
             }
         }
     }

@@ -8,10 +8,12 @@ import com.google.firebase.Timestamp
 data class Pengunjung (
     var id: String? = "" ,
     var nama: String? = "" ,
+    val noTelp: String? = "" ,
     val alamat: String? = "" ,
     val tanggal: Timestamp? = null
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString() ,
         parcel.readString() ,
         parcel.readString() ,
         parcel.readString() ,
@@ -21,6 +23,7 @@ data class Pengunjung (
     override fun writeToParcel(parcel: Parcel , flags: Int) {
         parcel.writeString(id)
         parcel.writeString(nama)
+        parcel.writeString(noTelp)
         parcel.writeString(alamat)
         parcel.writeParcelable(tanggal , flags)
     }

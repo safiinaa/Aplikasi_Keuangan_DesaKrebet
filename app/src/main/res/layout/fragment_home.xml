@@ -284,7 +284,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleView"
+        android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginVertical="10dp"
@@ -307,7 +307,7 @@
         android:clickable="true"
         android:focusable="true"
         android:tint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/recycleView"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_tambah"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
