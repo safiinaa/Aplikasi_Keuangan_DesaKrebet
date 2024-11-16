@@ -43,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnKembali"
-        app:startIconDrawable="@drawable/ic_user">
+        app:startIconDrawable="@drawable/ic_profile">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNama"
@@ -62,7 +62,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutNama"
-        app:startIconDrawable="@drawable/ic_phone">
+        app:startIconDrawable="@drawable/ic_call">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etNoTelp"
