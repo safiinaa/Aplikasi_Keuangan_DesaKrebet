@@ -42,7 +42,7 @@ class PengunjungFragment : Fragment() {
         db.collection("pengunjung").get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    val data = document.toObject(Pengunjung::class.java)
+                    val data = document.toObject(Pengunjung::class.java).also { it.id = document.id }
                     listPengunjung.add(data)
                 }
                 binding.recyclerView.adapter = PengunjungAdapter(listPengunjung, requireActivity().supportFragmentManager)

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.krebet.keuangandesakrebet.R
 import com.krebet.keuangandesakrebet.databinding.ItemPengunjungBinding
 import com.krebet.keuangandesakrebet.model.Pengunjung
-import com.krebet.keuangandesakrebet.ui.pengunjung.DetailPengunjungFragment
+import com.krebet.keuangandesakrebet.ui.pengunjung.EditPengunjungFragment
 
 @Suppress("SpellCheckingInspection")
 class PengunjungAdapter(private val data: List<Pengunjung>, private val fragmentManager: FragmentManager) : RecyclerView.Adapter<PengunjungAdapter.ViewHolder>() {
@@ -26,8 +26,8 @@ class PengunjungAdapter(private val data: List<Pengunjung>, private val fragment
                 tvNama.text = nama
 
                 holder.itemView.setOnClickListener {
-                    val data = Pengunjung(nama = nama, noTelp = noTelp, alamat = alamat, tanggal = tanggal)
-                    val fragment = DetailPengunjungFragment()
+                    val data = Pengunjung(id = id, nama = nama, noTelp = noTelp, alamat = alamat, tanggal = tanggal)
+                    val fragment = EditPengunjungFragment()
                     val mBundle = Bundle()
                     mBundle.putParcelable("data", data)
                     fragment.arguments = mBundle

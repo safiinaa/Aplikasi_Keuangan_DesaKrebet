@@ -1,7 +1,6 @@
 package com.krebet.keuangandesakrebet.ui.pengunjung
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,11 +63,7 @@ class AddPengunjungFragment : Fragment() {
                 if (nama.isEmpty()) {
                     Toast.makeText(context , "Nama tidak boleh kosong" , Toast.LENGTH_SHORT).show()
                 } else if (noTelp.isEmpty()) {
-                    Toast.makeText(
-                        context ,
-                        "Nomor telepon tidak boleh kosong" ,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(context , "Nomor telepon tidak boleh kosong" , Toast.LENGTH_SHORT).show()
                 } else if (alamat.isEmpty()) {
                     Toast.makeText(context , "Alamat tidak boleh kosong" , Toast.LENGTH_SHORT).show()
                 } else if (tanggal.isEmpty()) {
@@ -79,10 +74,7 @@ class AddPengunjungFragment : Fragment() {
                         "nama" to nama,
                         "noTelp" to noTelp,
                         "alamat" to alamat,
-                        "tanggal" to SimpleDateFormat(
-                            "dd-MM-yyyy hh:mm:ss a" ,
-                            Locale("id" , "ID")
-                        ).parse("$tanggal 00:00:00 AM"),
+                        "tanggal" to SimpleDateFormat("dd-MM-yyyy hh:mm:ss a" , Locale("id" , "ID")).parse("$tanggal 00:00:00 AM"),
                         "createdAt" to FieldValue.serverTimestamp()
                     )
 
@@ -98,13 +90,8 @@ class AddPengunjungFragment : Fragment() {
                             btnTanggal.text = getString(R.string.tgl)
                         }
                         .addOnFailureListener {
-                            Toast.makeText(
-                                context ,
-                                "Terjadi kesalahan, silahkan ulangi kembali" ,
-                                Toast.LENGTH_LONG
-                            ).show()
+                            Toast.makeText(context , "Terjadi kesalahan, silahkan ulangi kembali" , Toast.LENGTH_LONG).show()
                             loading.isVisible = false
-                            Log.e("Add Pengunjung" , it.message.toString())
                         }
                 }
             }

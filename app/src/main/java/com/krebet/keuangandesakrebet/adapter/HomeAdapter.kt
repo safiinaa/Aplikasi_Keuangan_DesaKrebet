@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.krebet.keuangandesakrebet.R
 import com.krebet.keuangandesakrebet.databinding.ItemHistoryBinding
 import com.krebet.keuangandesakrebet.model.Transaksi
-import com.krebet.keuangandesakrebet.ui.home.DetailTransaksiFragment
+import com.krebet.keuangandesakrebet.ui.home.EditPemasukanFragment
+import com.krebet.keuangandesakrebet.ui.home.EditPengeluaranFragment
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -43,14 +44,32 @@ class HomeAdapter(private val data: List<Transaksi> , private val fragmentManage
                 root.setCardBackgroundColor(itemColor)
 
                 holder.itemView.setOnClickListener {
-                    val data = Transaksi(tanggal = tanggal, nominal = nominal, qty = qty, total = total, catatan = catatan, jenis = jenis, pengunjung = pengunjung)
-                    val fragment = DetailTransaksiFragment()
+                    val data = Transaksi(
+                        idTransaksi = idTransaksi ,
+                        idPengunjung = idPengunjung ,
+                        tanggal = tanggal ,
+                        nominal = nominal ,
+                        qty = qty ,
+                        total = total ,
+                        catatan = catatan ,
+                        pengunjung = pengunjung
+                    )
+                    val fragmentPemasukan = EditPemasukanFragment()
+                    val fragmentPengeluaran = EditPengeluaranFragment()
                     val mBundle = Bundle()
                     mBundle.putParcelable("data", data)
-                    fragment.arguments = mBundle
-                    fragmentManager.beginTransaction()
-                        .replace(R.id.frameLayout, fragment)
-                        .commit()
+
+                    if (jenis == "pemasukan") {
+                        fragmentPemasukan.arguments = mBundle
+                        fragmentManager.beginTransaction()
+                            .replace(R.id.frameLayout, fragmentPemasukan)
+                            .commit()
+                    } else {
+                        fragmentPengeluaran.arguments = mBundle
+                        fragmentManager.beginTransaction()
+                            .replace(R.id.frameLayout, fragmentPengeluaran)
+                            .commit()
+                    }
                 }
             }
         }

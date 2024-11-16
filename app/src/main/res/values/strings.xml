@@ -56,4 +56,8 @@
     <string name="thn">2023</string>
     <string name="nominal">Nominal</string>
     <string name="detail_pengunjung">Detail Pengunjung</string>
+    <string name="hapus">Hapus</string>
+    <string name="ubah_data_pemasukan">Ubah Data Pemasukan</string>
+    <string name="ubah_data_pengeluaran">Ubah Data Pengeluaran</string>
+    <string name="edit_data_pengunjung">Edit Data Pengunjung</string>
 </resources>

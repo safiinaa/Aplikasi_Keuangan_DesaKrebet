@@ -41,6 +41,10 @@
             android:layout_below="@+id/tvTanggal"
             android:layout_alignParentStart="true"
             android:layout_marginTop="6dp"
+            android:layout_marginEnd="20dp"
+            android:layout_toStartOf="@+id/tvJumlah"
+            android:ellipsize="marquee"
+            android:maxLines="2"
             android:text="@string/pengajar_tari" />
 
         <TextView

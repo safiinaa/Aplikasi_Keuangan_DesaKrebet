@@ -124,7 +124,7 @@ class HomeFragment : Fragment() {
         db.collection("pengeluaran").get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    val transaction = document.toObject(Transaksi::class.java).copy(jenis = "pengeluaran")
+                    val transaction = document.toObject(Transaksi::class.java).copy(jenis = "pengeluaran").also { it.idTransaksi = document.id }
 
                     db.collection("pengunjung")
                         .document(transaction.idPengunjung.toString())
@@ -151,7 +151,7 @@ class HomeFragment : Fragment() {
         db.collection("pemasukan").get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    val transaction = document.toObject(Transaksi::class.java).copy(jenis = "pemasukan")
+                    val transaction = document.toObject(Transaksi::class.java).copy(jenis = "pemasukan").also { it.idTransaksi = document.id }
 
                     db.collection("pengunjung")
                         .document(transaction.idPengunjung.toString())

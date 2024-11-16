@@ -6,6 +6,7 @@ import com.google.firebase.Timestamp
 
 @Suppress("SpellCheckingInspection" , "DEPRECATION")
 data class Transaksi (
+    var idTransaksi: String? = "" ,
     val idPengunjung: String? = "" ,
     val tanggal: Timestamp? = null ,
     val nominal: Float? = 0F ,
@@ -17,6 +18,7 @@ data class Transaksi (
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ,
+        parcel.readString() ,
         parcel.readParcelable(Timestamp::class.java.classLoader) ,
         parcel.readValue(Float::class.java.classLoader) as? Float ,
         parcel.readValue(Float::class.java.classLoader) as? Float ,
@@ -27,6 +29,7 @@ data class Transaksi (
     )
 
     override fun writeToParcel(parcel: Parcel , flags: Int) {
+        parcel.writeString(idTransaksi)
         parcel.writeString(idPengunjung)
         parcel.writeParcelable(tanggal , flags)
         parcel.writeValue(nominal)
