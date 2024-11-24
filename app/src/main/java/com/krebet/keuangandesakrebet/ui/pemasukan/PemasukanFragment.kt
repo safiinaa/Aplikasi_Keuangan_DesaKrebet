@@ -86,7 +86,7 @@ class PemasukanFragment : Fragment() {
                 val visitors = userSnapshot.documents.map {
                     Pengunjung(
                         id = it.id,
-                        nama = it.getString("nama") ?: ""
+                        namaInstansi = it.getString("namaInstansi") ?: ""
                     )
                 }
 
@@ -101,10 +101,11 @@ class PemasukanFragment : Fragment() {
 
                         //Total transaksi pemasukan per pengunjung
                         val totalPemasukan = visitors.map { visitor ->
-                            val visitorTransactions = transactions.filter { it.idPengunjung == visitor.id }
+                            val visitorTransactions =
+                                transactions.filter { it.idPengunjung == visitor.id }
                             val total = visitorTransactions.sumOf { it.total!!.toDouble() }
                             Pair(visitor, total)
-                        }.filter { it.second > 0 }
+                        }
 
                         if (isAdded) {
                             binding.recyclerView.adapter = PemasukanAdapter(totalPemasukan, requireActivity().supportFragmentManager)

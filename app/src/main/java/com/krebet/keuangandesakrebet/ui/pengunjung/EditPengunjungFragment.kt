@@ -55,10 +55,12 @@ class EditPengunjungFragment : Fragment() {
 
             pengunjung.let {
                 tanggal = it.tanggal?.toDate()
-                etNama.setText(it.nama)
+                etNamaCp.setText(it.namaCp)
+                etNamaInstansi.setText(it.namaInstansi)
                 etNoTelp.setText(it.noTelp)
                 etAlamat.setText(it.alamat)
                 btnTanggal.text = formatDate.format(tanggal!!)
+                etNominal.setText(it.dp?.toInt().toString())
             }
 
             btnTanggal.setOnClickListener {
@@ -78,25 +80,33 @@ class EditPengunjungFragment : Fragment() {
             }
 
             btnSimpan.setOnClickListener {
-                val nama = etNama.text.toString()
+                val namaCp = etNamaCp.text.toString()
+                val namaInstansi = etNamaInstansi.text.toString()
                 val noTelp = etNoTelp.text.toString()
                 val alamat = etAlamat.text.toString()
+                val dp = etNominal.text.toString()
 
-                if (nama.isEmpty()) {
-                    Toast.makeText(context, "Nama tidak boleh kosong", Toast.LENGTH_LONG).show()
+                if (namaCp.isEmpty()) {
+                    Toast.makeText(context, "Nama CP tidak boleh kosong", Toast.LENGTH_LONG).show()
+                } else if (namaInstansi.isEmpty()) {
+                    Toast.makeText(context, "Nama Instansi tidak boleh kosong", Toast.LENGTH_LONG).show()
                 } else if (noTelp.isEmpty()) {
                     Toast.makeText(context , "Nomor telepon tidak boleh kosong" , Toast.LENGTH_SHORT).show()
                 } else if (alamat.isEmpty()) {
                     Toast.makeText(context, "Alamat tidak boleh kosong", Toast.LENGTH_LONG).show()
                 } else if (tanggal == null) {
                     Toast.makeText(context, "Tanggal tidak boleh kosong", Toast.LENGTH_LONG).show()
+                } else if (dp.isEmpty()) {
+                    Toast.makeText(context, "DP tidak boleh kosong", Toast.LENGTH_LONG).show()
                 } else {
                     loading.isVisible = true
                     val pengunjung = hashMapOf(
-                        "nama" to nama,
+                        "namaCp" to namaCp,
+                        "namaInstansi" to namaInstansi,
                         "noTelp" to noTelp,
                         "alamat" to alamat,
                         "tanggal" to tanggal,
+                        "dp" to dp,
                         "updatedAt" to serverTimestamp()
                     )
 

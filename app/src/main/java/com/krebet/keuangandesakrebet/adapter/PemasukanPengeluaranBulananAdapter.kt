@@ -26,7 +26,7 @@ class PemasukanPengeluaranBulananAdapter(private val data: List<Transaksi>) : Re
             with(data[position]) {
                 val date = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID")).format(tanggal!!.toDate())
                 val formatRp = DecimalFormat("Rp ###,###,###").format(total)
-                tvPengunjung.text = pengunjung?.nama
+                tvPengunjung.text = pengunjung?.namaInstansi
                 tvCatatan.text = catatan
                 tvTanggal.text = date
                 tvJumlah.text = formatRp

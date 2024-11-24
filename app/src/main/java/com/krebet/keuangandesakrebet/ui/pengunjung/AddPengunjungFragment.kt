@@ -39,6 +39,7 @@ class AddPengunjungFragment : Fragment() {
 
         binding.apply {
             lateinit var tanggal: String
+            lateinit var tanggalAcara: String
 
             btnTanggal.setOnClickListener {
                 val datePicker = MaterialDatePicker.Builder.datePicker()
@@ -55,26 +56,51 @@ class AddPengunjungFragment : Fragment() {
                 }
             }
 
+            btnTanggalAcara.setOnClickListener {
+                val datePicker = MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Pilih Tanggal Pelaksanaan")
+                    .build()
+                datePicker.show(parentFragmentManager , "DatePicker")
+                datePicker.addOnPositiveButtonClickListener {
+                    val dateFormat = SimpleDateFormat("dd-MM-yyyy" , Locale("id" , "ID"))
+                    tanggalAcara = dateFormat.format(Date(it)).toString()
+                    btnTanggalAcara.text = SimpleDateFormat("dd MMMM yyyy" , Locale("id" , "ID")).format(it)
+                }
+                datePicker.addOnNegativeButtonClickListener {
+                    datePicker.dismiss()
+                }
+            }
+
             btnSimpan.setOnClickListener {
-                val nama = etNama.text.toString()
+                val namaCp = etNamaCp.text.toString()
+                val namaInstansi = etNamaInstansi.text.toString()
                 val noTelp = etNoTelp.text.toString()
                 val alamat = etAlamat.text.toString()
+                val dp = etNominal.text.toString()
 
-                if (nama.isEmpty()) {
-                    Toast.makeText(context , "Nama tidak boleh kosong" , Toast.LENGTH_SHORT).show()
+                if (namaCp.isEmpty()) {
+                    Toast.makeText(context , "Nama CP tidak boleh kosong" , Toast.LENGTH_SHORT).show()
+                } else if (namaInstansi.isEmpty()) {
+                    Toast.makeText(context, "Nama Instansi tidak boleh kosong", Toast.LENGTH_SHORT).show()
                 } else if (noTelp.isEmpty()) {
                     Toast.makeText(context , "Nomor telepon tidak boleh kosong" , Toast.LENGTH_SHORT).show()
                 } else if (alamat.isEmpty()) {
                     Toast.makeText(context , "Alamat tidak boleh kosong" , Toast.LENGTH_SHORT).show()
                 } else if (tanggal.isEmpty()) {
                     Toast.makeText(context , "Tanggal tidak boleh kosong" , Toast.LENGTH_SHORT).show()
+                } else if (tanggalAcara.isEmpty()) {
+                    Toast.makeText(context , "Tanggal tidak boleh kosong" , Toast.LENGTH_SHORT).show()
+                } else if (dp.isEmpty()) {
+                    Toast.makeText(context , "DP tidak boleh kosong" , Toast.LENGTH_SHORT).show()
                 } else {
                     loading.isVisible = true
                     val pengunjung = hashMapOf(
-                        "nama" to nama,
+                        "namaCp" to namaCp,
+                        "namaInstansi" to namaInstansi,
                         "noTelp" to noTelp,
                         "alamat" to alamat,
                         "tanggal" to SimpleDateFormat("dd-MM-yyyy hh:mm:ss a" , Locale("id" , "ID")).parse("$tanggal 00:00:00 AM"),
+                        "dp" to dp,
                         "createdAt" to FieldValue.serverTimestamp()
                     )
 
@@ -83,11 +109,15 @@ class AddPengunjungFragment : Fragment() {
                         .addOnSuccessListener {
                             Toast.makeText(context , "Data berhasil disimpan" , Toast.LENGTH_LONG).show()
                             loading.isVisible = false
-                            etNama.text?.clear()
+                            etNamaCp.text?.clear()
+                            etNamaInstansi.text?.clear()
                             etNoTelp.text?.clear()
                             etAlamat.text?.clear()
+                            etNominal.text?.clear()
                             tanggal = ""
+                            tanggalAcara = ""
                             btnTanggal.text = getString(R.string.tgl)
+                            btnTanggalAcara.text = getString(R.string.tanggal_pelaksanaan)
                         }
                         .addOnFailureListener {
                             Toast.makeText(context , "Terjadi kesalahan, silahkan ulangi kembali" , Toast.LENGTH_LONG).show()

@@ -27,8 +27,8 @@
     <string name="pengunjung">Pengunjung</string>
     <string name="bulanthn">April 2023</string>
     <string name="detail_transaksi">Detail Transaksi</string>
-    <string name="nama">Nama</string>
-    <string name="tgl">Tanggal</string>
+    <string name="nama_instansi">Nama Instansi</string>
+    <string name="tgl">Tanggal Transaksi</string>
     <string name="jumlah">Jumlah</string>
     <string name="catatan">Catatan</string>
     <string name="total">Total</string>
@@ -60,4 +60,10 @@
     <string name="ubah_data_pemasukan">Ubah Data Pemasukan</string>
     <string name="ubah_data_pengeluaran">Ubah Data Pengeluaran</string>
     <string name="edit_data_pengunjung">Edit Data Pengunjung</string>
+    <string name="nama_cp">Nama CP</string>
+    <string name="id_pengunjung">Id Pengunjung</string>
+    <string name="tanggal_pelaksanaan">Tanggal Pelaksanaan</string>
+    <string name="dp">DP</string>
+    <string name="id_pemasukan">Id Pemasukan</string>
+    <string name="cari_nama_disini">Cari Nama Disini</string>
 </resources>

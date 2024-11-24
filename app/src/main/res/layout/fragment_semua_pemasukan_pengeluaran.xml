@@ -29,7 +29,7 @@
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/btnKembali"
         android:gravity="center"
-        android:text="@string/nama"
+        android:text="@string/nama_instansi"
         app:layout_constraintBottom_toBottomOf="@+id/btnKembali"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

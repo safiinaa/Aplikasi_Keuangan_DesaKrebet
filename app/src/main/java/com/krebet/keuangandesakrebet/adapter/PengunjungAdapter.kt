@@ -23,10 +23,10 @@ class PengunjungAdapter(private val data: List<Pengunjung>, private val fragment
     override fun onBindViewHolder(holder: ViewHolder , position: Int) {
         with(holder.binding) {
             with(data[position]) {
-                tvNama.text = nama
+                tvNama.text = namaInstansi
 
                 holder.itemView.setOnClickListener {
-                    val data = Pengunjung(id = id, nama = nama, noTelp = noTelp, alamat = alamat, tanggal = tanggal)
+                    val data = Pengunjung(id = id, namaInstansi = namaInstansi, noTelp = noTelp, alamat = alamat, tanggal = tanggal)
                     val fragment = EditPengunjungFragment()
                     val mBundle = Bundle()
                     mBundle.putParcelable("data", data)

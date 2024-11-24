@@ -52,7 +52,7 @@ class AddPengeluaranFragment : Fragment() {
         super.onViewCreated(view , savedInstanceState)
 
         binding.apply {
-            etNama.addTextChangedListener(object : TextWatcher {
+            etNamaInstansi.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence? , start: Int , count: Int , after: Int) {}
 
                 override fun onTextChanged(s: CharSequence? , start: Int , before: Int , count: Int) {
@@ -67,16 +67,16 @@ class AddPengeluaranFragment : Fragment() {
                 override fun afterTextChanged(s: Editable?) {}
             })
 
-            etNama.setOnItemClickListener { parent , _ , position , _ ->
+            etNamaInstansi.setOnItemClickListener { parent , _ , position , _ ->
                 selectedVisitor = parent.getItemAtPosition(position).toString()
-                val visitorData = visitors.find { it.nama == selectedVisitor }
+                val visitorData = visitors.find { it.namaInstansi == selectedVisitor }
                 visitorData.let {
                     visitorId = it?.id
                     alamat = it?.alamat
                     tvAlamat.text = alamat
                 }
-                etNama.dismissDropDown()
-                etNama.clearFocus()
+                etNamaInstansi.dismissDropDown()
+                etNamaInstansi.clearFocus()
             }
 
             btnTanggal.setOnClickListener {
@@ -116,7 +116,7 @@ class AddPengeluaranFragment : Fragment() {
             })
 
             btnSimpan.setOnClickListener {
-                val nama = etNama.text.toString()
+                val nama = etNamaInstansi.text.toString()
                 val catatan = etCatatan.text.toString()
                 val nominal = etNominal.text.toString()
                 val jumlah = etQty.text.toString()
@@ -124,7 +124,7 @@ class AddPengeluaranFragment : Fragment() {
                 if (nama.isEmpty()) {
                     Toast.makeText(context, "Nama tidak boleh kosong", Toast.LENGTH_LONG).show()
                 } else if (alamat == null) {
-                    Toast.makeText(context, "Nama belum disimpan, simpan pada menu tambah nama pengunjung", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Nama belum disimpan, simpan pada menu tambah namaInstansi pengunjung", Toast.LENGTH_LONG).show()
                 } else if (tanggal == null) {
                     Toast.makeText(context, "Tanggal tidak boleh kosong", Toast.LENGTH_LONG).show()
                 } else if (nominal.isEmpty()) {
@@ -150,7 +150,7 @@ class AddPengeluaranFragment : Fragment() {
                         .addOnSuccessListener {
                             Toast.makeText(context, "Data berhasil disimpan", Toast.LENGTH_LONG).show()
                             loading.isVisible = false
-                            etNama.text?.clear()
+                            etNamaInstansi.text?.clear()
                             btnTanggal.text = getString(R.string.tgl)
                             tanggal = null
                             alamat = null
@@ -194,7 +194,7 @@ class AddPengeluaranFragment : Fragment() {
 
     private fun searchVisitor(query: String) {
         val docRef = db.collection("pengunjung")
-            .orderBy("nama")
+            .orderBy("namaInstansi")
             .startAt(query)
             .endAt(query + "\uf8ff")
         listener = docRef.addSnapshotListener { value, error ->
@@ -207,11 +207,11 @@ class AddPengeluaranFragment : Fragment() {
                 visitors = value.mapNotNull {
                     val visitor = it.toObject(Pengunjung::class.java)
                     visitor.copy(id = it.id)
-                }.distinctBy { it.nama }
+                }.distinctBy { it.namaInstansi }
 
-                val adapter = ArrayAdapter<String>(requireContext() , R.layout.list_item , visitors.map { it.nama })
-                binding.etNama.setAdapter(adapter)
-                binding.etNama.showDropDown()
+                val adapter = ArrayAdapter<String>(requireContext() , R.layout.list_item , visitors.map { it.namaInstansi })
+                binding.etNamaInstansi.setAdapter(adapter)
+                binding.etNamaInstansi.showDropDown()
             } else {
                 Toast.makeText(context, "Nama tidak ditemukan", Toast.LENGTH_LONG).show()
             }

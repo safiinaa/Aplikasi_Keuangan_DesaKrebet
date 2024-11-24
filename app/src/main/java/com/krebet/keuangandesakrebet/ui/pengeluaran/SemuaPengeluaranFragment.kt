@@ -28,7 +28,7 @@ class SemuaPengeluaranFragment : Fragment() {
         _binding = FragmentSemuaPemasukanPengeluaranBinding.inflate(inflater, container, false)
 
         id = requireArguments().getString("id")!!
-        val nama = requireArguments().getString("nama")!!
+        val nama = requireArguments().getString("namaInstansi")!!
 
         binding.tvNama.text = nama
 
