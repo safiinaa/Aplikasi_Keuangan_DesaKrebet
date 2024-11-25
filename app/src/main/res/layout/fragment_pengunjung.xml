@@ -35,16 +35,68 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnKembali" />
 
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:queryHint="@string/cari_nama_disini"
+        style="@style/blackTextTitle2"
+        android:background="@drawable/style_searchview"
+        app:layout_constraintBottom_toTopOf="@id/recyclerView"
+        app:layout_constraintEnd_toStartOf="@+id/btnList"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnKembali" />
+
+    <Button
+        android:id="@+id/btnList"
+        android:layout_width="40dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/ic_list"
+        app:layout_constraintStart_toEndOf="@id/searchView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnKembali"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/btnFilterTanggal"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="20dp"
+        android:elevation="2dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/btnList"
+        app:layout_constraintTop_toTopOf="@+id/btnList"
+        android:background="@drawable/style_btn"
+        android:src="@drawable/ic_calender"/>
+
+    <ImageButton
+        android:id="@+id/btnHapusFilter"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/style_button_red"
+        android:layout_marginTop="5dp"
+        android:elevation="10dp"
+        android:visibility="gone"
+        android:src="@drawable/ic_close"
+        app:layout_constraintEnd_toEndOf="@+id/btnFilterTanggal"
+        app:layout_constraintStart_toStartOf="@+id/btnFilterTanggal"
+        app:layout_constraintTop_toBottomOf="@+id/btnFilterTanggal"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnKembali"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
         tools:listitem="@layout/item_pengunjung" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
