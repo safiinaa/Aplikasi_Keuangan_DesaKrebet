@@ -61,7 +61,6 @@
         app:layout_constraintTop_toBottomOf="@+id/btnFilter">
 
         <RadioGroup
-            android:id="@+id/toggleGroup"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"

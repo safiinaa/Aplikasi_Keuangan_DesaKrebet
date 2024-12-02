@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.BundleCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -43,6 +44,8 @@ class EditPengunjungFragment : Fragment() {
         } else {
             arguments?.getParcelable("data")!!
         }
+
+        onBackPressed()
 
         return binding.root
     }
@@ -135,7 +138,7 @@ class EditPengunjungFragment : Fragment() {
                             .delete()
                             .addOnSuccessListener {
                                 Toast.makeText(context, "Data berhasil dihapus", Toast.LENGTH_LONG).show()
-                                loadFragment()
+                                setBackState()
                             }
                             .addOnFailureListener {
                                 Toast.makeText(context, "Terjadi kesalahan, silahkan ulangi kembali", Toast.LENGTH_LONG).show()
@@ -147,12 +150,20 @@ class EditPengunjungFragment : Fragment() {
             }
 
             btnKembali.setOnClickListener {
-                loadFragment()
+                setBackState()
             }
         }
     }
 
-    private fun loadFragment() {
+    private fun onBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                setBackState()
+            }
+        })
+    }
+
+    private fun setBackState() {
         val transaction = parentFragmentManager.beginTransaction()
         transaction.replace(R.id.frameLayout , PengunjungFragment())
         transaction.commit()

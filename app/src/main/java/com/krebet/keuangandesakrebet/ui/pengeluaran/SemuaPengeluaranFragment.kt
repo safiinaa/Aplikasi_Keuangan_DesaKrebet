@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
@@ -18,7 +19,6 @@ import com.krebet.keuangandesakrebet.databinding.FragmentSemuaPemasukanPengeluar
 import com.krebet.keuangandesakrebet.model.Pengunjung
 import com.krebet.keuangandesakrebet.model.Transaksi
 import com.krebet.keuangandesakrebet.ui.home.HomeFragment
-import com.krebet.keuangandesakrebet.ui.pemasukan.PemasukanFragment
 
 @Suppress("SpellCheckingInspection" , "DEPRECATION")
 class SemuaPengeluaranFragment : Fragment() {
@@ -46,6 +46,8 @@ class SemuaPengeluaranFragment : Fragment() {
         backTo = arguments?.getString("backTo") ?: ""
 
         binding.tvNama.text = pengunjung.namaInstansi
+
+        onBackPressed()
 
         return binding.root
     }
@@ -76,18 +78,6 @@ class SemuaPengeluaranFragment : Fragment() {
                     Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
                 }
 
-            btnKembali.setOnClickListener {
-                if (backTo == "home") {
-                    val transaction = parentFragmentManager.beginTransaction()
-                    transaction.replace(R.id.frameLayout , HomeFragment())
-                    transaction.commit()
-                } else {
-                    val transaction = parentFragmentManager.beginTransaction()
-                    transaction.replace(R.id.frameLayout , PemasukanFragment())
-                    transaction.commit()
-                }
-            }
-
             val color = ContextCompat.getColor(requireContext(), R.color.blue1)
             btnTambahTransaksi.backgroundTintList = ColorStateList.valueOf(color)
             btnTambahTransaksi.setColorFilter(Color.WHITE)
@@ -101,6 +91,30 @@ class SemuaPengeluaranFragment : Fragment() {
                     .replace(R.id.frameLayout, fragment)
                     .commit()
             }
+
+            btnKembali.setOnClickListener {
+                setBackState()
+            }
+        }
+    }
+
+    private fun onBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                setBackState()
+            }
+        })
+    }
+
+    private fun setBackState() {
+        if (backTo == "home") {
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.replace(R.id.frameLayout , HomeFragment())
+            transaction.commit()
+        } else {
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.replace(R.id.frameLayout , PengeluaranFragment())
+            transaction.commit()
         }
     }
 

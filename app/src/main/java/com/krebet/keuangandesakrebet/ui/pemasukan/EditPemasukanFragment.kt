@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.BundleCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -53,6 +54,8 @@ class EditPemasukanFragment : Fragment() {
         } else {
             arguments?.getParcelable("data")!!
         }
+
+        onBackPressed()
 
         return binding.root
     }
@@ -148,7 +151,7 @@ class EditPemasukanFragment : Fragment() {
                         .addOnSuccessListener {
                             Toast.makeText(context, "Data berhasil diperbarui", Toast.LENGTH_LONG).show()
                             loading.isVisible = false
-                            loadFragment()
+                            setBackState()
                         }
                         .addOnFailureListener {
                             Toast.makeText(context, "Terjadi kesalahan, silahkan ulangi kembali", Toast.LENGTH_LONG).show()
@@ -168,7 +171,7 @@ class EditPemasukanFragment : Fragment() {
                             .delete()
                             .addOnSuccessListener {
                                 Toast.makeText(context, "Data berhasil dihapus", Toast.LENGTH_LONG).show()
-                                loadFragment()
+                                setBackState()
                             }
                             .addOnFailureListener {
                                 Toast.makeText(context, "Terjadi kesalahan, silahkan ulangi kembali", Toast.LENGTH_LONG).show()
@@ -180,7 +183,7 @@ class EditPemasukanFragment : Fragment() {
             }
 
             btnKembali.setOnClickListener {
-                loadFragment()
+                setBackState()
             }
         }
     }
@@ -213,7 +216,15 @@ class EditPemasukanFragment : Fragment() {
         }
     }
 
-    private fun loadFragment() {
+    private fun onBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                setBackState()
+            }
+        })
+    }
+
+    private fun setBackState() {
         val pengunjung = transaksi.pengunjung
         val data = Pengunjung(
             id = pengunjung?.id ,

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
@@ -46,6 +47,8 @@ class SemuaPemasukanFragment : Fragment() {
 
         binding.tvNama.text = pengunjung.namaInstansi
 
+        onBackPressed()
+
         return binding.root
     }
 
@@ -75,18 +78,6 @@ class SemuaPemasukanFragment : Fragment() {
                     Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
                 }
 
-            btnKembali.setOnClickListener {
-                if (backTo == "home") {
-                    val transaction = parentFragmentManager.beginTransaction()
-                    transaction.replace(R.id.frameLayout , HomeFragment())
-                    transaction.commit()
-                } else {
-                    val transaction = parentFragmentManager.beginTransaction()
-                    transaction.replace(R.id.frameLayout , PemasukanFragment())
-                    transaction.commit()
-                }
-            }
-
             val color = ContextCompat.getColor(requireContext(), R.color.green3)
             btnTambahTransaksi.backgroundTintList = ColorStateList.valueOf(color)
             btnTambahTransaksi.setColorFilter(Color.WHITE)
@@ -100,6 +91,30 @@ class SemuaPemasukanFragment : Fragment() {
                     .replace(R.id.frameLayout, fragment)
                     .commit()
             }
+
+            btnKembali.setOnClickListener {
+                setBackState()
+            }
+        }
+    }
+
+    private fun onBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                setBackState()
+            }
+        })
+    }
+
+    private fun setBackState() {
+        if (backTo == "home") {
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.replace(R.id.frameLayout , HomeFragment())
+            transaction.commit()
+        } else {
+            val transaction = parentFragmentManager.beginTransaction()
+            transaction.replace(R.id.frameLayout , PemasukanFragment())
+            transaction.commit()
         }
     }
 

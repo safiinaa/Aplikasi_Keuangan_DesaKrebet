@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -35,6 +36,9 @@ class PengunjungFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPengunjungBinding.inflate(inflater, container, false)
+
+        onBackPressed()
+
         return binding.root
     }
 
@@ -139,9 +143,7 @@ class PengunjungFragment : Fragment() {
             }
 
             btnKembali.setOnClickListener {
-                val transaction = parentFragmentManager.beginTransaction()
-                transaction.replace(R.id.frameLayout , HomeFragment())
-                transaction.commit()
+                setBackState()
             }
         }
     }
@@ -161,6 +163,20 @@ class PengunjungFragment : Fragment() {
     private fun closeFilter() {
         binding.layoutMenu.isVisible = false
         isFilterOpen = false
+    }
+
+    private fun onBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                setBackState()
+            }
+        })
+    }
+
+    private fun setBackState() {
+        val transaction = parentFragmentManager.beginTransaction()
+        transaction.replace(R.id.frameLayout , HomeFragment())
+        transaction.commit()
     }
 
     override fun onDestroyView() {

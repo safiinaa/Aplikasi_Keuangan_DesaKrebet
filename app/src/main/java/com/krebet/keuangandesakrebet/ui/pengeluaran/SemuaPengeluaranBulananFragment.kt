@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.krebet.keuangandesakrebet.R
@@ -33,6 +34,8 @@ class SemuaPengeluaranBulananFragment : Fragment() {
         bulan = requireArguments().getString("bulan")!!
 
         binding.tvBulan.text = bulan
+
+        onBackPressed()
 
         return binding.root
     }
@@ -78,10 +81,22 @@ class SemuaPengeluaranBulananFragment : Fragment() {
             }
 
         binding.btnKembali.setOnClickListener {
-            val transaction = parentFragmentManager.beginTransaction()
-            transaction.replace(R.id.frameLayout , PengeluaranFragment())
-            transaction.commit()
+            setBackState()
         }
+    }
+
+    private fun onBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                setBackState()
+            }
+        })
+    }
+
+    private fun setBackState() {
+        val transaction = parentFragmentManager.beginTransaction()
+        transaction.replace(R.id.frameLayout , PengeluaranFragment())
+        transaction.commit()
     }
 
     override fun onDestroyView() {

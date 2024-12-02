@@ -136,7 +136,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btnUpload"
             style="@style/whiteTextBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

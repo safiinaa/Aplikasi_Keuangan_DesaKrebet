@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.BundleCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -47,6 +48,8 @@ class AddPengeluaranFragment : Fragment() {
         } else {
             arguments?.getParcelable("data")!!
         }
+
+        onBackPressed()
 
         return binding.root
     }
@@ -151,10 +154,7 @@ class AddPengeluaranFragment : Fragment() {
             }
 
             btnKembali.setOnClickListener {
-                val fragment = PengeluaranFragment()
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.frameLayout, fragment)
-                    .commit()
+                setBackState()
             }
         }
     }
@@ -179,6 +179,30 @@ class AddPengeluaranFragment : Fragment() {
         val number = lastId.substring(1).toInt() // Ambil angka setelah K
         val nextNumber = number + 1
         return "K" + nextNumber.toString().padStart(2, '0') // Format menjadi K01 dst
+    }
+
+    private fun onBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                setBackState()
+            }
+        })
+    }
+
+    private fun setBackState() {
+        val data = Pengunjung(
+            id = pengunjung.id ,
+            namaInstansi = pengunjung.namaInstansi ,
+            alamat = pengunjung.alamat
+        )
+        val fragment = SemuaPengeluaranFragment()
+        val mBundle = Bundle()
+        mBundle.putParcelable("data", data)
+
+        fragment.arguments = mBundle
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.frameLayout, fragment)
+            .commit()
     }
 
     override fun onDestroyView() {

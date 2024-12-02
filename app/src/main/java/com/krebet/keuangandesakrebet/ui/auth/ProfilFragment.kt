@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.krebet.keuangandesakrebet.R
@@ -25,6 +26,9 @@ class ProfilFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfilBinding.inflate(inflater, container, false)
+
+        onBackPressed()
+
         return binding.root
     }
 
@@ -44,11 +48,23 @@ class ProfilFragment : Fragment() {
             }
 
             btnKembali.setOnClickListener {
-                val transaction = parentFragmentManager.beginTransaction()
-                transaction.replace(R.id.frameLayout , HomeFragment())
-                transaction.commit()
+                setBackState()
             }
         }
+    }
+
+    private fun onBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                setBackState()
+            }
+        })
+    }
+
+    private fun setBackState() {
+        val transaction = parentFragmentManager.beginTransaction()
+        transaction.replace(R.id.frameLayout , HomeFragment())
+        transaction.commit()
     }
 
     override fun onDestroyView() {

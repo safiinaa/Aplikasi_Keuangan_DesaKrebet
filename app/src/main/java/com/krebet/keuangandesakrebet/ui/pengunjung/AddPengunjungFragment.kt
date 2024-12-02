@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -33,6 +34,9 @@ class AddPengunjungFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAddPengunjungBinding.inflate(inflater , container , false)
+
+        onBackPressed()
+
         return binding.root
     }
 
@@ -99,7 +103,9 @@ class AddPengunjungFragment : Fragment() {
                         )
 
                         val pengunjungRef = db.collection("pengunjung").document(nextIdPengunjung)
-                        transaction.set(pengunjungRef, pengunjung)
+                        transaction.set(pengunjungRef, pengunjung)  //Masukkan data pengunjung ke db pengujung
+
+                        transaction.update(lastIdPengunjungRef, "id", nextIdPengunjung)     //Update id pengunjung di db lastId
 
                         val pemasukan = hashMapOf(
                             "idPengunjung" to nextIdPengunjung,
@@ -110,9 +116,9 @@ class AddPengunjungFragment : Fragment() {
                         )
 
                         val pemasukanRef = db.collection("pemasukan").document(nextIdPemasukan)
-                        transaction.set(pemasukanRef, pemasukan)
+                        transaction.set(pemasukanRef, pemasukan)  //Masukkan data pengunjung ke db pemasukan
 
-                        transaction.update(lastIdPengunjungRef, "id", nextIdPengunjung)
+                        transaction.update(lastIdPemasukanRef, "id", nextIdPemasukan)     //Update id pemasukan di db lastId
 
                     }.addOnSuccessListener {
                         Toast.makeText(context , "Data berhasil disimpan" , Toast.LENGTH_LONG).show()
@@ -132,9 +138,7 @@ class AddPengunjungFragment : Fragment() {
             }
 
             btnKembali.setOnClickListener {
-                val transaction = parentFragmentManager.beginTransaction()
-                transaction.replace(R.id.frameLayout , HomeFragment())
-                transaction.commit()
+                setBackState()
             }
         }
     }
@@ -149,6 +153,20 @@ class AddPengunjungFragment : Fragment() {
         val number = lastId.substring(1).toInt() // Ambil angka setelah M
         val nextNumber = number + 1
         return "M" + nextNumber.toString().padStart(2, '0') // Format menjadi M01 dst
+    }
+
+    private fun onBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                setBackState()
+            }
+        })
+    }
+
+    private fun setBackState() {
+        val transaction = parentFragmentManager.beginTransaction()
+        transaction.replace(R.id.frameLayout , HomeFragment())
+        transaction.commit()
     }
 
     override fun onDestroyView() {
