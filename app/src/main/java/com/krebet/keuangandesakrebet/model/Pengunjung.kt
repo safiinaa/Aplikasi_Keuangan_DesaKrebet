@@ -11,8 +11,8 @@ data class Pengunjung (
     var namaInstansi: String? = "",
     val noTelp: String? = "",
     val alamat: String? = "",
-    val tanggal: Timestamp? = null,
-    val tanggalAcara: Timestamp? = null,
+    val tglTransaksi: Timestamp? = null,
+    val tglKunjungan: Timestamp? = null,
     val dp: Float? = 0F
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -32,8 +32,8 @@ data class Pengunjung (
         parcel.writeString(namaInstansi)
         parcel.writeString(noTelp)
         parcel.writeString(alamat)
-        parcel.writeParcelable(tanggal , flags)
-        parcel.writeParcelable(tanggalAcara , flags)
+        parcel.writeParcelable(tglTransaksi , flags)
+        parcel.writeParcelable(tglKunjungan , flags)
         parcel.writeValue(dp)
     }
 

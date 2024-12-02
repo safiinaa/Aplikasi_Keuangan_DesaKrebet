@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="10dp">
 
     <RelativeLayout
@@ -13,12 +15,37 @@
         android:padding="10dp">
 
         <TextView
+            android:id="@+id/tvId"
+            style="@style/bodyTextRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/id_pemasukan" />
+
+        <TextView
+            android:id="@+id/tvNama"
+            style="@style/blackTextTitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvId"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:layout_toStartOf="@+id/tvJumlah"
+            android:ellipsize="marquee"
+            android:maxLines="2"
+            android:text="@string/nama_pengunjung" />
+
+        <TextView
             android:id="@+id/tvTanggal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_below="@+id/tvNama"
+            android:layout_marginTop="8dp"
             style="@style/bodyTextRegular"
-            android:text="@string/tanggal" />
+            android:text="@string/tgl" />
 
         <TextView
             android:id="@+id/tvCatatan"
@@ -27,12 +54,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvTanggal"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="20dp"
             android:layout_toStartOf="@+id/tvJumlah"
             android:ellipsize="marquee"
             android:maxLines="2"
-            android:text="@string/pengajar_tari" />
+            android:text="@string/catatan" />
 
         <TextView
             android:id="@+id/tvJumlah"

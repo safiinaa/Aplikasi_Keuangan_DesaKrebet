@@ -25,16 +25,20 @@ class PengeluaranAdapter(private val data: List<Pair<Pengunjung, Double>> , priv
         with(holder.binding) {
             with(data[position]) {
                 val formatRp = DecimalFormat("Rp ###,###,###").format(second)
+
+                tvId.text = first.id
                 tvNama.text = first.namaInstansi
                 tvJumlah.text = formatRp
 
                 holder.itemView.setOnClickListener {
-                    val id = first.id
-                    val nama = first.namaInstansi
+                    val data = Pengunjung(
+                        id = first.id ,
+                        namaInstansi = first.namaInstansi ,
+                        alamat = first.alamat
+                    )
                     val fragment = SemuaPengeluaranFragment()
                     val bundle = Bundle()
-                    bundle.putString("id", id)
-                    bundle.putString("namaInstansi", nama)
+                    bundle.putParcelable("data", data)
                     fragment.arguments = bundle
                     fragmentManager.beginTransaction()
                         .replace(R.id.frameLayout, fragment)

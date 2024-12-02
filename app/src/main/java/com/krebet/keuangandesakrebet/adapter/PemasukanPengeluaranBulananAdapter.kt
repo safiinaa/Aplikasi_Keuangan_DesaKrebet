@@ -24,8 +24,9 @@ class PemasukanPengeluaranBulananAdapter(private val data: List<Transaksi>) : Re
     override fun onBindViewHolder(holder: ViewHolder , position: Int) {
         with(holder.binding) {
             with(data[position]) {
-                val date = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID")).format(tanggal!!.toDate())
+                val date = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID")).format(tglTransaksi!!.toDate())
                 val formatRp = DecimalFormat("Rp ###,###,###").format(total)
+
                 tvPengunjung.text = pengunjung?.namaInstansi
                 tvCatatan.text = catatan
                 tvTanggal.text = date

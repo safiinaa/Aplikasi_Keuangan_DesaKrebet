@@ -24,17 +24,21 @@ class PemasukanAdapter(private val data: List<Pair<Pengunjung, Double>>, private
     override fun onBindViewHolder(holder: ViewHolder , position: Int) {
         with(holder.binding) {
             with(data[position]) {
-                val formatRp = DecimalFormat("Rp ###,###,###").format(second)
+                val formatRp = DecimalFormat("Rp ###,###,###")
+
+                tvId.text = first.id
                 tvNama.text = first.namaInstansi
-                tvJumlah.text = formatRp
+                tvJumlah.text = formatRp.format(second)
 
                 holder.itemView.setOnClickListener {
-                    val id = first.id
-                    val nama = first.namaInstansi
+                    val data = Pengunjung(
+                        id = first.id ,
+                        namaInstansi = first.namaInstansi ,
+                        alamat = first.alamat
+                    )
                     val fragment = SemuaPemasukanFragment()
                     val bundle = Bundle()
-                    bundle.putString("id", id)
-                    bundle.putString("namaInstansi", nama)
+                    bundle.putParcelable("data", data)
                     fragment.arguments = bundle
                     fragmentManager.beginTransaction()
                         .replace(R.id.frameLayout, fragment)

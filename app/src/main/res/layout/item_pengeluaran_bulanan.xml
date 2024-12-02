@@ -6,46 +6,36 @@
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     android:layout_marginBottom="10dp"
-    android:backgroundTint="@color/blue2"
+    android:backgroundTint="@color/blue3"
     app:cardCornerRadius="10dp">
 
     <RelativeLayout
         android:id="@+id/cvHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:padding="20dp">
 
         <TextView
-            android:id="@+id/tvId"
-            style="@style/bodyTextRegular"
+            android:id="@+id/tvBulan"
+            style="@style/blackTextTitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginBottom="8dp"
-            android:text="@string/id_pengunjung" />
-
-        <TextView
-            android:id="@+id/tvNama"
-            style="@style/blackTextTitle2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvId"
-            android:layout_alignParentStart="true"
             android:layout_marginEnd="20dp"
-            android:layout_toStartOf="@+id/tvJumlah"
             android:ellipsize="marquee"
             android:maxLines="2"
-            android:text="@string/nama_pengunjung" />
+            android:layout_toStartOf="@+id/tvJumlah"
+            android:text="@string/bulan" />
 
         <TextView
             android:id="@+id/tvJumlah"
-            style="@style/bodyTextBold"
+            style="@style/bodyTextRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="0dp"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="0dp"
             android:text="@string/saldo1" />
 
     </RelativeLayout>

@@ -8,7 +8,7 @@ import com.google.firebase.Timestamp
 data class Transaksi (
     var idTransaksi: String? = "" ,
     val idPengunjung: String? = "" ,
-    val tanggal: Timestamp? = null ,
+    val tglTransaksi: Timestamp? = null ,
     val nominal: Float? = 0F ,
     val qty: Float? = 0F ,
     val total: Float? = 0F ,
@@ -31,7 +31,7 @@ data class Transaksi (
     override fun writeToParcel(parcel: Parcel , flags: Int) {
         parcel.writeString(idTransaksi)
         parcel.writeString(idPengunjung)
-        parcel.writeParcelable(tanggal , flags)
+        parcel.writeParcelable(tglTransaksi , flags)
         parcel.writeValue(nominal)
         parcel.writeValue(qty)
         parcel.writeValue(total)

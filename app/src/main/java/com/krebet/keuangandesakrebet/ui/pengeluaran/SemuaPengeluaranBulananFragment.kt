@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.krebet.keuangandesakrebet.R
 import com.krebet.keuangandesakrebet.adapter.PemasukanPengeluaranBulananAdapter
-import com.krebet.keuangandesakrebet.databinding.FragmentSemuaPemasukanPengeluaranBinding
+import com.krebet.keuangandesakrebet.databinding.FragmentSemuaPemasukanPengeluaranBulananBinding
 import com.krebet.keuangandesakrebet.model.Pengunjung
 import com.krebet.keuangandesakrebet.model.Transaksi
 import java.text.SimpleDateFormat
@@ -18,7 +18,7 @@ import java.util.Locale
 @Suppress("SpellCheckingInspection")
 class SemuaPengeluaranBulananFragment : Fragment() {
 
-    private var _binding: FragmentSemuaPemasukanPengeluaranBinding? = null
+    private var _binding: FragmentSemuaPemasukanPengeluaranBulananBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var bulan: String
@@ -28,11 +28,11 @@ class SemuaPengeluaranBulananFragment : Fragment() {
         inflater: LayoutInflater , container: ViewGroup? ,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSemuaPemasukanPengeluaranBinding.inflate(inflater, container, false)
+        _binding = FragmentSemuaPemasukanPengeluaranBulananBinding.inflate(inflater, container, false)
 
         bulan = requireArguments().getString("bulan")!!
 
-        binding.tvNama.text = bulan
+        binding.tvBulan.text = bulan
 
         return binding.root
     }
@@ -47,7 +47,7 @@ class SemuaPengeluaranBulananFragment : Fragment() {
                 for (document in documents) {
                     val transaction = document.toObject(Transaksi::class.java).copy(jenis = "pengeluaran")
                     transaction.let {
-                        val transactionDate = it.tanggal!!.toDate()
+                        val transactionDate = it.tglTransaksi!!.toDate()
                         val monthFormat = SimpleDateFormat("MMMM yyyy", Locale("id", "ID"))
                         val transactionMonth = monthFormat.format(transactionDate)
 
@@ -60,8 +60,10 @@ class SemuaPengeluaranBulananFragment : Fragment() {
                                     transaction.pengunjung = visitor
                                     data.add(transaction)
 
+                                    val dataSorted = data.sortedByDescending { it.tglTransaksi }
+
                                     if (isAdded) {
-                                        binding.recyclerView.adapter = PemasukanPengeluaranBulananAdapter(data)
+                                        binding.recyclerView.adapter = PemasukanPengeluaranBulananAdapter(dataSorted)
                                     }
                                 }
                                 .addOnFailureListener {

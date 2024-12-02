@@ -8,15 +8,16 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.krebet.keuangandesakrebet.R
 import com.krebet.keuangandesakrebet.databinding.ItemHistoryBinding
+import com.krebet.keuangandesakrebet.model.Pengunjung
 import com.krebet.keuangandesakrebet.model.Transaksi
-import com.krebet.keuangandesakrebet.ui.home.EditPemasukanFragment
-import com.krebet.keuangandesakrebet.ui.home.EditPengeluaranFragment
+import com.krebet.keuangandesakrebet.ui.pemasukan.SemuaPemasukanFragment
+import com.krebet.keuangandesakrebet.ui.pengeluaran.SemuaPengeluaranFragment
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 @Suppress("SpellCheckingInspection")
-class HomeAdapter(private val data: List<Transaksi> , private val fragmentManager: FragmentManager) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+class HomeAdapter(private val data: List<Transaksi>, private val fragmentManager: FragmentManager) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ItemHistoryBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -28,7 +29,7 @@ class HomeAdapter(private val data: List<Transaksi> , private val fragmentManage
     override fun onBindViewHolder(holder: ViewHolder , position: Int) {
         with(holder.binding) {
             with(data[position]) {
-                val date = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID")).format(tanggal!!.toDate())
+                val date = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID")).format(tglTransaksi!!.toDate())
                 val formatRp = DecimalFormat("Rp ###,###,###").format(total)
                 tvPengunjung.text = pengunjung?.namaInstansi
                 tvCatatan.text = catatan
@@ -44,20 +45,16 @@ class HomeAdapter(private val data: List<Transaksi> , private val fragmentManage
                 root.setCardBackgroundColor(itemColor)
 
                 holder.itemView.setOnClickListener {
-                    val data = Transaksi(
-                        idTransaksi = idTransaksi ,
-                        idPengunjung = idPengunjung ,
-                        tanggal = tanggal ,
-                        nominal = nominal ,
-                        qty = qty ,
-                        total = total ,
-                        catatan = catatan ,
-                        pengunjung = pengunjung
+                    val data = Pengunjung(
+                        id = idPengunjung,
+                        namaInstansi = pengunjung?.namaInstansi,
+                        alamat = pengunjung?.alamat
                     )
-                    val fragmentPemasukan = EditPemasukanFragment()
-                    val fragmentPengeluaran = EditPengeluaranFragment()
+                    val fragmentPemasukan = SemuaPemasukanFragment()
+                    val fragmentPengeluaran = SemuaPengeluaranFragment()
                     val mBundle = Bundle()
                     mBundle.putParcelable("data", data)
+                    mBundle.putString("backTo", "home")
 
                     if (jenis == "pemasukan") {
                         fragmentPemasukan.arguments = mBundle

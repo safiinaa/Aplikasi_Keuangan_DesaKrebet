@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     android:layout_marginBottom="10dp"
     android:backgroundTint="@color/green2"
     app:cardCornerRadius="10dp">
@@ -16,12 +17,16 @@
 
         <TextView
             android:id="@+id/tvBulan"
+            style="@style/blackTextTitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/bulanthn"
-            style="@style/blackTextTitle2"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"/>
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="20dp"
+            android:ellipsize="marquee"
+            android:maxLines="2"
+            android:layout_toStartOf="@+id/tvJumlah"
+            android:text="@string/bulan" />
 
         <TextView
             android:id="@+id/tvJumlah"
@@ -29,6 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="0dp"
             android:text="@string/saldo1" />
 

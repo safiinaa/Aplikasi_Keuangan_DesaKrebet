@@ -1,4 +1,4 @@
-package com.krebet.keuangandesakrebet.ui.home
+package com.krebet.keuangandesakrebet.ui.pengeluaran
 
 import android.app.AlertDialog
 import android.os.Build
@@ -18,22 +18,24 @@ import com.google.firebase.firestore.FieldValue.serverTimestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.krebet.keuangandesakrebet.R
-import com.krebet.keuangandesakrebet.databinding.FragmentEditPemasukanBinding
+import com.krebet.keuangandesakrebet.databinding.FragmentEditPengeluaranBinding
 import com.krebet.keuangandesakrebet.model.Pengunjung
 import com.krebet.keuangandesakrebet.model.Transaksi
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 @Suppress("SpellCheckingInspection" , "DEPRECATION")
-class EditPemasukanFragment : Fragment() {
+class EditPengeluaranFragment : Fragment() {
 
-    private var _binding: FragmentEditPemasukanBinding? = null
+    private var _binding: FragmentEditPengeluaranBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var transaksi: Transaksi
 
     private var tanggal: Date? = null
+    private var total: Float? = null
     private var alamat: String? = null
     private var idPengunjung: String? = null
     private lateinit var visitors: List<Pengunjung>
@@ -46,7 +48,7 @@ class EditPemasukanFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentEditPemasukanBinding.inflate(inflater, container, false)
+        _binding = FragmentEditPengeluaranBinding.inflate(inflater, container, false)
 
         transaksi = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             BundleCompat.getParcelable(requireArguments(), "data", Transaksi::class.java)!!
@@ -66,12 +68,14 @@ class EditPemasukanFragment : Fragment() {
             transaksi.let {
                 idPengunjung = it.idPengunjung
                 alamat = it.pengunjung?.alamat
-                tanggal = it.tanggal?.toDate()
+                tanggal = it.tglTransaksi?.toDate()
                 etNamaInstansi.setText(it.pengunjung?.namaInstansi)
                 tvAlamat.text = it.pengunjung?.alamat
                 btnTanggal.text = formatDate.format(tanggal!!)
-                etNominal.setText(it.total?.toInt().toString())
+                etNominal.setText(it.nominal?.toInt().toString())
+                etQty.setText(it.qty?.toInt().toString())
                 etCatatan.setText(it.catatan)
+                calculateTotal()
             }
 
             etNamaInstansi.addTextChangedListener(object : TextWatcher {
@@ -103,7 +107,7 @@ class EditPemasukanFragment : Fragment() {
 
             btnTanggal.setOnClickListener {
                 val datePicker = MaterialDatePicker.Builder.datePicker()
-                    .setTitleText("Pilih Tanggal")
+                    .setTitleText("Pilih Tanggal Transaksi")
                     .build()
                 datePicker.show(parentFragmentManager , "DatePicker")
                 datePicker.addOnPositiveButtonClickListener {
@@ -117,9 +121,30 @@ class EditPemasukanFragment : Fragment() {
                 }
             }
 
+            etNominal.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence? , start: Int , count: Int , after: Int) {}
+
+                override fun onTextChanged(s: CharSequence? , start: Int , before: Int , count: Int) {}
+
+                override fun afterTextChanged(s: Editable?) {
+                    calculateTotal()
+                }
+            })
+
+            etQty.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence? , start: Int , count: Int , after: Int) {}
+
+                override fun onTextChanged(s: CharSequence? , start: Int , before: Int , count: Int) {}
+
+                override fun afterTextChanged(s: Editable?) {
+                    calculateTotal()
+                }
+            })
+
             btnSimpan.setOnClickListener {
                 val nama = etNamaInstansi.text.toString()
                 val nominal = etNominal.text.toString()
+                val jumlah = etQty.text.toString()
                 val catatan = etCatatan.text.toString()
 
                 if (nama.isEmpty()) {
@@ -129,25 +154,30 @@ class EditPemasukanFragment : Fragment() {
                 } else if (tanggal == null) {
                     Toast.makeText(context, "Tanggal tidak boleh kosong", Toast.LENGTH_LONG).show()
                 } else if (nominal.isEmpty()) {
-                    Toast.makeText(context, "Nominal tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context , "Nominal tidak boleh kosong" , Toast.LENGTH_LONG).show()
+                } else if (jumlah.isEmpty()) {
+                    Toast.makeText(context, "Jumlah tidak boleh kosong", Toast.LENGTH_LONG).show()
                 } else if (catatan.isEmpty()) {
                     Toast.makeText(context, "Catatan tidak boleh kosong", Toast.LENGTH_LONG).show()
                 } else {
                     loading.isVisible = true
-                    val pemasukan = hashMapOf(
+                    val pengeluaran = hashMapOf(
                         "idPengunjung" to idPengunjung,
                         "tanggal" to tanggal,
-                        "total" to nominal.toFloat(),
+                        "nominal" to nominal.toFloat(),
+                        "qty" to jumlah.toFloat(),
+                        "total" to total,
                         "catatan" to catatan,
                         "updatedAt" to serverTimestamp()
                     )
 
-                    db.collection("pemasukan")
+                    db.collection("pengeluaran")
                         .document(transaksi.idTransaksi!!)
-                        .update(pemasukan)
+                        .update(pengeluaran)
                         .addOnSuccessListener {
                             Toast.makeText(context, "Data berhasil diperbarui", Toast.LENGTH_LONG).show()
                             loading.isVisible = false
+                            loadFragment()
                         }
                         .addOnFailureListener {
                             Toast.makeText(context, "Terjadi kesalahan, silahkan ulangi kembali", Toast.LENGTH_LONG).show()
@@ -162,7 +192,7 @@ class EditPemasukanFragment : Fragment() {
                     .setMessage("Anda yakin ingin menghapus? Data ini tidak dapat dipulihkan setelah dihapus")
                     .setPositiveButton("Hapus") { _, _ ->
 
-                        db.collection("pemasukan")
+                        db.collection("pengeluaran")
                             .document(transaksi.idTransaksi!!)
                             .delete()
                             .addOnSuccessListener {
@@ -210,10 +240,36 @@ class EditPemasukanFragment : Fragment() {
         }
     }
 
+    private fun calculateTotal() {
+        binding.apply {
+            val nominal = etNominal.text.toString()
+            val jumlah = etQty.text.toString()
+
+            if (nominal.isNotEmpty() && jumlah.isNotEmpty()) {
+                val price = nominal.toFloat()
+                val qty = jumlah.toFloat()
+                total = price * qty
+                val formatRp = DecimalFormat("Rp ###,###,###").format(total)
+                binding.tvTotal.text = formatRp
+            }
+        }
+    }
+
     private fun loadFragment() {
-        val transaction = parentFragmentManager.beginTransaction()
-        transaction.replace(R.id.frameLayout , HomeFragment())
-        transaction.commit()
+        val pengunjung = transaksi.pengunjung
+        val data = Pengunjung(
+            id = pengunjung?.id ,
+            namaInstansi = pengunjung?.namaInstansi ,
+            alamat = pengunjung?.alamat
+        )
+        val fragment = SemuaPengeluaranFragment()
+        val mBundle = Bundle()
+        mBundle.putParcelable("data", data)
+
+        fragment.arguments = mBundle
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.frameLayout, fragment)
+            .commit()
     }
 
     override fun onStop() {

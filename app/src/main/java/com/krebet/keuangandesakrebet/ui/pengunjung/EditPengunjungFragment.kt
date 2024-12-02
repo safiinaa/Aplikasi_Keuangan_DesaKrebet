@@ -28,7 +28,7 @@ class EditPengunjungFragment : Fragment() {
 
     private lateinit var pengunjung: Pengunjung
 
-    private var tanggal: Date? = null
+    private var tglKunjungan: Date? = null
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -54,25 +54,25 @@ class EditPengunjungFragment : Fragment() {
             val formatDate = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
 
             pengunjung.let {
-                tanggal = it.tanggal?.toDate()
+                tglKunjungan = it.tglKunjungan?.toDate()
                 etNamaCp.setText(it.namaCp)
                 etNamaInstansi.setText(it.namaInstansi)
                 etNoTelp.setText(it.noTelp)
                 etAlamat.setText(it.alamat)
-                btnTanggal.text = formatDate.format(tanggal!!)
-                etNominal.setText(it.dp?.toInt().toString())
+                btnTanggalKunjungan.text = formatDate.format(tglKunjungan!!)
+//                etDp.setText(it.dp?.toInt().toString())
             }
 
-            btnTanggal.setOnClickListener {
+            btnTanggalKunjungan.setOnClickListener {
                 val datePicker = MaterialDatePicker.Builder.datePicker()
-                    .setTitleText("Pilih Tanggal")
+                    .setTitleText("Pilih Tanggal Kunjungan")
                     .build()
                 datePicker.show(parentFragmentManager , "DatePicker")
                 datePicker.addOnPositiveButtonClickListener {
                     val sdf = SimpleDateFormat("dd MMMM yyyy" , Locale("id", "ID"))
                     val date = Date(it)
-                    tanggal = date
-                    btnTanggal.text = sdf.format(date).toString()
+                    tglKunjungan = date
+                    btnTanggalKunjungan.text = sdf.format(date).toString()
                 }
                 datePicker.addOnNegativeButtonClickListener {
                     datePicker.dismiss()
@@ -84,20 +84,20 @@ class EditPengunjungFragment : Fragment() {
                 val namaInstansi = etNamaInstansi.text.toString()
                 val noTelp = etNoTelp.text.toString()
                 val alamat = etAlamat.text.toString()
-                val dp = etNominal.text.toString()
+//                val dp = etDp.text.toString()
 
                 if (namaCp.isEmpty()) {
                     Toast.makeText(context, "Nama CP tidak boleh kosong", Toast.LENGTH_LONG).show()
-                } else if (namaInstansi.isEmpty()) {
-                    Toast.makeText(context, "Nama Instansi tidak boleh kosong", Toast.LENGTH_LONG).show()
                 } else if (noTelp.isEmpty()) {
                     Toast.makeText(context , "Nomor telepon tidak boleh kosong" , Toast.LENGTH_SHORT).show()
+                } else if (namaInstansi.isEmpty()) {
+                    Toast.makeText(context, "Nama Instansi tidak boleh kosong", Toast.LENGTH_LONG).show()
                 } else if (alamat.isEmpty()) {
                     Toast.makeText(context, "Alamat tidak boleh kosong", Toast.LENGTH_LONG).show()
-                } else if (tanggal == null) {
+                } else if (tglKunjungan == null) {
                     Toast.makeText(context, "Tanggal tidak boleh kosong", Toast.LENGTH_LONG).show()
-                } else if (dp.isEmpty()) {
-                    Toast.makeText(context, "DP tidak boleh kosong", Toast.LENGTH_LONG).show()
+//                } else if (dp.isEmpty()) {
+//                    Toast.makeText(context, "DP tidak boleh kosong", Toast.LENGTH_LONG).show()
                 } else {
                     loading.isVisible = true
                     val pengunjung = hashMapOf(
@@ -105,8 +105,8 @@ class EditPengunjungFragment : Fragment() {
                         "namaInstansi" to namaInstansi,
                         "noTelp" to noTelp,
                         "alamat" to alamat,
-                        "tanggal" to tanggal,
-                        "dp" to dp,
+                        "tglKunjungan" to tglKunjungan,
+//                        "dp" to dp.toFloat(),
                         "updatedAt" to serverTimestamp()
                     )
 

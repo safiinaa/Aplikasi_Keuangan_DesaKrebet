@@ -2,13 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="grey">#C8CDD1</color>
-    <color name="green1">#D7F0EA</color>
     <color name="green2">#B0D4C6</color>
     <color name="green3">#477976</color>
     <color name="blue1">#295882</color>
     <color name="blue2">#6FABD0</color>
     <color name="blue3">#92C0D7</color>
     <color name="greytxt">#49454F</color>
-    <color name="red">#C62828</color>
 </resources>

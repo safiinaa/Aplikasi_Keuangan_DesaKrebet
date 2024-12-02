@@ -17,8 +17,6 @@ import com.krebet.keuangandesakrebet.databinding.FragmentHomeBinding
 import com.krebet.keuangandesakrebet.model.Pengunjung
 import com.krebet.keuangandesakrebet.model.Transaksi
 import com.krebet.keuangandesakrebet.ui.auth.ProfilFragment
-import com.krebet.keuangandesakrebet.ui.pemasukan.AddPemasukanFragment
-import com.krebet.keuangandesakrebet.ui.pengeluaran.AddPengeluaranFragment
 import com.krebet.keuangandesakrebet.ui.pengunjung.AddPengunjungFragment
 import com.krebet.keuangandesakrebet.ui.pengunjung.PengunjungFragment
 import java.text.DecimalFormat
@@ -103,20 +101,20 @@ class HomeFragment : Fragment() {
                 }
             }
 
-            btnInputNama.setOnClickListener {
+            btnTambahPengunjung.setOnClickListener {
                 loadFragment(AddPengunjungFragment())
                 closeMenu()
             }
 
-            btnTambahPemasukan.setOnClickListener {
-                loadFragment(AddPemasukanFragment())
-                closeMenu()
-            }
-
-            btnTambahPengeluaran.setOnClickListener {
-                loadFragment(AddPengeluaranFragment())
-                closeMenu()
-            }
+//            btnTambahPemasukan.setOnClickListener {
+//                loadFragment(AddPemasukanFragment())
+//                closeMenu()
+//            }
+//
+//            btnTambahPengeluaran.setOnClickListener {
+//                loadFragment(AddPengeluaranFragment())
+//                closeMenu()
+//            }
         }
     }
 
@@ -174,7 +172,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setRecyclerView(transactions: List<Transaksi>) {
-        val transactionsSorted = transactions.sortedBy { it.tanggal }
+        val transactionsSorted = transactions.sortedByDescending { it.tglTransaksi }
         if (isAdded) {
             binding.recyclerView.adapter = HomeAdapter(transactionsSorted, requireActivity().supportFragmentManager)
         }
@@ -192,14 +190,16 @@ class HomeFragment : Fragment() {
                 for (document in it) {
                     val transaction = document.toObject(Transaksi::class.java)
 
-                    val transactionDate = transaction.tanggal!!.toDate()
+                    val transactionDate = transaction.tglTransaksi!!.toDate()
                     val transactionYear = yearFormat.format(transactionDate)
 
                     if (transactionYear == currentYear) {
                         saldoPemasukan += transaction.total ?: 0F
                     }
                 }
-                binding.tvSaldoMasuk.text = formatRupiah(saldoPemasukan)
+                if (isAdded) {
+                    binding.tvSaldoMasuk.text = formatRupiah(saldoPemasukan)
+                }
             }
             .addOnFailureListener {
                 Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
@@ -210,14 +210,16 @@ class HomeFragment : Fragment() {
                 for (document in it) {
                     val transaction = document.toObject(Transaksi::class.java)
 
-                    val transactionDate = transaction.tanggal!!.toDate()
+                    val transactionDate = transaction.tglTransaksi!!.toDate()
                     val transactionYear = yearFormat.format(transactionDate)
 
                     if (transactionYear == currentYear) {
                         saldoPengeluaran += transaction.total ?: 0F
                     }
                 }
-                binding.tvSaldoKeluar.text = formatRupiah(saldoPengeluaran)
+                if (isAdded) {
+                    binding.tvSaldoKeluar.text = formatRupiah(saldoPengeluaran)
+                }
             }
             .addOnFailureListener {
                 Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
@@ -236,14 +238,16 @@ class HomeFragment : Fragment() {
                 for (document in it) {
                     val transaction = document.toObject(Transaksi::class.java)
 
-                    val transactionDate = transaction.tanggal!!.toDate()
+                    val transactionDate = transaction.tglTransaksi!!.toDate()
                     val transactionMonth = monthFormat.format(transactionDate)
 
                     if (transactionMonth == currentMonth) {
                         saldoPemasukan += transaction.total ?: 0F
                     }
                 }
-                binding.tvSaldoMasuk.text = formatRupiah(saldoPemasukan)
+                if (isAdded) {
+                    binding.tvSaldoMasuk.text = formatRupiah(saldoPemasukan)
+                }
             }
             .addOnFailureListener {
                 Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
@@ -254,14 +258,16 @@ class HomeFragment : Fragment() {
                 for (document in it) {
                     val transaction = document.toObject(Transaksi::class.java)
 
-                    val transactionDate = transaction.tanggal!!.toDate()
+                    val transactionDate = transaction.tglTransaksi!!.toDate()
                     val transactionMonth = monthFormat.format(transactionDate)
 
                     if (transactionMonth == currentMonth) {
                         saldoPengeluaran += transaction.total ?: 0F
                     }
                 }
-                binding.tvSaldoKeluar.text = formatRupiah(saldoPengeluaran)
+                if (isAdded) {
+                    binding.tvSaldoKeluar.text = formatRupiah(saldoPengeluaran)
+                }
             }
             .addOnFailureListener {
                 Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
@@ -280,14 +286,16 @@ class HomeFragment : Fragment() {
                 for (document in it) {
                     val transaction = document.toObject(Transaksi::class.java)
 
-                    val transactionDate = transaction.tanggal!!.toDate()
+                    val transactionDate = transaction.tglTransaksi!!.toDate()
                     val transactionDateFormat = dateFormat.format(transactionDate)
 
                     if (transactionDateFormat == currentDate) {
                         saldoPemasukan += transaction.total ?: 0F
                     }
                 }
-                binding.tvSaldoMasuk.text = formatRupiah(saldoPemasukan)
+                if (isAdded) {
+                    binding.tvSaldoMasuk.text = formatRupiah(saldoPemasukan)
+                }
             }
             .addOnFailureListener {
                 Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
@@ -298,14 +306,16 @@ class HomeFragment : Fragment() {
                 for (document in it) {
                     val transaction = document.toObject(Transaksi::class.java)
 
-                    val transactionDate = transaction.tanggal!!.toDate()
+                    val transactionDate = transaction.tglTransaksi!!.toDate()
                     val transactionMonthFormat = dateFormat.format(transactionDate)
 
                     if (transactionMonthFormat == currentDate) {
                         saldoPengeluaran += transaction.total ?: 0F
                     }
                 }
-                binding.tvSaldoKeluar.text = formatRupiah(saldoPengeluaran)
+                if (isAdded) {
+                    binding.tvSaldoKeluar.text = formatRupiah(saldoPengeluaran)
+                }
             }
             .addOnFailureListener {
                 Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
@@ -335,18 +345,18 @@ class HomeFragment : Fragment() {
 
     private fun openMenu() {
         binding.apply {
-            btnInputNama.isVisible = true
-            btnTambahPemasukan.isVisible = true
-            btnTambahPengeluaran.isVisible = true
+            btnTambahPengunjung.isVisible = true
+//            btnTambahPemasukan.isVisible = true
+//            btnTambahPengeluaran.isVisible = true
             isMenuOpen = true
         }
     }
 
     private fun closeMenu() {
         binding.apply {
-            btnInputNama.isVisible = false
-            btnTambahPemasukan.isVisible = false
-            btnTambahPengeluaran.isVisible = false
+            btnTambahPengunjung.isVisible = false
+//            btnTambahPemasukan.isVisible = false
+//            btnTambahPengeluaran.isVisible = false
             isMenuOpen = false
         }
     }

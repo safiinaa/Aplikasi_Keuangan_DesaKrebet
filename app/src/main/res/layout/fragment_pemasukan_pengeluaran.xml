@@ -8,28 +8,109 @@
     android:paddingBottom="10dp"
     tools:context=".ui.pemasukan.PemasukanFragment">
 
+<!--    <LinearLayout-->
+<!--        android:id="@+id/layoutMenu"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        <RadioGroup-->
+<!--            android:id="@+id/toggleGroup"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            tools:ignore="UselessParent">-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/btnSemua"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@drawable/button_selector"-->
+<!--                android:button="@null"-->
+<!--                android:checked="true"-->
+<!--                android:clickable="true"-->
+<!--                android:foreground="?android:attr/selectableItemBackground"-->
+<!--                android:gravity="center"-->
+<!--                android:padding="8dp"-->
+<!--                android:text="@string/semua"-->
+<!--                android:textColor="@drawable/text_color_selector"-->
+<!--                android:textStyle="bold" />-->
+
+<!--            <RadioButton-->
+<!--                android:id="@+id/btnBulanan"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@drawable/button_selector"-->
+<!--                android:button="@null"-->
+<!--                android:clickable="true"-->
+<!--                android:foreground="?android:attr/selectableItemBackground"-->
+<!--                android:gravity="center"-->
+<!--                android:padding="8dp"-->
+<!--                android:text="@string/bulanan"-->
+<!--                android:textColor="@drawable/text_color_selector"-->
+<!--                android:textStyle="bold" />-->
+<!--        </RadioGroup>-->
+<!--    </LinearLayout>-->
+
+    <SearchView
+        android:id="@+id/searchView"
+        style="@style/blackTextTitle2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:background="@drawable/style_searchview"
+        android:queryHint="@string/cari_nama_disini"
+        app:layout_constraintBottom_toTopOf="@id/recyclerView"
+        app:layout_constraintEnd_toStartOf="@+id/btnFilter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnFilter"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/ic_filter"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/searchView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
     <LinearLayout
         android:id="@+id/layoutMenu"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
         android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:elevation="2dp"
+        android:visibility="gone"
+        android:foregroundGravity="center"
+        app:layout_constraintEnd_toEndOf="@+id/btnFilter"
+        app:layout_constraintTop_toBottomOf="@+id/btnFilter">
 
         <RadioGroup
-            android:id="@+id/toggleGroup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             tools:ignore="UselessParent">
 
             <RadioButton
                 android:id="@+id/btnSemua"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:background="@drawable/button_selector"
                 android:button="@null"
                 android:checked="true"
@@ -43,10 +124,9 @@
 
             <RadioButton
                 android:id="@+id/btnBulanan"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
+                android:layout_marginTop="6dp"
                 android:background="@drawable/button_selector"
                 android:button="@null"
                 android:clickable="true"
@@ -56,59 +136,49 @@
                 android:text="@string/bulanan"
                 android:textColor="@drawable/text_color_selector"
                 android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/btnFilterTanggal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/button_selector"
+                android:button="@null"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/tgll"
+                android:textColor="@drawable/text_color_selector"
+                android:textStyle="bold" />
         </RadioGroup>
     </LinearLayout>
 
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:queryHint="@string/cari_nama_disini"
-        style="@style/blackTextTitle2"
-        android:background="@drawable/style_searchview"
-        app:layout_constraintBottom_toTopOf="@id/recyclerView"
-        app:layout_constraintEnd_toStartOf="@+id/btnList"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutMenu" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/btnFilterTanggal"-->
+<!--        android:layout_width="48dp"-->
+<!--        android:layout_height="48dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:background="@drawable/style_btn"-->
+<!--        android:elevation="2dp"-->
+<!--        android:importantForAccessibility="no"-->
+<!--        android:src="@drawable/ic_calender"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/btnList"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/btnList"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/btnList" />-->
 
-    <Button
-        android:id="@+id/btnList"
-        android:layout_width="40dp"
-        android:layout_height="48dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
-        android:background="@drawable/ic_filter"
-        app:layout_constraintStart_toEndOf="@id/searchView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutMenu"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <ImageButton
-        android:id="@+id/btnFilterTanggal"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="20dp"
-        android:elevation="2dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/btnList"
-        app:layout_constraintTop_toTopOf="@+id/btnList"
-        android:background="@drawable/style_btn"
-        android:src="@drawable/ic_calender"/>
-
-    <ImageButton
-        android:id="@+id/btnHapusFilter"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="@drawable/style_button_red"
-        android:layout_marginTop="5dp"
-        android:elevation="10dp"
-        android:visibility="gone"
-        android:src="@drawable/ic_close"
-        app:layout_constraintEnd_toEndOf="@+id/btnFilterTanggal"
-        app:layout_constraintStart_toStartOf="@+id/btnFilterTanggal"
-        app:layout_constraintTop_toBottomOf="@+id/btnFilterTanggal"/>
+<!--    <ImageButton-->
+<!--        android:id="@+id/btnHapusFilter"-->
+<!--        android:layout_width="48dp"-->
+<!--        android:layout_height="48dp"-->
+<!--        android:background="@drawable/style_button_red"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        android:elevation="10dp"-->
+<!--        android:importantForAccessibility="no"-->
+<!--        android:src="@drawable/ic_close"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/btnFilterTanggal"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/btnFilterTanggal"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/btnFilterTanggal"/>-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -121,6 +191,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchView"
         tools:listitem="@layout/item_pemasukan" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

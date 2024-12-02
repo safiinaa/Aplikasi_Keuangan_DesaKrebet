@@ -1,24 +1,34 @@
 package com.krebet.keuangandesakrebet.ui.pengeluaran
 
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.krebet.keuangandesakrebet.R
-import com.krebet.keuangandesakrebet.model.Transaksi
 import com.krebet.keuangandesakrebet.adapter.SemuaPemasukanPengeluaranAdapter
 import com.krebet.keuangandesakrebet.databinding.FragmentSemuaPemasukanPengeluaranBinding
+import com.krebet.keuangandesakrebet.model.Pengunjung
+import com.krebet.keuangandesakrebet.model.Transaksi
+import com.krebet.keuangandesakrebet.ui.home.HomeFragment
+import com.krebet.keuangandesakrebet.ui.pemasukan.PemasukanFragment
 
-@Suppress("SpellCheckingInspection")
+@Suppress("SpellCheckingInspection" , "DEPRECATION")
 class SemuaPengeluaranFragment : Fragment() {
 
     private var _binding: FragmentSemuaPemasukanPengeluaranBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var id: String
+    private lateinit var pengunjung: Pengunjung
+    private lateinit var backTo: String
+
     private val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
@@ -27,10 +37,15 @@ class SemuaPengeluaranFragment : Fragment() {
     ): View {
         _binding = FragmentSemuaPemasukanPengeluaranBinding.inflate(inflater, container, false)
 
-        id = requireArguments().getString("id")!!
-        val nama = requireArguments().getString("namaInstansi")!!
+        pengunjung = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            BundleCompat.getParcelable(requireArguments(), "data", Pengunjung::class.java)!!
+        } else {
+            arguments?.getParcelable("data")!!
+        }
 
-        binding.tvNama.text = nama
+        backTo = arguments?.getString("backTo") ?: ""
+
+        binding.tvNama.text = pengunjung.namaInstansi
 
         return binding.root
     }
@@ -38,30 +53,54 @@ class SemuaPengeluaranFragment : Fragment() {
     override fun onViewCreated(view: View , savedInstanceState: Bundle?) {
         super.onViewCreated(view , savedInstanceState)
 
+        val id = pengunjung.id
         val data = mutableListOf<Transaksi>()
 
-        db.collection("pengeluaran")
-            .whereEqualTo("idPengunjung", id)
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    val transaction = document.toObject(Transaksi::class.java)
-                    data.add(transaction)
-                    data.sortBy { it.tanggal }
+        binding.apply {
+            db.collection("pengeluaran")
+                .whereEqualTo("idPengunjung", id)
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        val transaction = document.toObject(Transaksi::class.java).copy(pengunjung = pengunjung).also { it.idTransaksi = document.id }
+                        data.add(transaction)
+                    }
+
+                    val dataSorted = data.sortedByDescending { it.tglTransaksi }
+
+                    if (isAdded) {
+                        binding.recyclerView.adapter = SemuaPemasukanPengeluaranAdapter(dataSorted, requireActivity().supportFragmentManager)
+                    }
+                }
+                .addOnFailureListener {
+                    Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
                 }
 
-                if (isAdded) {
-                    binding.recyclerView.adapter = SemuaPemasukanPengeluaranAdapter(data)
+            btnKembali.setOnClickListener {
+                if (backTo == "home") {
+                    val transaction = parentFragmentManager.beginTransaction()
+                    transaction.replace(R.id.frameLayout , HomeFragment())
+                    transaction.commit()
+                } else {
+                    val transaction = parentFragmentManager.beginTransaction()
+                    transaction.replace(R.id.frameLayout , PemasukanFragment())
+                    transaction.commit()
                 }
             }
-            .addOnFailureListener {
-                Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
-            }
 
-        binding.btnKembali.setOnClickListener {
-            val transaction = parentFragmentManager.beginTransaction()
-            transaction.replace(R.id.frameLayout , PengeluaranFragment())
-            transaction.commit()
+            val color = ContextCompat.getColor(requireContext(), R.color.blue1)
+            btnTambahTransaksi.backgroundTintList = ColorStateList.valueOf(color)
+            btnTambahTransaksi.setColorFilter(Color.WHITE)
+
+            btnTambahTransaksi.setOnClickListener {
+                val fragment = AddPengeluaranFragment()
+                val mBundle = Bundle()
+                mBundle.putParcelable("data", pengunjung)
+                fragment.arguments = mBundle
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.frameLayout, fragment)
+                    .commit()
+            }
         }
     }
 

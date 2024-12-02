@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.krebet.keuangandesakrebet.R
-import com.krebet.keuangandesakrebet.databinding.ItemPemasukanBinding
+import com.krebet.keuangandesakrebet.databinding.ItemPemasukanBulananBinding
 import com.krebet.keuangandesakrebet.model.SaldoBulanan
 import com.krebet.keuangandesakrebet.ui.pemasukan.SemuaPemasukanBulananFragment
 import java.text.DecimalFormat
@@ -14,10 +14,10 @@ import java.text.DecimalFormat
 @Suppress("SpellCheckingInspection")
 class PemasukanBulananAdapter(private val data: List<SaldoBulanan>, private val fragmentManager: FragmentManager) : RecyclerView.Adapter<PemasukanBulananAdapter.ViewHolder>() {
 
-    class ViewHolder(val binding: ItemPemasukanBinding): RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: ItemPemasukanBulananBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup , viewType: Int): ViewHolder {
-        val binding = ItemPemasukanBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemPemasukanBulananBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -25,8 +25,9 @@ class PemasukanBulananAdapter(private val data: List<SaldoBulanan>, private val 
         with(holder.binding) {
             with(data[position]) {
                 val formatRp = DecimalFormat("Rp ###,###,###").format(saldo)
+
                 tvJumlah.text = formatRp
-                tvNama.text = bulan
+                tvBulan.text = bulan
 
                 holder.itemView.setOnClickListener {
                     val fragment = SemuaPemasukanBulananFragment()
