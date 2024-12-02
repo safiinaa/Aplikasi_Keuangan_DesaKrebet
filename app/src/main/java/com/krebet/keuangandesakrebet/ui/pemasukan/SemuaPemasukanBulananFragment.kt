@@ -8,11 +8,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.krebet.keuangandesakrebet.R
+import com.krebet.keuangandesakrebet.adapter.PemasukanPengeluaranBulananAdapter
+import com.krebet.keuangandesakrebet.databinding.FragmentSemuaPemasukanPengeluaranBulananBinding
 import com.krebet.keuangandesakrebet.model.Pengunjung
 import com.krebet.keuangandesakrebet.model.Transaksi
-import com.krebet.keuangandesakrebet.adapter.PemasukanPengeluaranBulananAdapter
-import com.krebet.keuangandesakrebet.databinding.FragmentSemuaPemasukanPengeluaranBinding
-import com.krebet.keuangandesakrebet.databinding.FragmentSemuaPemasukanPengeluaranBulananBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -61,7 +60,7 @@ class SemuaPemasukanBulananFragment : Fragment() {
                                     transaction.pengunjung = visitor
                                     data.add(transaction)
 
-                                    val dataSorted = data.sortedByDescending { it.tglTransaksi }
+                                    val dataSorted = data.sortedByDescending { it.idTransaksi }
 
                                     if (isAdded) {
                                         binding.recyclerView.adapter = PemasukanPengeluaranBulananAdapter(dataSorted)

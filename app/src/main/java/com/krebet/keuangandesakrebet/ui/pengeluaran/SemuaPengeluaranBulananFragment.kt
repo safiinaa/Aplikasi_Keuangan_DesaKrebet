@@ -60,7 +60,7 @@ class SemuaPengeluaranBulananFragment : Fragment() {
                                     transaction.pengunjung = visitor
                                     data.add(transaction)
 
-                                    val dataSorted = data.sortedByDescending { it.tglTransaksi }
+                                    val dataSorted = data.sortedByDescending { it.idTransaksi }
 
                                     if (isAdded) {
                                         binding.recyclerView.adapter = PemasukanPengeluaranBulananAdapter(dataSorted)

@@ -281,8 +281,10 @@ class PemasukanFragment : Fragment() {
                             Pair(visitor, total)
                         }
 
+                        val dataSorted = totalPemasukan.sortedByDescending { it.first.id }
+
                         if (isAdded) {
-                            binding.recyclerView.adapter = PemasukanAdapter(totalPemasukan, requireActivity().supportFragmentManager)
+                            binding.recyclerView.adapter = PemasukanAdapter(dataSorted, requireActivity().supportFragmentManager)
                         }
                     }
                     .addOnFailureListener {

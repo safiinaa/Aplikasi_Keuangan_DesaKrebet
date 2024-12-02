@@ -65,7 +65,7 @@ class SemuaPemasukanFragment : Fragment() {
                         data.add(transaction)
                     }
 
-                    val dataSorted = data.sortedByDescending { it.tglTransaksi }
+                    val dataSorted = data.sortedByDescending { it.idTransaksi }
 
                     if (isAdded) {
                         recyclerView.adapter = SemuaPemasukanPengeluaranAdapter(dataSorted, requireActivity().supportFragmentManager)
