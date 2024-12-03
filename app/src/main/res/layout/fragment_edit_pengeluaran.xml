@@ -177,19 +177,20 @@
             android:layout_marginTop="14dp"
             android:text="@string/total"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutCatatan" />
+            app:layout_constraintTop_toBottomOf="@+id/btnUpload" />
 
         <TextView
             android:id="@+id/tvTotal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/whiteTextBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="6dp"
-            android:background="@drawable/bottom_border"
-            android:padding="15dp"
+            android:background="@drawable/style_tv_fill"
+            android:padding="10dp"
             android:text="@string/saldo2"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <Button
             android:id="@+id/btnUpload"
@@ -200,7 +201,6 @@
             android:background="@drawable/style_btn"
             android:drawableLeft="@drawable/ic_camera"
             android:text="@string/upload"
-            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layoutCatatan"
             tools:ignore="RtlHardcoded" />
@@ -210,25 +210,25 @@
             style="@style/whiteTextBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="200dp"
             android:background="@drawable/style_btn"
             android:text="@string/simpan"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTotal" />
+            app:layout_constraintTop_toBottomOf="@+id/layoutCatatan" />
 
         <Button
             android:id="@+id/btnHapus"
             style="@style/whiteTextBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="200dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/style_btn"
             android:text="@string/hapus"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTotal" />
+            app:layout_constraintTop_toBottomOf="@+id/layoutCatatan" />
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/loading"

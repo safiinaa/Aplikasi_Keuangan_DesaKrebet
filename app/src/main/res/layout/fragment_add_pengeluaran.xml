@@ -188,6 +188,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
+            android:id="@+id/btnUpload"
             style="@style/whiteTextBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -195,7 +196,6 @@
             android:background="@drawable/style_btn"
             android:drawableLeft="@drawable/ic_camera"
             android:text="@string/upload"
-            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layoutCatatan"
             tools:ignore="RtlHardcoded" />
@@ -204,7 +204,9 @@
             style="@style/blackTextTittle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="@string/total"
+            app:layout_constraintTop_toBottomOf="@id/btnUpload"
             app:layout_constraintBottom_toTopOf="@+id/btnSimpan"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -226,7 +228,7 @@
             style="@style/whiteTextBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="120dp"
             android:background="@drawable/style_btn"
             android:text="@string/simpan"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -52,4 +52,6 @@
     <string name="lihat_pengunjung">Lihat pengunjung</string>
     <string name="bulan">Bulan</string>
     <string name="tgll">Tanggal</string>
+    <string name="kas_yang_diterima_dari_pengunjung">Kas yang diterima dari Pengunjung</string>
+    <string name="dikurangi_pembayaran_kas_untuk_vendor">Dikurangi pembayaran kas untuk Vendor</string>
 </resources>
