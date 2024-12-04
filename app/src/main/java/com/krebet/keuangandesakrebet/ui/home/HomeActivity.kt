@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.navigation.NavigationBarView.LABEL_VISIBILITY_LABELED
 import com.krebet.keuangandesakrebet.R
 import com.krebet.keuangandesakrebet.databinding.ActivityHomeBinding
 import com.krebet.keuangandesakrebet.ui.laporan.LaporanFragment
@@ -43,8 +44,9 @@ class HomeActivity : AppCompatActivity() {
 
         loadFragment(HomeFragment())
 
-        binding.apply {
-            bottomNavBar.setOnItemSelectedListener {
+        binding.bottomNavBar.apply {
+            labelVisibilityMode = LABEL_VISIBILITY_LABELED  //Label menu di navbar tampil terus
+            setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.home_fragment -> {
                         loadFragment(HomeFragment())

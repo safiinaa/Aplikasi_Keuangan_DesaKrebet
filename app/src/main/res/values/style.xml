@@ -60,4 +60,9 @@
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
+    <style name="BottomNavigationView.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/green2</item>
+        <item name="android:background">@color/green2</item>
+    </style>
+
 </resources>

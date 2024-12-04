@@ -52,6 +52,11 @@
     <string name="lihat_pengunjung">Lihat pengunjung</string>
     <string name="bulan">Bulan</string>
     <string name="tgll">Tanggal</string>
-    <string name="kas_yang_diterima_dari_pengunjung">Kas yang diterima dari Pengunjung</string>
-    <string name="dikurangi_pembayaran_kas_untuk_vendor">Dikurangi pembayaran kas untuk Vendor</string>
+    <string name="kas_yang_diterima_dari_pengunjung">Kas yang diterima dari pengunjung</string>
+    <string name="dikurangi_pembayaran_kas_untuk_vendor">Dikurangi pembayaran kas untuk vendor</string>
+    <string name="desa_wisata_krebet">Desa Wisata Krebet</string>
+    <string name="untuk_bulan_yang_berakhir_pada">Untuk bulan yang berakhir pada </string>
+    <string name="arus_kas_bersih_dan_saldo_kas_bulan">Arus kas bersih dan saldo kas bulan </string>
+    <string name="buat_laporan">Buat Laporan</string>
+    <string name="rentang_tanggal_transaksi">Rentang Tanggal Transaksi</string>
 </resources>

@@ -34,25 +34,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnKembali" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnKembali" />
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="20dp"
-        android:text="Desa Wisata Krebet"
+        android:text="@string/desa_wisata_krebet"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnKembali" />
+        app:layout_constraintTop_toBottomOf="@id/imageView" />
 
     <TextView
         android:id="@+id/tvJudul"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Laporan Arus Kas"
+        android:text="@string/laporan_arus_kas"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +74,7 @@
         android:id="@+id/tvKet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Untuk bulan yang berakhir pada 31 Januari 2019"
+        android:text="@string/untuk_bulan_yang_berakhir_pada"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/tvJudul"
         android:layout_marginBottom="16dp" />
@@ -73,16 +84,16 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/tvKet"
         android:text="@string/kas_yang_diterima_dari_pengunjung"
-        android:layout_marginBottom="4dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvKet" />
 
     <TextView
         android:id="@+id/tvTotalSaldoMasuk"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:text="Rp 7.500.000"
+        android:text="@string/saldo2"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvJudul1" />
@@ -91,37 +102,48 @@
         android:id="@+id/tvJudul2"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tvTotalSaldoMasuk"
         android:text="@string/dikurangi_pembayaran_kas_untuk_vendor"
-        android:layout_marginBottom="4dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTotalSaldoMasuk" />
 
     <TextView
         android:id="@+id/tvTotalSaldoKeluar"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:text="4.600.000"
+        android:text="@string/saldo2"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvJudul2" />
 
     <TextView
+        android:id="@+id/tvBlnBerikutnya"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:id="@+id/tvJudul3"
-        app:layout_constraintTop_toBottomOf="@id/tvTotalSaldoKeluar"
-        android:text="Arus kas bersih dan saldo kas bulan Berikutnya"
-        android:layout_marginBottom="4dp" />
+        android:text="@string/arus_kas_bersih_dan_saldo_kas_bulan"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTotalSaldoKeluar" />
 
     <TextView
         android:id="@+id/tvSaldoAkhir"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:text="Rp 5.900.000"
+        android:text="@string/saldo2"
         android:textAlignment="textEnd"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvJudul3" />
+        app:layout_constraintTop_toBottomOf="@id/tvBlnBerikutnya" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
