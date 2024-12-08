@@ -205,8 +205,8 @@ class EditPemasukanFragment : Fragment() {
                     visitor.copy(id = it.id)
                 }.distinctBy { it.namaInstansi }
 
-                val adapter = ArrayAdapter<String>(requireContext() , R.layout.list_item , visitors.map { it.namaInstansi })
                 if (isAdded) {
+                    val adapter = ArrayAdapter<String>(requireContext() , R.layout.list_item , visitors.map { it.namaInstansi })
                     binding.etNamaInstansi.setAdapter(adapter)
                     binding.etNamaInstansi.showDropDown()
                 }

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -24,6 +25,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -61,15 +63,7 @@ class RiwayatTransaksiFragment : Fragment() {
     private lateinit var listener: ListenerRegistration
     private val db = FirebaseFirestore.getInstance()
 
-    private val permissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                Toast.makeText(requireContext(), "Izin diberikan", Toast.LENGTH_SHORT).show()
-                createAndSaveReport()
-            } else {
-                Toast.makeText(requireContext(), "Izin ditolak", Toast.LENGTH_SHORT).show()
-            }
-        }
+    private lateinit var permissionLauncher: ActivityResultLauncher<String>
 
     override fun onCreateView(
         inflater: LayoutInflater , container: ViewGroup? ,
@@ -84,6 +78,15 @@ class RiwayatTransaksiFragment : Fragment() {
 
     override fun onViewCreated(view: View , savedInstanceState: Bundle?) {
         super.onViewCreated(view , savedInstanceState)
+
+        permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                Toast.makeText(requireContext(), "Izin diberikan", Toast.LENGTH_SHORT).show()
+                createAndSaveReport()
+            } else {
+                Toast.makeText(requireContext(), "Izin ditolak", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         binding.apply {
             etNamaInstansi.addTextChangedListener(object : TextWatcher {
@@ -217,7 +220,7 @@ class RiwayatTransaksiFragment : Fragment() {
         val width = 1920
         val rowHeight = 80 // Tinggi setiap baris
         val marginTop = 400 // Margin atas untuk judul, detail toko, dan informasi tambahan
-        val marginBottom = 700 // Margin bawah untuk tanda tangan
+        val marginBottom = 730 // Margin bawah untuk tanda tangan
         val height = marginTop + (transaksiPemasukan.size * rowHeight) + marginBottom // Total tinggi canvas
 
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
@@ -227,7 +230,7 @@ class RiwayatTransaksiFragment : Fragment() {
         // Background putih
         canvas.drawColor(Color.WHITE)
 
-        // Title (Judul di tengah atas)
+        // Judul di tengah atas
         paint.color = Color.BLACK
         paint.textSize = 60f
         paint.isFakeBoldText = true
@@ -235,8 +238,8 @@ class RiwayatTransaksiFragment : Fragment() {
         canvas.drawText("LAPORAN KEUANGAN", width / 2f, 100f, paint)
 
         // Load logo dari drawable
-        val logoDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_logo_large)
-        val logoBitmap = (logoDrawable as BitmapDrawable).bitmap
+        val companyLogoDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_logo_large)
+        val logoBitmap = (companyLogoDrawable as BitmapDrawable).bitmap
 
         // Tempatkan logo di atas kiri
         val logoHeight = 230
@@ -261,9 +264,16 @@ class RiwayatTransaksiFragment : Fragment() {
         val currentDate = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date())
         canvas.drawText("Yogyakarta, $currentDate", width - 50f, 220f, paint)
 
+        // Menghitung lebar teks kota dan tanggal
+        val textWidth = paint.measureText("Yogyakarta, $currentDate")
+
+        // Posisi "Kepada Yth," dan "visitor" dimulai dari bawah teks Yogyakarta
+        val startX = width - 50f - textWidth
+
         // Kepada Yth
-        canvas.drawText("Kepada Yth,", width - 50f, 280f, paint)
-        canvas.drawText("$selectedVisitor", width - 50f, 330f, paint)
+        paint.textAlign = Paint.Align.LEFT
+        canvas.drawText("Kepada Yth,", startX, 280f, paint)
+        canvas.drawText("$selectedVisitor", startX, 330f, paint)
 
         // Header Table
         paint.textSize = 40f
@@ -324,20 +334,27 @@ class RiwayatTransaksiFragment : Fragment() {
         canvas.drawText(formatRupiah(sisa), width - 50f, yPosition + 140f, paint)
         paint.isFakeBoldText = false
 
-        // Hormat Kami di bagian bawah
-        paint.textAlign = Paint.Align.RIGHT
-        paint.textSize = 40f
-
-        // Jarak untuk hormat Kami
+        // Jarak untuk "Hormat Kami"
         yPosition += 250f
-        canvas.drawText("Hormat Kami,", canvas.width - 50f, yPosition, paint) // 50f is the margin from the right edge
+        paint.textAlign = Paint.Align.RIGHT // Align "Hormat Kami" ke kanan
+        canvas.drawText("Hormat Kami,", width - 100f, yPosition, paint)
 
-        // Jarak untuk tanda tangan
-        yPosition += 200f
+        // Memuat gambar tanda tangan dari drawable
+        val signatureBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_tanda_tangan)
+
+        // Menyesuaikan ukuran gambar tanda tangan
+        yPosition -= 30f
+        val signatureWidth = 300
+        val signatureHeight = (signatureBitmap.height * (signatureWidth / signatureBitmap.width.toFloat())).toInt() // Menjaga aspek rasio
+        val signatureRect = Rect(width - 50 - signatureWidth, yPosition.toInt(), width - 50, yPosition.toInt() + signatureHeight)
+
+        // Gambar tanda tangan
+        canvas.drawBitmap(signatureBitmap, null, signatureRect, paint)
 
         // Nama Pengurus
         paint.isFakeBoldText = true
-        canvas.drawText("(Agus Jati Kumara)", canvas.width - 50f, yPosition, paint) // 50f is the margin from the right edge
+        yPosition += signatureHeight - 20f // Menambahkan jarak setelah tanda tangan
+        canvas.drawText("(Agus Jati Kumara)", canvas.width - 50f, yPosition, paint) // Nama pemilik toko juga sejajar kanan
 
         val sdf = SimpleDateFormat("dd-MM-yyyy" , Locale("id", "ID"))
         val fileName = "Laporan Keuangan $selectedVisitor ${sdf.format(tglAwal!!)} - ${sdf.format(tglAkhir!!)}.jpg"
@@ -412,9 +429,11 @@ class RiwayatTransaksiFragment : Fragment() {
                     visitor.copy(id = it.id)
                 }.distinctBy { it.namaInstansi }
 
-                val adapter = ArrayAdapter<String>(requireContext() , R.layout.list_item , visitors.map { it.namaInstansi })
-                binding.etNamaInstansi.setAdapter(adapter)
-                binding.etNamaInstansi.showDropDown()
+                if (isAdded) {
+                    val adapter = ArrayAdapter<String>(requireContext() , R.layout.list_item , visitors.map { it.namaInstansi })
+                    binding.etNamaInstansi.setAdapter(adapter)
+                    binding.etNamaInstansi.showDropDown()
+                }
             } else {
                 Toast.makeText(context, "Nama tidak ditemukan", Toast.LENGTH_LONG).show()
             }

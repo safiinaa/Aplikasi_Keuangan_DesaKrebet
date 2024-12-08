@@ -234,9 +234,11 @@ class EditPengeluaranFragment : Fragment() {
                     visitor.copy(id = it.id)
                 }.distinctBy { it.namaInstansi }
 
-                val adapter = ArrayAdapter<String>(requireContext() , R.layout.list_item , visitors.map { it.namaInstansi })
-                binding.etNamaInstansi.setAdapter(adapter)
-                binding.etNamaInstansi.showDropDown()
+                if (isAdded) {
+                    val adapter = ArrayAdapter<String>(requireContext() , R.layout.list_item , visitors.map { it.namaInstansi })
+                    binding.etNamaInstansi.setAdapter(adapter)
+                    binding.etNamaInstansi.showDropDown()
+                }
             } else {
                 Toast.makeText(context, "Nama tidak ditemukan", Toast.LENGTH_LONG).show()
             }

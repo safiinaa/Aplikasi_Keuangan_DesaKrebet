@@ -10,7 +10,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import com.krebet.keuangandesakrebet.R
-import com.krebet.keuangandesakrebet.R.string.arus_kas_bersih_dan_saldo_kas_bulan
+import com.krebet.keuangandesakrebet.R.string.arus_kas_dan_saldo_bulan
 import com.krebet.keuangandesakrebet.R.string.untuk_bulan_yang_berakhir_pada
 import com.krebet.keuangandesakrebet.databinding.FragmentLaporanArusKasBinding
 import com.krebet.keuangandesakrebet.model.Transaksi
@@ -110,7 +110,7 @@ class LaporanArusKasFragment : Fragment() {
         if(isAdded) {
             binding.apply {
                 tvKet.text = getString(untuk_bulan_yang_berakhir_pada) + " " + lastDate
-                tvBlnBerikutnya.text = getString(arus_kas_bersih_dan_saldo_kas_bulan) + " " + nextMonth
+                tvBlnBerikutnya.text = getString(arus_kas_dan_saldo_bulan) + " " + nextMonth
                 tvTotalSaldoMasuk.text = formatRupiah(saldoPemasukan)
                 tvTotalSaldoKeluar.text = formatRupiah(saldoPengeluaran)
                 tvSaldoAkhir.text = formatRupiah(kas)
