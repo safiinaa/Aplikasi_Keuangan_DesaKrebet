@@ -130,7 +130,6 @@
         app:layout_constraintTop_toBottomOf="@id/layoutAlamat" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layoutDp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

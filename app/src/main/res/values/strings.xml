@@ -1,11 +1,9 @@
 <resources>
-    <string name="app_name">Keuangan Desa Krebet</string>
+    <string name="app_name">KrebetKu</string>
     <string name="login">Login</string>
     <string name="forget_password">Forget Password</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
-    <string name="alamatKrebet">Desa Wisata Krebet RT. 04, Sendangsari, Pajangan, Krebet, Sendangsari,
-                Kecamatan Pajangan, Kabupaten Bantul, Daerah Istimewa Yogyakarta 55751</string>
     <string name="beranda">Beranda</string>
     <string name="pengeluaran">Pengeluaran</string>
     <string name="laporan">Laporan</string>
@@ -24,7 +22,6 @@
     <string name="jumlah">Jumlah</string>
     <string name="catatan">Catatan</string>
     <string name="total">Total</string>
-    <string name="upload">Upload</string>
     <string name="alamat">Alamat</string>
     <string name="tambah_transaksi_pengeluaran">Tambah Transaksi Pengeluaran</string>
     <string name="tambah_transaksi_pemasukan">Tambah Transaksi Pemasukan</string>
@@ -36,8 +33,6 @@
     <string name="nominal_rp">Nominal (Rp)</string>
     <string name="nama_pengunjung">Nama Pengunjung</string>
     <string name="laporan_arus_kas">Laporan Arus Kas</string>
-    <string name="laporan_laba_rugi">Laporan Laba Rugi</string>
-    <string name="jurnal_transaksi">Jurnal Transaksi</string>
     <string name="hapus">Hapus</string>
     <string name="ubah_data_pemasukan">Ubah Data Pemasukan</string>
     <string name="ubah_data_pengeluaran">Ubah Data Pengeluaran</string>
