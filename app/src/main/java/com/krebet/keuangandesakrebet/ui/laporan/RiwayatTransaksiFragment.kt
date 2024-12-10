@@ -58,7 +58,8 @@ class RiwayatTransaksiFragment : Fragment() {
     private var totalPengeluaran: Float? = 0F
     private var totalPemasukan: Float? = 0F
     private lateinit var visitors: List<Pengunjung>
-    private var transaksiPemasukan = mutableListOf<Transaksi>()
+    private var transaksiPengeluaran = mutableListOf<Transaksi>()
+    private var filterPengeluaranByVisitor = mutableListOf<Transaksi>()
 
     private lateinit var listener: ListenerRegistration
     private val db = FirebaseFirestore.getInstance()
@@ -146,12 +147,13 @@ class RiwayatTransaksiFragment : Fragment() {
                         .whereLessThanOrEqualTo("tglTransaksi", tglAkhir!!)
                         .get()
                         .addOnSuccessListener { documents ->
-                            transaksiPemasukan.clear()
+                            transaksiPengeluaran.clear()
+                            filterPengeluaranByVisitor.clear()
                             totalPengeluaran = 0F
 
                             for (document in documents) {
                                 val dataPengeluaran = document.toObject(Transaksi::class.java)
-                                transaksiPemasukan.add(dataPengeluaran)
+                                transaksiPengeluaran.add(dataPengeluaran)
                             }
 
                             db.collection("pemasukan")
@@ -168,9 +170,10 @@ class RiwayatTransaksiFragment : Fragment() {
                                         pemasukan.add(dataPemasukan)
                                     }
 
-                                    val filterPengeluaran = transaksiPemasukan.filter { it.idPengunjung == idPengunjung }
+                                    val filterPengeluaran = transaksiPengeluaran.filter { it.idPengunjung == idPengunjung }
                                     filterPengeluaran.forEach {
                                         totalPengeluaran = totalPengeluaran!! + (it.total ?: 0F)
+                                        filterPengeluaranByVisitor.add(it)
                                     }
 
                                     val filterPemasukan = pemasukan.filter { it.idPengunjung == idPengunjung }
@@ -221,7 +224,7 @@ class RiwayatTransaksiFragment : Fragment() {
         val rowHeight = 80 // Tinggi setiap baris
         val marginTop = 400 // Margin atas untuk judul, detail toko, dan informasi tambahan
         val marginBottom = 730 // Margin bawah untuk tanda tangan
-        val height = marginTop + (transaksiPemasukan.size * rowHeight) + marginBottom // Total tinggi canvas
+        val height = marginTop + (transaksiPengeluaran.size * rowHeight) + marginBottom // Total tinggi canvas
 
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
@@ -296,7 +299,7 @@ class RiwayatTransaksiFragment : Fragment() {
 
         // Data Rows
         yPosition += 70f
-        for ((index, data) in transaksiPemasukan.withIndex()) {
+        for ((index, data) in filterPengeluaranByVisitor.withIndex()) {
             paint.textAlign = Paint.Align.LEFT
             canvas.drawText((index + 1).toString(), 50f, yPosition, paint)
             canvas.drawText(data.catatan!!, 170f, yPosition, paint)
