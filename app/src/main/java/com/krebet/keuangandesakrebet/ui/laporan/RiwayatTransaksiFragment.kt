@@ -224,7 +224,7 @@ class RiwayatTransaksiFragment : Fragment() {
         val rowHeight = 80 // Tinggi setiap baris
         val marginTop = 400 // Margin atas untuk judul, detail toko, dan informasi tambahan
         val marginBottom = 730 // Margin bawah untuk tanda tangan
-        val height = marginTop + (transaksiPengeluaran.size * rowHeight) + marginBottom // Total tinggi canvas
+        val height = marginTop + (filterPengeluaranByVisitor.size * rowHeight) + marginBottom // Total tinggi canvas
 
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
