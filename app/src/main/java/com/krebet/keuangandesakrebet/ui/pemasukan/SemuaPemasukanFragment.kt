@@ -75,7 +75,9 @@ class SemuaPemasukanFragment : Fragment() {
                     }
                 }
                 .addOnFailureListener {
-                    Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+                    if (isAdded) {
+                        Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
             val color = ContextCompat.getColor(requireContext(), R.color.green3)

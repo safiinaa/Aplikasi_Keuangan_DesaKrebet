@@ -90,19 +90,19 @@ class EditPengunjungFragment : Fragment() {
 //                val dp = etDp.text.toString()
 
                 if (namaCp.isEmpty()) {
-                    Toast.makeText(context, "Nama CP tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    showToast("Nama CP tidak boleh kosong")
                 } else if (noTelp.isEmpty()) {
-                    Toast.makeText(context , "Nomor telepon tidak boleh kosong" , Toast.LENGTH_SHORT).show()
+                    showToast("Nomor telepon tidak boleh kosong")
                 } else if (namaInstansi.isEmpty()) {
-                    Toast.makeText(context, "Nama Instansi tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    showToast("Nama Instansi tidak boleh kosong")
                 } else if (alamat.isEmpty()) {
-                    Toast.makeText(context, "Alamat tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    showToast("Alamat tidak boleh kosong")
                 } else if (tglKunjungan == null) {
-                    Toast.makeText(context, "Tanggal tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    showToast("Tanggal tidak boleh kosong")
 //                } else if (dp.isEmpty()) {
 //                    Toast.makeText(context, "DP tidak boleh kosong", Toast.LENGTH_LONG).show()
                 } else {
-                    loading.isVisible = true
+                    showLoading()
                     val pengunjung = hashMapOf(
                         "namaCp" to namaCp,
                         "namaInstansi" to namaInstansi,
@@ -117,12 +117,12 @@ class EditPengunjungFragment : Fragment() {
                         .document(this@EditPengunjungFragment.pengunjung.id!!)
                         .update(pengunjung)
                         .addOnSuccessListener {
-                            Toast.makeText(context, "Data berhasil diperbarui", Toast.LENGTH_LONG).show()
-                            loading.isVisible = false
+                            showToast("Data berhasil diperbarui")
+                            dismissLoading()
                         }
                         .addOnFailureListener {
-                            Toast.makeText(context, "Terjadi kesalahan, silahkan ulangi kembali", Toast.LENGTH_LONG).show()
-                            loading.isVisible = false
+                            showToast("Terjadi kesalahan, silahkan ulangi kembali")
+                            dismissLoading()
                         }
                 }
             }
@@ -137,11 +137,11 @@ class EditPengunjungFragment : Fragment() {
                             .document(pengunjung.id!!)
                             .delete()
                             .addOnSuccessListener {
-                                Toast.makeText(context, "Data berhasil dihapus", Toast.LENGTH_LONG).show()
+                                showToast("Data berhasil dihapus")
                                 setBackState()
                             }
                             .addOnFailureListener {
-                                Toast.makeText(context, "Terjadi kesalahan, silahkan ulangi kembali", Toast.LENGTH_LONG).show()
+                                showToast("Terjadi kesalahan, silahkan ulangi kembali")
                             }
 
                     }
@@ -167,6 +167,24 @@ class EditPengunjungFragment : Fragment() {
         val transaction = parentFragmentManager.beginTransaction()
         transaction.replace(R.id.frameLayout , PengunjungFragment())
         transaction.commit()
+    }
+
+    private fun showLoading() {
+        if (isAdded) {
+            binding.loading.isVisible = true
+        }
+    }
+
+    private fun dismissLoading() {
+        if (isAdded) {
+            binding.loading.isVisible = false
+        }
+    }
+
+    private fun showToast(message: String) {
+        if (isAdded) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroyView() {

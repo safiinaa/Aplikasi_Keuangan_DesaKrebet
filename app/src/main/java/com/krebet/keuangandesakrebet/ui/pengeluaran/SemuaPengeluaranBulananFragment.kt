@@ -70,14 +70,14 @@ class SemuaPengeluaranBulananFragment : Fragment() {
                                     }
                                 }
                                 .addOnFailureListener {
-                                    Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+                                    showToast()
                                 }
                         }
                     }
                 }
             }
             .addOnFailureListener {
-                Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+                showToast()
             }
 
         binding.btnKembali.setOnClickListener {
@@ -97,6 +97,12 @@ class SemuaPengeluaranBulananFragment : Fragment() {
         val transaction = parentFragmentManager.beginTransaction()
         transaction.replace(R.id.frameLayout , PengeluaranFragment())
         transaction.commit()
+    }
+
+    private fun showToast() {
+        if (isAdded) {
+            Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroyView() {

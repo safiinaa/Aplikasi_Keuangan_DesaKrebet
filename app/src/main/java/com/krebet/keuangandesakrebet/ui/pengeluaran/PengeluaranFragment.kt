@@ -155,12 +155,12 @@ class PengeluaranFragment : Fragment() {
                             listPemasukan.add(transaction)
                         }
                         .addOnFailureListener {
-                            Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+                            showToast("Terjadi kesalahan")
                         }
                 }
             }
             .addOnFailureListener {
-                Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+                showToast("Terjadi kesalahan")
             }
     }
 
@@ -173,7 +173,7 @@ class PengeluaranFragment : Fragment() {
         }
 
         if (filterNama.isEmpty()) {
-            Toast.makeText(context, "Nama instansi tidak ditemukan", Toast.LENGTH_SHORT).show()
+            showToast("Nama instansi tidak ditemukan")
         } else {
             if (isAdded) {
                 binding.recyclerView.adapter = PengeluaranAdapter(filterNama, requireActivity().supportFragmentManager)
@@ -218,7 +218,7 @@ class PengeluaranFragment : Fragment() {
                 }
             }
             .addOnFailureListener {
-                Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+                showToast("Terjadi kesalahan")
             }
     }
 
@@ -256,12 +256,18 @@ class PengeluaranFragment : Fragment() {
                         }
                     }
                     .addOnFailureListener {
-                        Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+                        showToast("Terjadi kesalahan")
                     }
             }
             .addOnFailureListener {
-                Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+                showToast("Terjadi kesalahan")
             }
+    }
+
+    private fun showToast(message: String) {
+        if (isAdded) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroyView() {

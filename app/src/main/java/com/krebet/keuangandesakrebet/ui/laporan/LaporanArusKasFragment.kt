@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
@@ -43,17 +45,52 @@ class LaporanArusKasFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getSaldoBulanan()
+        setupSpinner()
     }
 
-    private fun getSaldoBulanan() {
-        binding.loading.isVisible = true
+    private fun setupSpinner() {
+        val monthFormat = SimpleDateFormat("MMMM yyyy", Locale("id", "ID"))
+        val yearFormat = SimpleDateFormat("yyyy", Locale("id", "ID"))
+
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.YEAR, - 1)
+        val lastYear = yearFormat.format(calendar.time)
+
+        calendar.add(Calendar.YEAR, 2)
+        val nextYear = yearFormat.format(calendar.time)
+
+        val currentMonth = monthFormat.format(Date())
+        val menuItems = arrayOf(currentMonth, nextYear, lastYear)
+
+        val adapter: ArrayAdapter<*> = ArrayAdapter<Any?>(requireContext(), R.layout.item_spinner, menuItems)
+        binding.spinnerFilter.adapter = adapter
+
+        binding.spinnerFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>? , view: View? , position: Int , id: Long) {
+                val selectedItem = menuItems[position]
+                when(selectedItem) {
+                    currentMonth -> {
+                        getKasBulanan(currentMonth)
+                    }
+                    nextYear -> {
+                        getKasTahunan(nextYear)
+                    }
+                    lastYear -> {
+                        getKasTahunan(lastYear)
+                    }
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    private fun getKasBulanan(currentMonth: String) {
+        showLoading()
 
         saldoPemasukan = 0F
         saldoPengeluaran = 0F
 
-        val monthFormat = SimpleDateFormat("MM-yyyy", Locale("id", "ID"))
-        val currentMonth = monthFormat.format(Date())
+        val monthFormat = SimpleDateFormat("MMMM yyyy", Locale("id", "ID"))
 
         db.collection("pemasukan").get()
             .addOnSuccessListener {
@@ -67,11 +104,11 @@ class LaporanArusKasFragment : Fragment() {
                         saldoPemasukan += transaction.total ?: 0F
                     }
                 }
-                updateSaldoAkhir()
+                updateSaldoBulanan()
             }
             .addOnFailureListener {
-                Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
-                binding.loading.isVisible = false
+                showToast()
+                dismissLoading()
             }
 
         db.collection("pengeluaran").get()
@@ -86,11 +123,11 @@ class LaporanArusKasFragment : Fragment() {
                         saldoPengeluaran += transaction.total ?: 0F
                     }
                 }
-                updateSaldoAkhir()
+                updateSaldoBulanan()
             }
             .addOnFailureListener {
-                Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
-                binding.loading.isVisible = false
+                showToast()
+                dismissLoading()
             }
 
         binding.btnKembali.setOnClickListener {
@@ -98,7 +135,58 @@ class LaporanArusKasFragment : Fragment() {
         }
     }
 
-    private fun updateSaldoAkhir() {
+    private fun getKasTahunan(year: String) {
+        showLoading()
+
+        saldoPemasukan = 0F
+        saldoPengeluaran = 0F
+
+        val yearFormat = SimpleDateFormat("yyyy", Locale("id", "ID"))
+
+        db.collection("pemasukan").get()
+            .addOnSuccessListener {
+                for (document in it) {
+                    val transaction = document.toObject(Transaksi::class.java)
+
+                    val transactionDate = transaction.tglTransaksi!!.toDate()
+                    val transactionYear = yearFormat.format(transactionDate)
+
+                    if (transactionYear == year) {
+                        saldoPemasukan += transaction.total ?: 0F
+                    }
+                }
+                updateSaldoTahunan(year)
+            }
+            .addOnFailureListener {
+                showToast()
+                dismissLoading()
+            }
+
+        db.collection("pengeluaran").get()
+            .addOnSuccessListener {
+                for (document in it) {
+                    val transaction = document.toObject(Transaksi::class.java)
+
+                    val transactionDate = transaction.tglTransaksi!!.toDate()
+                    val transactionYear = yearFormat.format(transactionDate)
+
+                    if (transactionYear == year) {
+                        saldoPengeluaran += transaction.total ?: 0F
+                    }
+                }
+                updateSaldoTahunan(year)
+            }
+            .addOnFailureListener {
+                showToast()
+                dismissLoading()
+            }
+
+        binding.btnKembali.setOnClickListener {
+            setBackState()
+        }
+    }
+
+    private fun updateSaldoBulanan() {
         val kas = saldoPemasukan - saldoPengeluaran
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
@@ -107,6 +195,7 @@ class LaporanArusKasFragment : Fragment() {
         calendar.add(Calendar.MONTH, 1)
         val nextMonth = SimpleDateFormat("MMMM yyyy", Locale("id", "ID")).format(calendar.time)
 
+        dismissLoading()
         if(isAdded) {
             binding.apply {
                 tvKet.text = getString(untuk_bulan_yang_berakhir_pada) + " " + lastDate
@@ -114,10 +203,32 @@ class LaporanArusKasFragment : Fragment() {
                 tvTotalSaldoMasuk.text = formatRupiah(saldoPemasukan)
                 tvTotalSaldoKeluar.text = formatRupiah(saldoPengeluaran)
                 tvSaldoAkhir.text = formatRupiah(kas)
-                loading.isVisible = false
             }
         }
     }
+
+    private fun updateSaldoTahunan(year: String) {
+        val kas = saldoPemasukan - saldoPengeluaran
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.YEAR, year.toInt())
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH))
+        val lastDate = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID")).format(calendar.time)
+
+        calendar.add(Calendar.MONTH, 1)
+        val nextMonth = SimpleDateFormat("MMMM yyyy", Locale("id", "ID")).format(calendar.time)
+
+        dismissLoading()
+        if(isAdded) {
+            binding.apply {
+                tvKet.text = getString(untuk_bulan_yang_berakhir_pada) + " " + lastDate
+                tvBlnBerikutnya.text = getString(arus_kas_dan_saldo_bulan) + " " + nextMonth
+                tvTotalSaldoMasuk.text = formatRupiah(saldoPemasukan)
+                tvTotalSaldoKeluar.text = formatRupiah(saldoPengeluaran)
+                tvSaldoAkhir.text = formatRupiah(kas)
+            }
+        }
+    }
+
 
     private fun formatRupiah(total: Float): String {
         val formatRp = DecimalFormat("Rp ###,###,###").format(total)
@@ -136,6 +247,24 @@ class LaporanArusKasFragment : Fragment() {
         parentFragmentManager.beginTransaction()
             .replace(R.id.frameLayout, LaporanFragment())
             .commit()
+    }
+
+    private fun showLoading() {
+        if (isAdded) {
+            binding.loading.isVisible = true
+        }
+    }
+
+    private fun dismissLoading() {
+        if (isAdded) {
+            binding.loading.isVisible = false
+        }
+    }
+
+    private fun showToast() {
+        if (isAdded) {
+            Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroyView() {

@@ -104,15 +104,15 @@ class AddPengeluaranFragment : Fragment() {
                 val jumlah = etQty.text.toString()
 
                 if (tglTransaksi == null) {
-                    Toast.makeText(context, "Tanggal tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    showToast("Tanggal tidak boleh kosong")
                 } else if (nominal.isEmpty()) {
-                    Toast.makeText(context, "Nominal tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    showToast("Nominal tidak boleh kosong")
                 } else if (jumlah.isEmpty()) {
-                    Toast.makeText(context, "Jumlah tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    showToast("Jumlah tidak boleh kosong")
                 } else if (catatan.isEmpty()) {
-                    Toast.makeText(context, "Catatan tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    showToast("Catatan tidak boleh kosong")
                 } else {
-                    loading.isVisible = true
+                    showLoading()
 
                     val lastIdDocRef = db.collection("lastId").document("lastIdPengeluaran")
 
@@ -137,18 +137,20 @@ class AddPengeluaranFragment : Fragment() {
                         transaction.update(lastIdDocRef, "id", nextId)
 
                     }.addOnSuccessListener {
-                        Toast.makeText(context, "Data berhasil disimpan", Toast.LENGTH_LONG).show()
-                        loading.isVisible = false
-                        btnTglTransaksi.text = getString(R.string.tgl)
-                        tglTransaksi = null
-                        total = null
-                        etNominal.text?.clear()
-                        etQty.text?.clear()
-                        etCatatan.text?.clear()
-                        tvTotal.text = getString(R.string.saldo2)
+                        showToast("Data berhasil disimpan")
+                        dismissLoading()
+                        if (isAdded) {
+                            btnTglTransaksi.text = getString(R.string.tgl)
+                            tglTransaksi = null
+                            total = null
+                            etNominal.text?.clear()
+                            etQty.text?.clear()
+                            etCatatan.text?.clear()
+                            tvTotal.text = getString(R.string.saldo2)
+                        }
                     }.addOnFailureListener {
-                        Toast.makeText(context, "Terjadi kesalahan, silahkan ulangi kembali", Toast.LENGTH_LONG).show()
-                        loading.isVisible = false
+                        showToast("Terjadi kesalahan, silahkan ulangi kembali")
+                        dismissLoading()
                     }
                 }
             }
@@ -203,6 +205,24 @@ class AddPengeluaranFragment : Fragment() {
         parentFragmentManager.beginTransaction()
             .replace(R.id.frameLayout, fragment)
             .commit()
+    }
+
+    private fun showLoading() {
+        if (isAdded) {
+            binding.loading.isVisible = true
+        }
+    }
+
+    private fun dismissLoading() {
+        if (isAdded) {
+            binding.loading.isVisible = false
+        }
+    }
+
+    private fun showToast(message: String) {
+        if (isAdded) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroyView() {

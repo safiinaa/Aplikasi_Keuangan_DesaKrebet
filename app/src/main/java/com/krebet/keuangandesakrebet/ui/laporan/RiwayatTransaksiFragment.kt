@@ -82,10 +82,10 @@ class RiwayatTransaksiFragment : Fragment() {
 
         permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
-                Toast.makeText(requireContext(), "Izin diberikan", Toast.LENGTH_SHORT).show()
+                showToast("Izin diberikan")
                 createAndSaveReport()
             } else {
-                Toast.makeText(requireContext(), "Izin ditolak", Toast.LENGTH_SHORT).show()
+                showToast("Izin ditolak, mohon berikan izin")
             }
         }
 
@@ -134,13 +134,13 @@ class RiwayatTransaksiFragment : Fragment() {
 
             btnSimpan.setOnClickListener {
                 if (selectedVisitor == null) {
-                    Toast.makeText(context, "Nama instansi tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    showToast("Nama instansi tidak boleh kosong")
                 } else if (alamat == null) {
-                    Toast.makeText(context, "Nama instansi tidak ditemukan", Toast.LENGTH_LONG).show()
+                    showToast("Nama instansi tidak ditemukan")
                 } else if (tglAwal == null) {
-                    Toast.makeText(context, "Tanggal tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    showToast("Tanggal tidak boleh kosong")
                 } else {
-                    loading.isVisible = true
+                    showLoading()
 
                     db.collection("pengeluaran")
                         .whereGreaterThanOrEqualTo("tglTransaksi", tglAwal!!)
@@ -182,19 +182,19 @@ class RiwayatTransaksiFragment : Fragment() {
                                     }
 
                                     if (filterPengeluaran.isEmpty()) {
-                                        Toast.makeText(context, "Transaksi pengeluaran instansi tersebut pada tanggal dipilih tidak ditemukan", Toast.LENGTH_LONG).show()
-                                        loading.isVisible = false
+                                        showToast("Transaksi pengeluaran instansi tersebut pada tanggal dipilih tidak ditemukan")
+                                        dismissLoading()
                                     } else {
                                         checkAndRequestPermission()
                                     }
 
                                 }.addOnFailureListener {
-                                    Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
-                                    loading.isVisible = false
+                                    showToast("Terjadi kesalahan")
+                                    dismissLoading()
                                 }
                         }.addOnFailureListener {
-                            Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
-                            loading.isVisible = false
+                            showToast("Terjadi kesalahan")
+                            dismissLoading()
                         }
                 }
             }
@@ -377,16 +377,16 @@ class RiwayatTransaksiFragment : Fragment() {
                     val outputStream = resolver.openOutputStream(uri)
                     outputStream?.use { out ->
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
-                        Toast.makeText(requireContext(), "Gambar berhasil disimpan", Toast.LENGTH_SHORT).show()
-                        binding.loading.isVisible = false
+                        showToast("Gambar berhasil disimpan")
+                        dismissLoading()
                     }
                 } catch (e: Exception) {
-                    Toast.makeText(requireContext(), "Gagal menyimpan gambar", Toast.LENGTH_SHORT).show()
-                    binding.loading.isVisible = false
+                    showToast("Gagal menyimpan gambar")
+                    dismissLoading()
                 }
             } else {
-                Toast.makeText(requireContext(), "Gagal menyimpan gambar", Toast.LENGTH_SHORT).show()
-                binding.loading.isVisible = false
+                showToast("Gagal menyimpan gambar")
+                dismissLoading()
             }
         } else {
             val picturesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/LaporanKeuangan") // Direktori Pictures
@@ -401,7 +401,7 @@ class RiwayatTransaksiFragment : Fragment() {
                 // Simpan bitmap ke file
                 FileOutputStream(file).use { outputStream ->
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-                    Toast.makeText(context, "Gambar disimpan di: ${file.absolutePath}", Toast.LENGTH_LONG).show()
+                    showToast("Gambar disimpan di: ${file.absolutePath}")
 
                     // Notify media scanner untuk memperbarui galeri
                     MediaScannerConnection.scanFile(context, arrayOf(file.absolutePath), null, null)
@@ -409,8 +409,8 @@ class RiwayatTransaksiFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 Log.e("simpan gambar", e.message.toString())
-                Toast.makeText(context, "Gagal menyimpan gambar", Toast.LENGTH_SHORT).show()
-                binding.loading.isVisible = false
+                showToast("Gagal menyimpan gambar")
+                dismissLoading()
             }
         }
     }
@@ -422,7 +422,7 @@ class RiwayatTransaksiFragment : Fragment() {
             .endAt(query + "\uf8ff")
         listener = docRef.addSnapshotListener { value, error ->
             if (error != null) {
-                Toast.makeText(context, "Terjadi kesalahan, silahkan ulangi kembali", Toast.LENGTH_LONG).show()
+                showToast("Terjadi kesalahan, silahkan ulangi kembali")
                 return@addSnapshotListener
             }
 
@@ -438,7 +438,7 @@ class RiwayatTransaksiFragment : Fragment() {
                     binding.etNamaInstansi.showDropDown()
                 }
             } else {
-                Toast.makeText(context, "Nama tidak ditemukan", Toast.LENGTH_LONG).show()
+                showToast("Nama tidak ditemukan")
             }
         }
     }
@@ -460,6 +460,24 @@ class RiwayatTransaksiFragment : Fragment() {
         parentFragmentManager.beginTransaction()
             .replace(R.id.frameLayout, LaporanFragment())
             .commit()
+    }
+
+    private fun showLoading() {
+        if (isAdded) {
+            binding.loading.isVisible = true
+        }
+    }
+
+    private fun dismissLoading() {
+        if (isAdded) {
+            binding.loading.isVisible = false
+        }
+    }
+
+    private fun showToast(message: String) {
+        if (isAdded) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onStop() {

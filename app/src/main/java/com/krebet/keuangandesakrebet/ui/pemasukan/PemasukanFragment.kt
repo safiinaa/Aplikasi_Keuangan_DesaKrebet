@@ -174,7 +174,7 @@ class PemasukanFragment : Fragment() {
                             listPemasukan.add(transaction)
                         }
                         .addOnFailureListener {
-                            Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+                            showToast("Terjadi kesalahan")
                         }
                 }
 
@@ -183,7 +183,7 @@ class PemasukanFragment : Fragment() {
 //                }
             }
             .addOnFailureListener {
-                Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+                showToast("Terjadi kesalahan")
             }
     }
 
@@ -196,7 +196,7 @@ class PemasukanFragment : Fragment() {
         }
 
         if (filterNama.isEmpty()) {
-            Toast.makeText(context, "Nama instansi tidak ditemukan", Toast.LENGTH_SHORT).show()
+            showToast("Nama instansi tidak ditemukan")
         } else if (tglAwal == null) {
             if (isAdded) {
                 binding.recyclerView.adapter = PemasukanAdapter(filterNama , requireActivity().supportFragmentManager)
@@ -250,7 +250,7 @@ class PemasukanFragment : Fragment() {
                 }
             }
             .addOnFailureListener {
-                Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+                showToast("Terjadi kesalahan")
             }
     }
 
@@ -288,11 +288,11 @@ class PemasukanFragment : Fragment() {
                         }
                     }
                     .addOnFailureListener {
-                        Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+                        showToast("Terjadi kesalahan")
                     }
             }
             .addOnFailureListener {
-                Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+                showToast("Terjadi kesalahan")
             }
     }
 
@@ -307,6 +307,12 @@ class PemasukanFragment : Fragment() {
         binding.apply {
             layoutMenu.isVisible = false
             isFilterOpen = false
+        }
+    }
+
+    private fun showToast(message: String) {
+        if (isAdded) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -68,19 +68,19 @@ class AddPengunjungFragment : Fragment() {
                 val dp = etDp.text.toString()
 
                 if (namaCp.isEmpty()) {
-                    Toast.makeText(context , "Nama CP tidak boleh kosong" , Toast.LENGTH_SHORT).show()
+                    showToast("Nama CP tidak boleh kosong")
                 } else if (noTelp.isEmpty()) {
-                    Toast.makeText(context , "Nomor telepon tidak boleh kosong" , Toast.LENGTH_SHORT).show()
+                    showToast("Nomor telepon tidak boleh kosong")
                 } else if (namaInstansi.isEmpty()) {
-                    Toast.makeText(context, "Nama instansi tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                    showToast("Nama instansi tidak boleh kosong")
                 } else if (alamat.isEmpty()) {
-                    Toast.makeText(context , "Alamat tidak boleh kosong" , Toast.LENGTH_SHORT).show()
+                    showToast("Alamat tidak boleh kosong")
                 } else if (tglKunjungan == null) {
-                    Toast.makeText(context , "Tanggal kunjungan tidak boleh kosong" , Toast.LENGTH_SHORT).show()
+                    showToast("Tanggal kunjungan tidak boleh kosong")
                 } else if (dp.isEmpty()) {
-                    Toast.makeText(context , "DP tidak boleh kosong" , Toast.LENGTH_SHORT).show()
+                    showToast("DP tidak boleh kosong")
                 } else {
-                    loading.isVisible = true
+                    showLoading()
 
                     val lastIdPengunjungRef = db.collection("lastId").document("lastIdPengunjung")
                     val lastIdPemasukanRef = db.collection("lastId").document("lastIdPemasukan")
@@ -121,18 +121,20 @@ class AddPengunjungFragment : Fragment() {
                         transaction.update(lastIdPemasukanRef, "id", nextIdPemasukan)     //Update id pemasukan di db lastId
 
                     }.addOnSuccessListener {
-                        Toast.makeText(context , "Data berhasil disimpan" , Toast.LENGTH_LONG).show()
-                        loading.isVisible = false
-                        etNamaCp.text?.clear()
-                        etNamaInstansi.text?.clear()
-                        etNoTelp.text?.clear()
-                        etAlamat.text?.clear()
-                        etDp.text?.clear()
-                        tglKunjungan = null
-                        btnTanggalKunjungan.text = getString(R.string.tanggal_kunjungan)
+                        showToast("Data berhasil disimpan")
+                        dismissLoading()
+                        if (isAdded) {
+                            etNamaCp.text?.clear()
+                            etNamaInstansi.text?.clear()
+                            etNoTelp.text?.clear()
+                            etAlamat.text?.clear()
+                            etDp.text?.clear()
+                            tglKunjungan = null
+                            btnTanggalKunjungan.text = getString(R.string.tanggal_kunjungan)
+                        }
                     }.addOnFailureListener {
-                        Toast.makeText(context , "Terjadi kesalahan, silahkan ulangi kembali" , Toast.LENGTH_LONG).show()
-                        loading.isVisible = false
+                        showToast("Terjadi kesalahan, silahkan ulangi kembali")
+                        dismissLoading()
                     }
                 }
             }
@@ -167,6 +169,24 @@ class AddPengunjungFragment : Fragment() {
         val transaction = parentFragmentManager.beginTransaction()
         transaction.replace(R.id.frameLayout , HomeFragment())
         transaction.commit()
+    }
+
+    private fun showLoading() {
+        if (isAdded) {
+            binding.loading.isVisible = true
+        }
+    }
+
+    private fun dismissLoading() {
+        if (isAdded) {
+            binding.loading.isVisible = false
+        }
+    }
+
+    private fun showToast(message: String) {
+        if (isAdded) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroyView() {

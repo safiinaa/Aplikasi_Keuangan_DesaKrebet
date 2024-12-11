@@ -55,7 +55,7 @@ class PengunjungFragment : Fragment() {
                     setRecyclerView()
                 }
                 .addOnFailureListener {
-                    Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_LONG).show()
+                    showToast("Terjadi kesalahan")
                 }
 
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -70,7 +70,7 @@ class PengunjungFragment : Fragment() {
                     }
 
                     if (filterList.isEmpty()) {
-                        Toast.makeText(context, "Nama instansi tidak ditemukan", Toast.LENGTH_LONG).show()
+                        showToast("Nama instansi tidak ditemukan")
                     } else {
                         if (isAdded) {
                             binding.recyclerView.adapter = PengunjungAdapter(filterList, requireActivity().supportFragmentManager)
@@ -129,7 +129,7 @@ class PengunjungFragment : Fragment() {
                     }
 
                     if (listFilterPengunjung.isEmpty()) {
-                        Toast.makeText(context, "Pengunjung pada tanggal tersebut tidak ditemukan", Toast.LENGTH_LONG).show()
+                        showToast("Pengunjung pada tanggal tersebut tidak ditemukan")
                     } else {
                         if (isAdded) {
                             binding.recyclerView.adapter = PengunjungAdapter(listFilterPengunjung.toMutableList(), requireActivity().supportFragmentManager)
@@ -177,6 +177,12 @@ class PengunjungFragment : Fragment() {
         val transaction = parentFragmentManager.beginTransaction()
         transaction.replace(R.id.frameLayout , HomeFragment())
         transaction.commit()
+    }
+
+    private fun showToast(message: String) {
+        if (isAdded) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroyView() {

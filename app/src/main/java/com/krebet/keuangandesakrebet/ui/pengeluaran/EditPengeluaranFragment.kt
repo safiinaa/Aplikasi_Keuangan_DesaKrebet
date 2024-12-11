@@ -151,19 +151,19 @@ class EditPengeluaranFragment : Fragment() {
                 val catatan = etCatatan.text.toString()
 
                 if (nama.isEmpty()) {
-                    Toast.makeText(context, "Nama tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    showToast("Nama tidak boleh kosong")
                 } else if (alamat == null) {
-                    Toast.makeText(context, "Nama belum disimpan, simpan pada menu tambah namaInstansi pengunjung", Toast.LENGTH_LONG).show()
+                    showToast("Nama belum disimpan, simpan pada menu tambah namaInstansi pengunjung")
                 } else if (tanggal == null) {
-                    Toast.makeText(context, "Tanggal tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    showToast("Tanggal tidak boleh kosong")
                 } else if (nominal.isEmpty()) {
-                    Toast.makeText(context , "Nominal tidak boleh kosong" , Toast.LENGTH_LONG).show()
+                    showToast("Nominal tidak boleh kosong")
                 } else if (jumlah.isEmpty()) {
-                    Toast.makeText(context, "Jumlah tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    showToast("Jumlah tidak boleh kosong")
                 } else if (catatan.isEmpty()) {
-                    Toast.makeText(context, "Catatan tidak boleh kosong", Toast.LENGTH_LONG).show()
+                    showToast("Catatan tidak boleh kosong")
                 } else {
-                    loading.isVisible = true
+                    showLoading()
                     val pengeluaran = hashMapOf(
                         "idPengunjung" to idPengunjung,
                         "tanggal" to tanggal,
@@ -178,13 +178,13 @@ class EditPengeluaranFragment : Fragment() {
                         .document(transaksi.idTransaksi!!)
                         .update(pengeluaran)
                         .addOnSuccessListener {
-                            Toast.makeText(context, "Data berhasil diperbarui", Toast.LENGTH_LONG).show()
-                            loading.isVisible = false
+                            showToast("Data berhasil diperbarui")
+                            dismissLoading()
                             setBackState()
                         }
                         .addOnFailureListener {
-                            Toast.makeText(context, "Terjadi kesalahan, silahkan ulangi kembali", Toast.LENGTH_LONG).show()
-                            loading.isVisible = false
+                            showToast("Terjadi kesalahan, silahkan ulangi kembali")
+                            dismissLoading()
                         }
                 }
             }
@@ -199,11 +199,11 @@ class EditPengeluaranFragment : Fragment() {
                             .document(transaksi.idTransaksi!!)
                             .delete()
                             .addOnSuccessListener {
-                                Toast.makeText(context, "Data berhasil dihapus", Toast.LENGTH_LONG).show()
+                                showToast("Data berhasil dihapus")
                                 setBackState()
                             }
                             .addOnFailureListener {
-                                Toast.makeText(context, "Terjadi kesalahan, silahkan ulangi kembali", Toast.LENGTH_LONG).show()
+                                showToast("Terjadi kesalahan, silahkan ulangi kembali")
                             }
 
                     }
@@ -224,7 +224,7 @@ class EditPengeluaranFragment : Fragment() {
             .endAt(query + "\uf8ff")
         listener = docRef.addSnapshotListener { value, error ->
             if (error != null) {
-                Toast.makeText(context, "Terjadi kesalahan, silahkan ulangi kembali", Toast.LENGTH_LONG).show()
+                showToast("Terjadi kesalahan, silahkan ulangi kembali")
                 return@addSnapshotListener
             }
 
@@ -240,7 +240,7 @@ class EditPengeluaranFragment : Fragment() {
                     binding.etNamaInstansi.showDropDown()
                 }
             } else {
-                Toast.makeText(context, "Nama tidak ditemukan", Toast.LENGTH_LONG).show()
+                showToast("Nama tidak ditemukan")
             }
         }
     }
@@ -283,6 +283,24 @@ class EditPengeluaranFragment : Fragment() {
         parentFragmentManager.beginTransaction()
             .replace(R.id.frameLayout, fragment)
             .commit()
+    }
+
+    private fun showLoading() {
+        if (isAdded) {
+            binding.loading.isVisible = true
+        }
+    }
+
+    private fun dismissLoading() {
+        if (isAdded) {
+            binding.loading.isVisible = false
+        }
+    }
+
+    private fun showToast(message: String) {
+        if (isAdded) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onStop() {
