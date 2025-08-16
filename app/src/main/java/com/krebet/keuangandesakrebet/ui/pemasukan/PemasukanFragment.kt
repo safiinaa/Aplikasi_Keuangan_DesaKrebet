@@ -156,7 +156,7 @@ class PemasukanFragment : Fragment() {
     }
 
     private fun getSemuaPemasukan() {
-        db.collection("pemasukan")
+        db.collection("pemasukan") //untuk menambahkan data ke koleksi di Firestore.
 //            .whereGreaterThanOrEqualTo("tglTransaksi", startDate)
 //            .whereLessThanOrEqualTo("tglTransaksi", endDate)
             .get()
@@ -253,7 +253,7 @@ class PemasukanFragment : Fragment() {
                 showToast("Terjadi kesalahan")
             }
     }
-
+// simpan data
     private fun getPemasukanPerPengunjung() {
         db.collection("pengunjung").get()
             .addOnSuccessListener { userSnapshot ->

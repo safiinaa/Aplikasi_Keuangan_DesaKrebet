@@ -9,13 +9,16 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.os.BundleCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.firebase.firestore.FieldValue.serverTimestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firestore.v1.StructuredAggregationQuery.Aggregation.Count
 import com.krebet.keuangandesakrebet.R
 import com.krebet.keuangandesakrebet.databinding.FragmentAddPemasukanBinding
 import com.krebet.keuangandesakrebet.model.Pengunjung
+import kotlinx.coroutines.CoroutineStart
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -55,6 +58,45 @@ class AddPemasukanFragment : Fragment() {
             tvNamaInstansi.text = pengunjung.namaInstansi
             tvAlamat.text = pengunjung.alamat
 
+
+            val locale = Locale("id", "ID")
+
+            //tambah titik & Rp saat mngetik nominal
+            etNominal.addTextChangedListener (object :android.text.TextWatcher{
+                private var current = ""
+
+                override fun  beforeTextChanged(s: CharSequence?, start: Int, count: Int, sfter: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+                override fun afterTextChanged(s: android.text.Editable?) {
+                    if (s.toString() != current) {
+                        etNominal.removeTextChangedListener(this)
+
+                        val cleanString = s.toString()
+                            .replace("Rp", "")
+                            .replace(".", "")
+                            .replace(",", "")
+                            .trim()
+
+                        if (cleanString.isNotEmpty()) {
+                            try {
+                                val parsed = cleanString.toLong()
+                                val formatter = java.text.NumberFormat.getInstance(locale)
+                                val formatted = "Rp" + formatter.format(parsed)
+
+                                current = formatted
+                                etNominal.setText(formatted)
+                                etNominal.setSelection(formatted.length)
+                            } catch (e: NumberFormatException) {
+                                // biarkan jika error
+                            }
+                        }
+
+                        etNominal.addTextChangedListener(this)
+                    }
+                }
+            })
+
             btnTglTransaksi.setOnClickListener {
                 val datePicker = MaterialDatePicker.Builder.datePicker()
                     .setTitleText("Pilih Tanggal Transaksi")
@@ -72,25 +114,33 @@ class AddPemasukanFragment : Fragment() {
             }
 
             btnSimpan.setOnClickListener {
-                val nominal = etNominal.text.toString()
+                val nominal:String = etNominal.text.toString()
+                    .replace("Rp", "") //Hilangkan simbol mata uang jika tersimpan di database agar tidak eror
+                    .replace(".", "") //Hilangkan pemisah ribuan jika tersimpan di database agar tidak eror
+                    .replace(",", "") //(Opsional) Hilangkan koma jika ada yang copy-paste format asing saat disimpan di database
+                    .trim()
                 val catatan = etCatatan.text.toString()
 
+                //tampilan data tidak boleh kosong
                if (tglTransaksi == null) {
                     showToast("Tanggal tidak boleh kosong")
                 } else if (nominal.isEmpty()) {
                     showToast("Nominal tidak boleh kosong")
                 } else if (catatan.isEmpty()) {
                     showToast("Catatan tidak boleh kosong")
-                } else {
+                } else if (nominal.toFloat() <=0) {
+                   showToast("Nominal harus lebih dari 0") //nominal lebih dari 0 jika nominal 0 akan gagal menyimpan
+               } else {
                     showLoading()
 
+                   val nominal = nominal.toFloat()
                    val lastIdDocRef = db.collection("lastId").document("lastIdPemasukan")
 
                    db.runTransaction {  transaction ->
                        val snapshot = transaction.get(lastIdDocRef)
                        val lastId = snapshot.getString("id") ?: "M01"
                        val nextId = generateNextId(lastId)
-
+// menyimpan ke firestore
                        val pemasukan = hashMapOf(
                            "idPengunjung" to pengunjung.id,
                            "tglTransaksi" to tglTransaksi,
@@ -125,7 +175,7 @@ class AddPemasukanFragment : Fragment() {
             }
         }
     }
-
+// ID
     private fun generateNextId(lastId: String): String {
         val number = lastId.substring(1).toInt() // Ambil angka setelah M
         val nextNumber = number + 1

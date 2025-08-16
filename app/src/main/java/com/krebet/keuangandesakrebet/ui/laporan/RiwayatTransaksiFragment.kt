@@ -17,6 +17,9 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
+import android.text.Layout
+import android.text.StaticLayout
+import android.text.TextPaint
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
@@ -181,6 +184,7 @@ class RiwayatTransaksiFragment : Fragment() {
                                         totalPemasukan = totalPemasukan!! + (it.total ?: 0F)
                                     }
 
+
                                     if (filterPengeluaran.isEmpty()) {
                                         showToast("Transaksi pengeluaran instansi tersebut pada tanggal dipilih tidak ditemukan")
                                         dismissLoading()
@@ -273,10 +277,43 @@ class RiwayatTransaksiFragment : Fragment() {
         // Posisi "Kepada Yth," dan "visitor" dimulai dari bawah teks Yogyakarta
         val startX = width - 50f - textWidth
 
+        // Gunakan TextPaint untuk StaticLayout
+        val textPaint = TextPaint().apply {
+            color = Color.BLACK
+            textSize = 40f
+            isAntiAlias = true
+            typeface = paint.typeface
+        }
+        // Gabungkan teks multi-baris
+        val fullText = "Kepada Yth,\n$selectedVisitor"
+
+// Hitung lebar maksimum teks (dari startX sampai batas kanan canvas)
+        val maxTextWidth = (width - startX - 50).toInt()
+
+// Gunakan StaticLayout untuk teks multi-baris
+        val staticLayout = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            StaticLayout.Builder
+                .obtain(fullText, 0, fullText.length, textPaint, maxTextWidth)
+                .setAlignment(Layout.Alignment.ALIGN_NORMAL)
+                .setLineSpacing(0f, 1f)
+                .setIncludePad(false)
+                .build()
+        } else {
+            @Suppress("DEPRECATION")
+            StaticLayout(fullText, textPaint, maxTextWidth, Layout.Alignment.ALIGN_NORMAL, 1f, 0f, false)
+        }
+
+// Gambar teks di posisi tertentu
+        val yKepadaYth = 250f
+        canvas.save()
+        canvas.translate(startX, yKepadaYth)
+        staticLayout.draw(canvas)
+        canvas.restore()
         // Kepada Yth
-        paint.textAlign = Paint.Align.LEFT
+       /* paint.textAlign = Paint.Align.LEFT
         canvas.drawText("Kepada Yth,", startX, 280f, paint)
-        canvas.drawText("$selectedVisitor", startX, 330f, paint)
+        canvas.drawText("$selectedVisitor", startX, 330f, paint)*/
+
 
         // Header Table
         paint.textSize = 40f

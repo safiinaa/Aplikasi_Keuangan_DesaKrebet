@@ -66,8 +66,43 @@ class EditPengeluaranFragment : Fragment() {
         super.onViewCreated(view , savedInstanceState)
 
         binding.apply {
-            val formatDate = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+            val formatDate = SimpleDateFormat("dd MMMM yyyy")
+            val locale = Locale("id", "ID")
 
+            etNominal.addTextChangedListener (object :android.text.TextWatcher{
+                private var current = ""
+
+                override fun  beforeTextChanged(s: CharSequence?, start: Int, count: Int, sfter: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+                override fun afterTextChanged(s: android.text.Editable?) {
+                    if (s.toString() != current) {
+                        etNominal.removeTextChangedListener(this)
+
+                        val cleanString = s.toString()
+                            .replace("Rp", "")
+                            .replace(".", "")
+                            .replace(",", "")
+                            .trim()
+
+                        if (cleanString.isNotEmpty()) {
+                            try {
+                                val parsed = cleanString.toLong()
+                                val formatter = java.text.NumberFormat.getInstance(locale)
+                                val formatted = "Rp" + formatter.format(parsed)
+
+                                current = formatted
+                                etNominal.setText(formatted)
+                                etNominal.setSelection(formatted.length)
+                            } catch (e: NumberFormatException) {
+                                // biarkan jika error
+                            }
+                        }
+
+                        etNominal.addTextChangedListener(this)
+                    }
+                }
+            })
             transaksi.let {
                 idPengunjung = it.idPengunjung
                 alamat = it.pengunjung?.alamat
@@ -147,6 +182,10 @@ class EditPengeluaranFragment : Fragment() {
             btnSimpan.setOnClickListener {
                 val nama = etNamaInstansi.text.toString()
                 val nominal = etNominal.text.toString()
+                    .replace("Rp", "") //Hilangkan simbol mata uang jika tersimpan di database agar tidak eror
+                    .replace(".", "") //Hilangkan pemisah ribuan jika tersimpan di database agar tidak eror
+                    .replace(",", "") //(Opsional) Hilangkan koma jika ada yang copy-paste format asing saat disimpan di database
+                    .trim()
                 val jumlah = etQty.text.toString()
                 val catatan = etCatatan.text.toString()
 
@@ -162,8 +201,11 @@ class EditPengeluaranFragment : Fragment() {
                     showToast("Jumlah tidak boleh kosong")
                 } else if (catatan.isEmpty()) {
                     showToast("Catatan tidak boleh kosong")
+                } else if (nominal.toFloat() <=0) {
+                    showToast("Nominal harus lebih dari 0") //nominal lebih dari 0
                 } else {
                     showLoading()
+                    val nominal = nominal.toFloat()
                     val pengeluaran = hashMapOf(
                         "idPengunjung" to idPengunjung,
                         "tanggal" to tanggal,
@@ -248,6 +290,10 @@ class EditPengeluaranFragment : Fragment() {
     private fun calculateTotal() {
         binding.apply {
             val nominal = etNominal.text.toString()
+                .replace("Rp", "")
+                .replace(".", "")
+                .replace(",", "")
+                .trim()
             val jumlah = etQty.text.toString()
 
             if (nominal.isNotEmpty() && jumlah.isNotEmpty()) {

@@ -40,7 +40,7 @@ class ProfilFragment : Fragment() {
             if (user != null) {
                 tvMail.text = user.email
                 binding.btnLogout.setOnClickListener {
-                    auth.signOut()
+                    auth.signOut() //untuk logout
                     Prefs.saveLoginStatus(requireContext(), false)
                     startActivity(Intent(requireActivity(), LoginActivity::class.java))
                     requireActivity().finishAffinity()

@@ -44,14 +44,50 @@ class AddPengunjungFragment : Fragment() {
         super.onViewCreated(view , savedInstanceState)
 
         binding.apply {
+            val locale = Locale("id", "ID")
 
+            //tambah titik & Rp saat mngetik nominal
+            etDp.addTextChangedListener (object :android.text.TextWatcher{
+                private var current = ""
+
+                override fun  beforeTextChanged(s: CharSequence?, start: Int, count: Int, sfter: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+                override fun afterTextChanged(s: android.text.Editable?) {
+                    if (s.toString() != current) {
+                        etDp.removeTextChangedListener(this)
+
+                        val cleanString = s.toString()
+                            .replace("Rp", "")
+                            .replace(".", "")
+                            .replace(",", "")
+                            .trim()
+
+                        if (cleanString.isNotEmpty()) {
+                            try {
+                                val parsed = cleanString.toLong()
+                                val formatter = java.text.NumberFormat.getInstance(locale)
+                                val formatted = "Rp" + formatter.format(parsed)
+
+                                current = formatted
+                                etDp.setText(formatted)
+                                etDp.setSelection(formatted.length)
+                            } catch (e: NumberFormatException) {
+                                // biarkan jika error
+                            }
+                        }
+
+                        etDp.addTextChangedListener(this)
+                    }
+                }
+            })
             btnTanggalKunjungan.setOnClickListener {
                 val datePicker = MaterialDatePicker.Builder.datePicker()
                     .setTitleText("Pilih Tanggal Kunjungan")
                     .build()
                 datePicker.show(parentFragmentManager , "DatePicker")
                 datePicker.addOnPositiveButtonClickListener {
-                    val dateFormat = SimpleDateFormat("dd-MM-yyyy" , Locale("id" , "ID"))
+                    val dateFormat = SimpleDateFormat("dd-MM-yyyy" , locale)
                     tglKunjungan = dateFormat.format(Date(it)).toString()
                     btnTanggalKunjungan.text = SimpleDateFormat("dd MMMM yyyy" , Locale("id" , "ID")).format(it)
                 }
@@ -66,7 +102,12 @@ class AddPengunjungFragment : Fragment() {
                 val noTelp = etNoTelp.text.toString()
                 val alamat = etAlamat.text.toString()
                 val dp = etDp.text.toString()
+                    .replace("Rp", "") //Hilangkan simbol mata uang jika tersimpan di database agar tidak eror
+                    .replace(".", "") //Hilangkan pemisah ribuan jika tersimpan di database agar tidak eror
+                    .replace(",", "") //(Opsional) Hilangkan koma jika ada yang copy-paste format asing saat disimpan di database
+                    .trim()
 
+                // tampilan data tidak boleh ada yang kosong
                 if (namaCp.isEmpty()) {
                     showToast("Nama CP tidak boleh kosong")
                 } else if (noTelp.isEmpty()) {
@@ -79,9 +120,12 @@ class AddPengunjungFragment : Fragment() {
                     showToast("Tanggal kunjungan tidak boleh kosong")
                 } else if (dp.isEmpty()) {
                     showToast("DP tidak boleh kosong")
+                } else if (dp.toFloat() <=0){
+                    showToast("Nominal harus lebih dari 0")//nominal lebih dari 0 jika nominal 0 akan gagal menyimpan
                 } else {
                     showLoading()
 
+                    val dp = dp.toFloat()
                     val lastIdPengunjungRef = db.collection("lastId").document("lastIdPengunjung")
                     val lastIdPemasukanRef = db.collection("lastId").document("lastIdPemasukan")
 
